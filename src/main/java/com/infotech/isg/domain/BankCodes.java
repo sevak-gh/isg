@@ -1,6 +1,7 @@
 package com.infotech.isg.domain;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
 
 /**
@@ -8,7 +9,7 @@ import java.util.HashMap;
 *
 * @author Sevak Gharibian
 */
-public class Bank {
+public class BankCodes {
     
     private static Map<String, String> codes = new HashMap<String, String>();
     
@@ -35,5 +36,9 @@ public class Bank {
 
     public static boolean isCodeExist(String code) {
         return codes.containsKey(code);
+    }
+    
+    public static Set<String> getCodes() {
+        return codes.keySet();
     }
 }

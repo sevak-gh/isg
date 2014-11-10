@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
-* domain object representing TeleCom operator.   
+* domain object representing Telecom operator.   
 *
 * @author Sevak Gharibian 
 */
@@ -18,6 +18,10 @@ public class Operator {
     private String name;
     private Status status;
     private static Map<Integer, String> services = new HashMap<Integer, String>();
+
+    public static final int MTN_ID = 1;
+    public static final int MCI_ID = 2;
+    public static final int JIRING_ID = 3;
 
     static {
         services.put(1, "top-up");
