@@ -1,10 +1,10 @@
 package com.infotech.isg.util;
 
-import java.security.MessageDigest; 
-import java.security.NoSuchAlgorithmException; 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
-* utility class for generating hash  
+* utility class for generating hash
 *
 * @author Sevak Gharibian
 */

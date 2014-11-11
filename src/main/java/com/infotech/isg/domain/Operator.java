@@ -4,9 +4,9 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
-* domain object representing Telecom operator.   
+* domain object representing Telecom operator.
 *
-* @author Sevak Gharibian 
+* @author Sevak Gharibian
 */
 public class Operator {
     public enum Status {

@@ -1,7 +1,7 @@
 package com.infotech.isg.service;
 
 /**
-* representing service error codes.   
+* representing service error codes.
 *
 * @author Sevak Garibian
 */

@@ -22,61 +22,61 @@ public abstract class RequestValidator {
                         int channel, String state, String bankReceipt,
                         String orderId, String consumer, String customerIp) {
         int result;
- 
+
         result = validateAction(action);
         if (result != ErrorCodes.OK) {
             return result;
         }
-           
+
         result = validateAmount(amount);
         if (result != ErrorCodes.OK) {
             return result;
         }
- 
+
         result = validateCellNumber(consumer);
         if (result != ErrorCodes.OK) {
             return result;
         }
- 
+
         result = validateBankCode(bankCode);
         if (result != ErrorCodes.OK) {
             return result;
         }
- 
+
         result = validateOperator(operatorId);
         if (result != ErrorCodes.OK) {
             return result;
         }
- 
+
         result = validatePaymentChannel(channel);
         if (result != ErrorCodes.OK) {
             return result;
         }
-            
+
         return ErrorCodes.OK;
     }
 
     protected int validateAmount(int amount) {
-        if (!((amount == 10000) 
-                || (amount == 20000) 
-                || (amount == 50000)
-                || (amount == 100000) 
-                || (amount == 200000))) {
+        if (!((amount == 10000)
+              || (amount == 20000)
+              || (amount == 50000)
+              || (amount == 100000)
+              || (amount == 200000))) {
             return ErrorCodes.INVALID_AMOUNT;
         }
         return ErrorCodes.OK;
     }
 
-    protected int validateAction(String action) {        
+    protected int validateAction(String action) {
         return (ServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
     }
 
     protected int validateCellNumber(String cellNumber) {
         if (!(cellNumber.startsWith("91")
-                || cellNumber.startsWith("091")
-                || cellNumber.startsWith("9891")
-                || cellNumber.startsWith("09891")
-                || cellNumber.startsWith("009891"))) {
+              || cellNumber.startsWith("091")
+              || cellNumber.startsWith("9891")
+              || cellNumber.startsWith("09891")
+              || cellNumber.startsWith("009891"))) {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
         return ErrorCodes.OK;
@@ -89,9 +89,9 @@ public abstract class RequestValidator {
     protected int validateOperator(int operatorId) {
         Operator operator = operatorRepository.findById(operatorId);
         if (operator == null) {
-            return ErrorCodes.INVALID_OPERATOR; 
+            return ErrorCodes.INVALID_OPERATOR;
         }
-        if (operator.getStatus() != Operator.Status.ACTIVE) {                
+        if (operator.getStatus() != Operator.Status.ACTIVE) {
             return ErrorCodes.DISABLED_OPERATOR;
         }
         return ErrorCodes.OK;
@@ -100,9 +100,9 @@ public abstract class RequestValidator {
     protected int validatePaymentChannel(int channelId) {
         PaymentChannel channel = paymentChannelRepository.findById(channelId);
         if (channel == null) {
-            return ErrorCodes.INVALID_PAYMENT_CHANNEL; 
+            return ErrorCodes.INVALID_PAYMENT_CHANNEL;
         }
-        if (!channel.getIsActive()) {                
+        if (!channel.getIsActive()) {
             return ErrorCodes.DISABLED_PAYMENT_CHANNEL;
         }
         return ErrorCodes.OK;

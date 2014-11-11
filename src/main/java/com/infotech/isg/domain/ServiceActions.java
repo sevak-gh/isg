@@ -18,7 +18,7 @@ public class ServiceActions {
     public static final String POST_WIMAX = "post_wimax";
     public static final String PRE_WIMAX = "pre_wimax";
     public static final String GPRS = "gprs";
-    
+
     private static List<String> actions = Arrays.asList(TOPUP, BULK, PAY_BILL, WOW, POST_WIMAX, PRE_WIMAX, GPRS);
 
     public static boolean isActionExist(String action) {

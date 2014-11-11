@@ -53,7 +53,7 @@ public class Client {
         }
         return ips;
     }
-        
+
     public void addIp(String ip) {
         getIps().add(ip);
     }

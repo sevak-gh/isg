@@ -16,5 +16,5 @@ public class Transaction {
     private long revnum;
     private String clientIp;
     private long amount;
-    private int channel;   
+    private int channel;
 }

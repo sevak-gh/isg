@@ -10,9 +10,9 @@ import java.util.HashMap;
 * @author Sevak Gharibian
 */
 public class BankCodes {
-    
+
     private static Map<String, String> codes = new HashMap<String, String>();
-    
+
     static {
         codes.put("056", "SAMAN");
         codes.put("055", "EN");
@@ -37,7 +37,7 @@ public class BankCodes {
     public static boolean isCodeExist(String code) {
         return codes.containsKey(code);
     }
-    
+
     public static Set<String> getCodes() {
         return codes.keySet();
     }

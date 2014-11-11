@@ -13,7 +13,7 @@ public class RequestValidatorMCI extends RequestValidator {
 
     public RequestValidatorMCI(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository) {
         this.operatorRepository = operatorRepository;
-        this.paymentChannelRepository = paymentChannelRepository;            
+        this.paymentChannelRepository = paymentChannelRepository;
         this.operatorId = Operator.MCI_ID;
     }
 }
