@@ -10,8 +10,13 @@ import java.security.NoSuchAlgorithmException;
 */
 public class HashGenerator {
 
-    public static String getSHA512(String input) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
+    public static String getSHA512(String input) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         byte[] hash = md.digest(input.getBytes());
         StringBuilder sb = new StringBuilder();
         for (Byte b : hash) {

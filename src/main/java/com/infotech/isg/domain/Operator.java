@@ -57,6 +57,10 @@ public class Operator {
         this.status = status;
     }
 
+    public boolean getIsActive() {
+        return (status == Status.ACTIVE) ? true : false;
+    }
+
     public static boolean isServiceExist(String service) {
         return services.containsValue(service);
     }

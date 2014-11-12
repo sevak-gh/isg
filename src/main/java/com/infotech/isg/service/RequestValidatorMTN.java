@@ -3,6 +3,7 @@ package com.infotech.isg.service;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
+import com.infotech.isg.repository.ClientRepository;
 
 /**
 * validating MTN service request.
@@ -11,9 +12,10 @@ import com.infotech.isg.repository.PaymentChannelRepository;
 */
 public class RequestValidatorMTN extends RequestValidator {
 
-    public RequestValidatorMTN(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository) {
+    public RequestValidatorMTN(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository, ClientRepository clientRepository) {
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
+        this.clientRepository = clientRepository;
         this.operatorId = Operator.MTN_ID;
     }
 
