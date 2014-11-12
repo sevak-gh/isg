@@ -1,7 +1,7 @@
 package com.infotech.isg.domain;
 
-import java.util.List;
-import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
 * representing supported service actions.
@@ -9,19 +9,23 @@ import java.util.Arrays;
 * @author Sevak Gharibian
 */
 public class ServiceActions {
+    private static Map<String, Integer> actions = new HashMap<String, Integer>();
 
-
-    public static final String TOPUP = "top-up";
-    public static final String BULK = "bulk";
-    public static final String PAY_BILL = "pay-bill";
-    public static final String WOW = "wow";
-    public static final String POST_WIMAX = "post_wimax";
-    public static final String PRE_WIMAX = "pre_wimax";
-    public static final String GPRS = "gprs";
-
-    private static List<String> actions = Arrays.asList(TOPUP, BULK, PAY_BILL, WOW, POST_WIMAX, PRE_WIMAX, GPRS);
+    static {
+        actions.put("top-up", 1);
+        actions.put("bulk", 2);
+        actions.put("pay-bill", 3);
+        actions.put("wow", 4);
+        actions.put("post_wimax", 5);
+        actions.put("pre_wimax", 6);
+        actions.put("gprs", 7);
+    }
 
     public static boolean isActionExist(String action) {
-        return actions.contains(action);
+        return actions.containsKey(action);
+    }
+
+    public static int getActionCode(String action) {
+        return actions.get(action); 
     }
 }
