@@ -68,6 +68,12 @@ public abstract class RequestValidator {
             return result;
         }
 
+        result = validateTransaction(bankReceipt, bankCode, client.getId(), orderId, amount, 
+                                     channel, consumer, customerIp); 
+        if (result != ErrorCodes.OK) {
+            return result;
+        }
+
         return ErrorCodes.OK;
     }
 
