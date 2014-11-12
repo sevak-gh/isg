@@ -68,8 +68,8 @@ public abstract class RequestValidator {
             return result;
         }
 
-        result = validateTransaction(bankReceipt, bankCode, client.getId(), orderId, amount, 
-                                     channel, consumer, customerIp); 
+        result = validateTransaction(bankReceipt, bankCode, client.getId(), orderId, amount,
+                                     channel, consumer, customerIp);
         if (result != ErrorCodes.OK) {
             return result;
         }
@@ -145,8 +145,8 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateTransaction(String refNum, String bankCode, int clientId, 
-                                      String orderId, int amount, int channel, 
+    protected int validateTransaction(String refNum, String bankCode, int clientId,
+                                      String orderId, int amount, int channel,
                                       String consumer, String customerIp) {
         Transaction transaction = transactionRepository.findByRefNumBankCodeClientId(refNum, bankCode, clientId);
 
@@ -155,11 +155,11 @@ public abstract class RequestValidator {
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 
-        if(!((transaction.getProvider() == operatorId)
-                && (transaction.getAmount() == amount)
-                && (transaction.getChannel() == channel)
-                && (transaction.getConsumer() == consumer)
-                && (transaction.getCustomerIp() == customerIp))) {
+        if (!((transaction.getProvider() == operatorId)
+              && (transaction.getAmount() == amount)
+              && (transaction.getChannel() == channel)
+              && (transaction.getConsumer() == consumer)
+              && (transaction.getCustomerIp() == customerIp))) {
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 

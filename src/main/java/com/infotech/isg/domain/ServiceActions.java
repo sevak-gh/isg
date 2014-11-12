@@ -26,6 +26,6 @@ public class ServiceActions {
     }
 
     public static int getActionCode(String action) {
-        return actions.get(action); 
+        return actions.get(action);
     }
 }

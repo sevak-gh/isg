@@ -11,7 +11,7 @@ public class Transaction {
     private long id;
     private int provider;
     private String token;
-    private int action;     // type column 
+    private int action;     // type column
     private String state;
     private String resNum;
     private String refNum;
@@ -30,7 +30,7 @@ public class Transaction {
     private int operator;
     private String operatorCommand;
     private String operatorResponse;
-    private String oepratorTId;         
+    private String oepratorTId;
     private Date operatorDateTime;
     private int stf;
     private int stfResult;
@@ -48,7 +48,7 @@ public class Transaction {
     public int getAction() {
         return action;
     }
-    
+
     public String getRefNum() {
         return refNum;
     }
@@ -56,7 +56,7 @@ public class Transaction {
     public String getResNum() {
         return resNum;
     }
-    
+
     public long getAmount() {
         return amount;
     }
