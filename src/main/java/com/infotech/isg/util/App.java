@@ -35,5 +35,8 @@ public class App {
         for (String ip : ips) {
             System.out.println(ip);
         }
+
+        TransactionRepository transactionRepo = context.getBean("TransactionRepositoryJdbc", TransactionRepository.class);
+        Transaction transaction = transactionRepo.findByRefNumBankCodeClientId("111", "015", 1);
     }
 }
