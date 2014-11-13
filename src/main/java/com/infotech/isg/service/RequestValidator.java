@@ -32,6 +32,23 @@ public abstract class RequestValidator {
                         String consumer, String customerIp, String remoteIp) {
         int result;
 
+        if ((username == null)
+                || (password == null)
+                || (action == null)
+                || (bankCode == null)
+                || (state == null)
+                || (bankReceipt == null)
+                || (orderId == null)
+                || (consumer == null)
+                || (customerIp == null)
+                || (state.isEmpty())
+                || (bankReceipt.isEmpty())
+                || (orderId.isEmpty())
+                || (consumer.isEmpty())                
+                || (customerIp.isEmpty())) {
+            return ErrorCodes.INSUFFICIENT_PARAMETERS;
+        }
+
         Client client = clientRepository.findByUsername(username);
         result = validateClient(client, password, remoteIp);
         if (result != ErrorCodes.OK) {
@@ -163,15 +180,18 @@ public abstract class RequestValidator {
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 
-        if ((transaction.getStatus() != 1) && (transaction.getOperator() != 0)) {
+        if ((transaction.getStatus() == null)
+                || (transaction.getStatus().intValue() != 1) 
+                || (transaction.getOperatorResponseCode() == 0)
+                || (transaction.getOperatorResponseCode().intValue() != 0)) {
             return ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE;
         }
 
-        if (transaction.getStf() == 1) {
+        if ((transaction.getStf() != null) && (transaction.getStf().intValue() == 1)) {
             return ErrorCodes.OPERATOR_SERVICE_ERROR;
         }
 
-        if (transaction.getStf() == 3) {
+        if ((transaction.getStf() != null) && (transaction.getStf().intValue() == 3)) {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
 
