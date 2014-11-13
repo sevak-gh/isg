@@ -135,7 +135,7 @@ public abstract class RequestValidator {
     }
 
     protected int validatePaymentChannel(int channelId) {
-        PaymentChannel channel = paymentChannelRepository.findById(channelId);
+        PaymentChannel channel = paymentChannelRepository.findById(Integer.toString(channelId));
         if (channel == null) {
             return ErrorCodes.INVALID_PAYMENT_CHANNEL;
         }

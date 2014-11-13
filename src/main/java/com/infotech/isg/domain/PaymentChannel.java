@@ -6,15 +6,15 @@ package com.infotech.isg.domain;
 * @author Sevak Gharibian
 */
 public class PaymentChannel {
-    private String channel;
+    private String id;
     private boolean isActive;
 
-    public String getChannel() {
-        return channel;
+    public String getId() {
+        return id;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public boolean getIsActive() {

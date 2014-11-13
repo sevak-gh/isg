@@ -8,5 +8,5 @@ import com.infotech.isg.domain.PaymentChannel;
 * @author Sevak Gharibian
 */
 public interface PaymentChannelRepository {
-    public PaymentChannel findById(int id);
+    public PaymentChannel findById(String id);
 }
