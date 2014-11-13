@@ -9,14 +9,10 @@ import java.util.HashMap;
 * @author Sevak Gharibian
 */
 public class Operator {
-    public enum Status {
-        ACTIVE,
-        DISABLED
-    };
 
     private int id;
     private String name;
-    private Status status;
+    private boolean isActive;
     private static Map<Integer, String> services = new HashMap<Integer, String>();
 
     public static final int MTN_ID = 1;
@@ -37,7 +33,7 @@ public class Operator {
         return id;
     }
 
-    public void setId() {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,16 +45,12 @@ public class Operator {
         this.name = name;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public boolean getIsActive() {
-        return (status == Status.ACTIVE) ? true : false;
+        return isActive;
+    }
+
+    public void setIsActive(boolean isACtive) {
+        this.isActive = isActive;
     }
 
     public static boolean isServiceExist(String service) {
