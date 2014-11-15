@@ -89,7 +89,7 @@ public class Transaction {
     // seems like not being used anymore
     private Integer opReverse;
 
-    // seemd like not being used anymore
+    // seems like not being used anymore
     private Integer bkReverse;
 
     public long getId() {

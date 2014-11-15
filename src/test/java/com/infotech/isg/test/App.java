@@ -68,5 +68,20 @@ public class App {
         } else {
             System.out.println("transaction not found!");
         }
+
+        /*
+        transaction.setStf(1);
+        transaction.setStfResult(0);
+        transaction.setOperatorResponseCode(2);
+        transactionRepo.update(transaction);
+        */
+
+        transaction.setStatus(-1);
+        transaction.setOperatorDateTime(new Date());
+        transaction.setOperatorResponseCode(0);
+        transaction.setOperatorResponse("sim card charged");
+        transaction.setToken("MCI-TOKEN:ABC12356");
+        transaction.setOperatorTId("sim card charged");
+        transactionRepo.update(transaction);
     }
 }

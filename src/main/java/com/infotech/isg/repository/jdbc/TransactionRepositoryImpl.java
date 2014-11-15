@@ -49,8 +49,23 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public void update(Transaction transaction) {
-        //TODO to be completed
-        throw new UnsupportedOperationException();
+        String sql = "update info_topup_transactions set provider=?, token=?, type=?, "
+                     + "state=?, resnum=?, refnum=?, revnum=?, clientip=?, amount=?, "
+                     + "channel=?, consumer=?, bankcode=?, client=?, customerip=?, "
+                     + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?,"
+                     + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
+                     + "stfresult=?, opreverse=?, bkreverse=? where id=?";
+        jdbcTemplate.update(sql, new Object[] {transaction.getProvider(), transaction.getToken(), transaction.getAction(),
+                                               transaction.getState(), transaction.getResNum(), transaction.getRefNum(),
+                                               transaction.getRevNum(), transaction.getRemoteIp(), transaction.getAmount(),
+                                               transaction.getChannel(), transaction.getConsumer(), transaction.getBankCode(),
+                                               transaction.getClientId(), transaction.getCustomerIp(), transaction.getTrDateTime(),
+                                               transaction.getBankVerify(), transaction.getVerifyDateTime(), transaction.getStatus(),
+                                               transaction.getOperatorResponseCode(), transaction.getOperatorCommand(), transaction.getOperatorResponse(),
+                                               transaction.getOperatorTId(), transaction.getOperatorDateTime(), transaction.getStf(),
+                                               transaction.getStfResult(), transaction.getOpReverse(), transaction.getBkReverse(),
+                                               transaction.getId()
+                                              });
     }
 
     @Override
