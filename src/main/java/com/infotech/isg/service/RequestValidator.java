@@ -33,19 +33,19 @@ public abstract class RequestValidator {
         int result;
 
         if ((username == null)
-                || (password == null)
-                || (action == null)
-                || (bankCode == null)
-                || (state == null)
-                || (bankReceipt == null)
-                || (orderId == null)
-                || (consumer == null)
-                || (customerIp == null)
-                || (state.isEmpty())
-                || (bankReceipt.isEmpty())
-                || (orderId.isEmpty())
-                || (consumer.isEmpty())                
-                || (customerIp.isEmpty())) {
+            || (password == null)
+            || (action == null)
+            || (bankCode == null)
+            || (state == null)
+            || (bankReceipt == null)
+            || (orderId == null)
+            || (consumer == null)
+            || (customerIp == null)
+            || (state.isEmpty())
+            || (bankReceipt.isEmpty())
+            || (orderId.isEmpty())
+            || (consumer.isEmpty())
+            || (customerIp.isEmpty())) {
             return ErrorCodes.INSUFFICIENT_PARAMETERS;
         }
 
@@ -181,9 +181,9 @@ public abstract class RequestValidator {
         }
 
         if ((transaction.getStatus() == null)
-                || (transaction.getStatus().intValue() != 1) 
-                || (transaction.getOperatorResponseCode() == 0)
-                || (transaction.getOperatorResponseCode().intValue() != 0)) {
+            || (transaction.getStatus().intValue() != 1)
+            || (transaction.getOperatorResponseCode() == 0)
+            || (transaction.getOperatorResponseCode().intValue() != 0)) {
             return ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE;
         }
 

@@ -18,77 +18,77 @@ public class Transaction {
     private String token;
 
     // action from request, column name = type
-    private int action;     
+    private int action;
 
     // state prarmeter from request
     private String state;
 
-    // orderId from request        
+    // orderId from request
     private String resNum;
 
-    // bankReceipt from request 
+    // bankReceipt from request
     private String refNum;
-    
+
     // seems like not being used anymore
     private Long revNum;
 
     // remote IP makeing request, column name = clientip
     private String remoteIp;
-    
+
     // amount from request, should be in valid range
     private long amount;
-    
+
     // payment channel ID from request, should be defined active in DB
     private int channel;
-    
-    // consumer from request, means cell number        
+
+    // consumer from request, means cell number
     private String consumer;
 
     // bankCode from request, should be valid
     private String bankCode;
-    
+
     // client id defined in clients table, column name = client
     private int clientId;
-    
-    // customerIp from request    
+
+    // customerIp from request
     private String customerIp;
-    
-    // current datetime once request receveived by ISG, column name = trtime    
+
+    // current datetime once request receveived by ISG, column name = trtime
     private Date trDateTime;
-    
+
     // filled by amount from request
     private Integer bankVerify;
-    
+
     // filled by current datetime once request received by ISG, seems useless, column name = verifytime
     private Date verifyDateTime;
 
     // representing transaction/service result, 1=OK, otherwise=NOK{0,-1,-2,-3}
     private Integer status;
-    
+
     // filled by response code from service provider, apparently 0=OK, otherwise=NOK, column name = operator
     private Integer operatorResponseCode;
 
     // filled by command status field from MTN request only, comumn name = oprcommand
     private String operatorCommand;
-    
+
     // filled by response message/detail in service provider's response, column name = oprresponse
     private String operatorResponse;
-    
+
     // fiiled by MTN/transctionId, MCI/response detail, Jiring/token, another words some additional info from response, column name = oprtid
     private String operatorTId;
 
-    // filled by current datetime once response recevied from service provider, column name = operatortime 
+    // filled by current datetime once response recevied from service provider, column name = operatortime
     private Date operatorDateTime;
-    
-    // =1 means this transaction is set to be processed by STF service, in case of failure. 
+
+    // =1 means this transaction is set to be processed by STF service, in case of failure.
     private Integer stf;
 
-    // apparently set by STF service        
+    // apparently set by STF service
     private Integer stfResult;
-    
-    // seems like not being used anymore 
+
+    // seems like not being used anymore
     private Integer opReverse;
-    
+
     // seemd like not being used anymore
     private Integer bkReverse;
 
@@ -98,7 +98,7 @@ public class Transaction {
 
     public void setId(long id) {
         this.id = id;
-    }    
+    }
 
     public int getProvider() {
         return provider;
@@ -122,7 +122,7 @@ public class Transaction {
 
     public void setAction(int action) {
         this.action = action;
-    }    
+    }
 
     public String getState() {
         return state;
@@ -262,7 +262,7 @@ public class Transaction {
 
     public String getOperatorResponse() {
         return operatorResponse;
-    }        
+    }
 
     public void setOperatorResponse(String operatorResponse) {
         this.operatorResponse = operatorResponse;
@@ -278,7 +278,7 @@ public class Transaction {
 
     public Date getOperatorDateTime() {
         return operatorDateTime;
-    }    
+    }
 
     public void setOperatorDateTime(Date operatorDateTime) {
         this.operatorDateTime = operatorDateTime;
@@ -298,7 +298,7 @@ public class Transaction {
 
     public void setStfResult(Integer stfResult) {
         this.stfResult = stfResult;
-    }        
+    }
 
     public Integer getOpReverse() {
         return opReverse;
@@ -306,7 +306,7 @@ public class Transaction {
 
     public void setOpReverse(Integer opReverse) {
         this.opReverse = opReverse;
-    }    
+    }
 
     public Integer getBkReverse() {
         return bkReverse;

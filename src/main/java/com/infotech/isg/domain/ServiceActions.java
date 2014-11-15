@@ -11,14 +11,22 @@ import java.util.HashMap;
 public class ServiceActions {
     private static Map<String, Integer> actions = new HashMap<String, Integer>();
 
+    public static final int TOP_UP = 1;
+    public static final int BULK = 2;
+    public static final int PAY_BILL = 3;
+    public static final int WOW = 4;
+    public static final int POST_WIMAX = 5;
+    public static final int PRE_WIMAX = 6;
+    public static final int GPRS = 7;
+
     static {
-        actions.put("top-up", 1);
-        actions.put("bulk", 2);
-        actions.put("pay-bill", 3);
-        actions.put("wow", 4);
-        actions.put("post_wimax", 5);
-        actions.put("pre_wimax", 6);
-        actions.put("gprs", 7);
+        actions.put("top-up", TOP_UP);
+        actions.put("bulk", BULK);
+        actions.put("pay-bill", PAY_BILL);
+        actions.put("wow", WOW);
+        actions.put("post_wimax", POST_WIMAX);
+        actions.put("pre_wimax", PRE_WIMAX);
+        actions.put("gprs", GPRS);
     }
 
     public static boolean isActionExist(String action) {

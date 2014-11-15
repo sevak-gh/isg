@@ -9,5 +9,6 @@ import com.infotech.isg.domain.Transaction;
 */
 public interface TransactionRepository {
     public Transaction findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId);
+    public void create(Transaction transaction);
     public void update(Transaction transaction);
 }

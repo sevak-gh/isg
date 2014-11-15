@@ -33,11 +33,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public Transaction findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId) {
         Transaction transaction = null;
         String sql = "select id, provider, token, type, state, resnum, refnum, revnum, "
-                    + "clientip, amount, channel, consumer, bankcode, client, customerip, "
-                    + "trtime, bankverify, verifytime, status, operator, oprcommand, "
-                    + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
-                    + "bkreverse from info_topup_transactions where refnum = ? and "
-                    + "bankcode = ? and client = ?";
+                     + "clientip, amount, channel, consumer, bankcode, client, customerip, "
+                     + "trtime, bankverify, verifytime, status, operator, oprcommand, "
+                     + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, "
+                     + "bkreverse from info_topup_transactions where refnum = ? and "
+                     + "bankcode = ? and client = ?";
         try {
             transaction = jdbcTemplate.queryForObject(sql, new Object[] {refNum, bankCode, clientId}, new TransactionRowMapper());
         } catch (EmptyResultDataAccessException e) {
@@ -51,6 +51,25 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public void update(Transaction transaction) {
         //TODO to be completed
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void create(Transaction transaction) {
+        String sql = "insert into info_topup_transactions(provider, token, type, state, resnum, refnum, revnum, "
+                     + "clientip, amount, channel, consumer, bankcode, client, customerip, "
+                     + "trtime, bankverify, verifytime, status, operator, oprcommand, "
+                     + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, bkreverse) values( "
+                     + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, new Object[] {transaction.getProvider(), transaction.getToken(), transaction.getAction(),
+                                               transaction.getState(), transaction.getResNum(), transaction.getRefNum(),
+                                               transaction.getRevNum(), transaction.getRemoteIp(), transaction.getAmount(),
+                                               transaction.getChannel(), transaction.getConsumer(), transaction.getBankCode(),
+                                               transaction.getClientId(), transaction.getCustomerIp(), transaction.getTrDateTime(),
+                                               transaction.getBankVerify(), transaction.getVerifyDateTime(), transaction.getStatus(),
+                                               transaction.getOperatorResponseCode(), transaction.getOperatorCommand(), transaction.getOperatorResponse(),
+                                               transaction.getOperatorTId(), transaction.getOperatorDateTime(), transaction.getStf(),
+                                               transaction.getStfResult(), transaction.getOpReverse(), transaction.getBkReverse()
+                                              });
     }
 
     private static final class TransactionRowMapper implements RowMapper<Transaction> {
