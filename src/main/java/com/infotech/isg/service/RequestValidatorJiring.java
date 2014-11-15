@@ -13,8 +13,8 @@ import com.infotech.isg.repository.TransactionRepository;
 */
 public class RequestValidatorJiring extends RequestValidator {
 
-    public RequestValidatorJiring(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository, 
-                                    ClientRepository clientRepository, TransactionRepository transactionRepository) {
+    public RequestValidatorJiring(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository,
+                                  ClientRepository clientRepository, TransactionRepository transactionRepository) {
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
         this.clientRepository = clientRepository;

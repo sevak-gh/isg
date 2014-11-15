@@ -13,8 +13,8 @@ import com.infotech.isg.repository.TransactionRepository;
 */
 public class RequestValidatorMCI extends RequestValidator {
 
-    public RequestValidatorMCI(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository, 
-                                ClientRepository clientRepository, TransactionRepository transactionRepository) {
+    public RequestValidatorMCI(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository,
+                               ClientRepository clientRepository, TransactionRepository transactionRepository) {
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
         this.clientRepository = clientRepository;

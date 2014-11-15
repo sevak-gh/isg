@@ -6,6 +6,9 @@ import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.TransactionRepository;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /**
 * validating MTN service request.
 *
@@ -13,8 +16,8 @@ import com.infotech.isg.repository.TransactionRepository;
 */
 public class RequestValidatorMTN extends RequestValidator {
 
-    public RequestValidatorMTN(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository, 
-                                ClientRepository clientRepository, TransactionRepository transactionRepository) {
+    public RequestValidatorMTN(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository,
+                               ClientRepository clientRepository, TransactionRepository transactionRepository) {
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
         this.clientRepository = clientRepository;
@@ -29,16 +32,8 @@ public class RequestValidatorMTN extends RequestValidator {
 
     @Override
     public int validateCellNumber(String cellNumber) {
-        if (!(cellNumber.startsWith("93")
-              || cellNumber.startsWith("093")
-              || cellNumber.startsWith("9893")
-              || cellNumber.startsWith("+9893")
-              || cellNumber.startsWith("009893")
-              || cellNumber.startsWith("94")
-              || cellNumber.startsWith("094")
-              || cellNumber.startsWith("9894")
-              || cellNumber.startsWith("+9894")
-              || cellNumber.startsWith("009894"))) {
+        Pattern pattern = Pattern.compile("^(0|98|\\+98|0098)?9[34][0-9]{8}$");
+        if (!pattern.matcher(cellNumber).matches()) {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
         return ErrorCodes.OK;

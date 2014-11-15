@@ -12,6 +12,8 @@ import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.util.HashGenerator;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
 * validating service request.
@@ -126,11 +128,8 @@ public abstract class RequestValidator {
     }
 
     public int validateCellNumber(String cellNumber) {
-        if (!(cellNumber.startsWith("91")
-              || cellNumber.startsWith("091")
-              || cellNumber.startsWith("9891")
-              || cellNumber.startsWith("+9891")
-              || cellNumber.startsWith("009891"))) {
+        Pattern pattern = Pattern.compile("^(0|98|\\+98|0098)?91[0-9]{8}$");
+        if (!pattern.matcher(cellNumber).matches()) {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
         return ErrorCodes.OK;
@@ -163,8 +162,8 @@ public abstract class RequestValidator {
     }
 
     public int validateTransaction(String refNum, String bankCode, int clientId,
-                                      String orderId, int amount, int channel,
-                                      String consumer, String customerIp) {
+                                   String orderId, int amount, int channel,
+                                   String consumer, String customerIp) {
         Transaction transaction = transactionRepository.findByRefNumBankCodeClientId(refNum, bankCode, clientId);
 
         if (transaction.getResNum() != orderId) {
