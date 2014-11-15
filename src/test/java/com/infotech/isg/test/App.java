@@ -25,6 +25,10 @@ public class App {
         System.out.println("isg test app...");
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+
+        System.out.println("press enter to continue....");
+        System.console().readLine();
+
         ClientRepository clientRepo = context.getBean("ClientRepositoryJdbc", ClientRepository.class);
         Client client = clientRepo.findByUsername("test");
         System.out.println("id: " + Integer.toString(client.getId()));
@@ -75,6 +79,9 @@ public class App {
         transaction.setOperatorResponseCode(2);
         transactionRepo.update(transaction);
         */
+
+        System.out.println("press enter to continue....");
+        System.console().readLine();
 
         transaction.setStatus(-1);
         transaction.setOperatorDateTime(new Date());

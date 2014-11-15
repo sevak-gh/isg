@@ -94,7 +94,7 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateClient(Client client, String password, String remoteIp) {
+    public int validateClient(Client client, String password, String remoteIp) {
         if (client == null) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
@@ -110,7 +110,7 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateAmount(int amount) {
+    public int validateAmount(int amount) {
         if (!((amount == 10000)
               || (amount == 20000)
               || (amount == 50000)
@@ -121,11 +121,11 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateAction(String action) {
+    public int validateAction(String action) {
         return (ServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
     }
 
-    protected int validateCellNumber(String cellNumber) {
+    public int validateCellNumber(String cellNumber) {
         if (!(cellNumber.startsWith("91")
               || cellNumber.startsWith("091")
               || cellNumber.startsWith("9891")
@@ -136,11 +136,11 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateBankCode(String bankCode) {
+    public int validateBankCode(String bankCode) {
         return (BankCodes.isCodeExist(bankCode)) ? ErrorCodes.OK : ErrorCodes.INVALID_BANK_CODE;
     }
 
-    protected int validateOperator(int operatorId) {
+    public int validateOperator(int operatorId) {
         Operator operator = operatorRepository.findById(operatorId);
         if (operator == null) {
             return ErrorCodes.INVALID_OPERATOR;
@@ -151,7 +151,7 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validatePaymentChannel(int channelId) {
+    public int validatePaymentChannel(int channelId) {
         PaymentChannel channel = paymentChannelRepository.findById(Integer.toString(channelId));
         if (channel == null) {
             return ErrorCodes.INVALID_PAYMENT_CHANNEL;
@@ -162,7 +162,7 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    protected int validateTransaction(String refNum, String bankCode, int clientId,
+    public int validateTransaction(String refNum, String bankCode, int clientId,
                                       String orderId, int amount, int channel,
                                       String consumer, String customerIp) {
         Transaction transaction = transactionRepository.findByRefNumBankCodeClientId(refNum, bankCode, clientId);
