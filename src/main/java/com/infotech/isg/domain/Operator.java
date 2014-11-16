@@ -13,21 +13,10 @@ public class Operator {
     private int id;
     private String name;
     private boolean isActive;
-    private static Map<Integer, String> services = new HashMap<Integer, String>();
 
     public static final int MTN_ID = 1;
     public static final int MCI_ID = 2;
     public static final int JIRING_ID = 3;
-
-    static {
-        services.put(1, "top-up");
-        services.put(2, "bulk");
-        services.put(3, "pay-bill");
-        services.put(4, "wow");
-        services.put(5, "post-wimax");
-        services.put(6, "pre-wimax");
-        services.put(7, "gprs");
-    }
 
     public int getId() {
         return id;
@@ -49,12 +38,8 @@ public class Operator {
         return isActive;
     }
 
-    public void setIsActive(boolean isACtive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
-    }
-
-    public static boolean isServiceExist(String service) {
-        return services.containsValue(service);
     }
 }
 

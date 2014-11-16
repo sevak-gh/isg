@@ -4,6 +4,9 @@ import com.infotech.isg.domain.*;
 import com.infotech.isg.service.*;
 import com.infotech.isg.repository.*;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
@@ -24,6 +27,23 @@ public class RequestValidatorTest {
 
     @BeforeClass
     public void setUp() {
+        // mock repository for operator
+        operatorRepository = new OperatorRepository() {
+            private Map<Integer, Operator> operators = new HashMap<Integer, Operator>() {
+                {
+                    put(Operator.MTN_ID, new Operator() {{setId(Operator.MTN_ID); setName("MTN"); setIsActive(true);}});
+                    put(Operator.MCI_ID, new Operator() {{setId(Operator.MCI_ID); setName("MCI"); setIsActive(true);}});
+                    put(Operator.JIRING_ID, new Operator() {{setId(Operator.JIRING_ID); setName("JIRING"); setIsActive(true);}});
+                    put(4, new Operator() {{setId(4); setName("test1"); setIsActive(true);}});
+                    put(5, new Operator() {{setId(5); setName("test2"); setIsActive(false);}});
+                }
+            };
+
+            public Operator findById(int id) {
+                return operators.get(id);
+            }
+        };
+
         requestValidator = new RequestValidatorMCI(operatorRepository, paymentChannelRepository,
                 clientRepository, transactionRepository);
     }
@@ -84,6 +104,21 @@ public class RequestValidatorTest {
         };
     }
 
+    @DataProvider(name = "provideOperatorIds")
+    public Object[][] provideOperatorIds() {
+        return new Object[][] {
+            {0, ErrorCodes.INVALID_OPERATOR},
+            { -1, ErrorCodes.INVALID_OPERATOR},
+            {10, ErrorCodes.INVALID_OPERATOR},
+            {6, ErrorCodes.INVALID_OPERATOR},
+            {5, ErrorCodes.DISABLED_OPERATOR},
+            {1, ErrorCodes.OK},
+            {2, ErrorCodes.OK},
+            {3, ErrorCodes.OK},
+            {4, ErrorCodes.OK}
+        };
+    }
+
     @Test(dataProvider = "provideAmounts")
     public void testValidateAmount(int amount, int errorCode) {
         Assert.assertEquals(requestValidator.validateAmount(amount), errorCode);
@@ -97,5 +132,10 @@ public class RequestValidatorTest {
     @Test(dataProvider = "provideBankCodes")
     public void testValidateBankCode(String bankCode, int errorCode) {
         Assert.assertEquals(requestValidator.validateBankCode(bankCode), errorCode);
+    }
+
+    @Test(dataProvider = "provideOperatorIds")
+    public void testValidateOperator(int operatorId, int errorCode) {
+        Assert.assertEquals(requestValidator.validateOperator(operatorId), errorCode);
     }
 }
