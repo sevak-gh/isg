@@ -44,6 +44,36 @@ public class RequestValidatorTest {
             }
         };
 
+        // mock repository for payment channel
+        paymentChannelRepository = new PaymentChannelRepository() {
+            private Map<String, PaymentChannel> channels = new HashMap<String, PaymentChannel>() {
+                {
+                    put("59", new PaymentChannel() {{setId("59"); setIsActive(true);}});
+                    put("14", new PaymentChannel() {{setId("14"); setIsActive(true);}});
+                    put("5", new PaymentChannel() {{setId("5"); setIsActive(true);}});
+                    put("10", new PaymentChannel() {{setId("10"); setIsActive(true);}});
+                    put("25", new PaymentChannel() {{setId("25"); setIsActive(false);}});
+                }
+            };
+
+            public PaymentChannel findById(String id) {
+                return channels.get(id);
+            }
+        };
+
+        // mock repository for client
+        clientRepository = new ClientRepository() {
+            private Map<String, Client> clients = new HashMap<String, Client>() {
+                {
+                    put("root", new Client() {{setUsername("root"); setPassword(""); addIp("1.1.1.1"); addIp("2.2.2.2"); setIsActive(true);}});
+                }
+            };
+
+            public Client findByUsername(String username) {
+                return clients.get(username);
+            }
+        };
+
         requestValidator = new RequestValidatorMCI(operatorRepository, paymentChannelRepository,
                 clientRepository, transactionRepository);
     }
@@ -119,6 +149,19 @@ public class RequestValidatorTest {
         };
     }
 
+    @DataProvider(name = "providePaymentChannelIds")
+    public Object[][] providePaymentChannelIds() {
+        return new Object[][] {
+            { -1, ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {0, ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {125, ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {59, ErrorCodes.OK},
+            {14, ErrorCodes.OK},
+            {5, ErrorCodes.OK},
+            {25, ErrorCodes.DISABLED_PAYMENT_CHANNEL},
+            {10, ErrorCodes.OK}
+        };
+    }
     @Test(dataProvider = "provideAmounts")
     public void testValidateAmount(int amount, int errorCode) {
         Assert.assertEquals(requestValidator.validateAmount(amount), errorCode);
@@ -137,5 +180,10 @@ public class RequestValidatorTest {
     @Test(dataProvider = "provideOperatorIds")
     public void testValidateOperator(int operatorId, int errorCode) {
         Assert.assertEquals(requestValidator.validateOperator(operatorId), errorCode);
+    }
+
+    @Test(dataProvider = "providePaymentChannelIds")
+    public void testValidatePaymentChannel(int channelId, int errorCode) {
+        Assert.assertEquals(requestValidator.validatePaymentChannel(channelId), errorCode);
     }
 }
