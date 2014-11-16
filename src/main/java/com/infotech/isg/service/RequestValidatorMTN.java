@@ -3,7 +3,6 @@ package com.infotech.isg.service;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
-import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.TransactionRepository;
 
 import java.util.regex.Pattern;
@@ -17,10 +16,9 @@ import java.util.regex.Matcher;
 public class RequestValidatorMTN extends RequestValidator {
 
     public RequestValidatorMTN(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository,
-                               ClientRepository clientRepository, TransactionRepository transactionRepository) {
+                               TransactionRepository transactionRepository) {
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
-        this.clientRepository = clientRepository;
         this.transactionRepository = transactionRepository;
         this.operatorId = Operator.MTN_ID;
     }

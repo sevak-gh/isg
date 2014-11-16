@@ -19,13 +19,12 @@ public class RequestValidatorMTNTest {
     private RequestValidator requestValidator;
     private OperatorRepository operatorRepository;
     private PaymentChannelRepository paymentChannelRepository;
-    private ClientRepository clientRepository;
     private TransactionRepository transactionRepository;
 
     @BeforeClass
     public void setUp() {
         requestValidator = new RequestValidatorMTN(operatorRepository, paymentChannelRepository,
-                clientRepository, transactionRepository);
+                transactionRepository);
     }
 
     @DataProvider(name = "provideAmounts")

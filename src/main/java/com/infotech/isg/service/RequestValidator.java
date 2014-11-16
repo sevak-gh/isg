@@ -1,6 +1,5 @@
 package com.infotech.isg.service;
 
-import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
@@ -8,9 +7,7 @@ import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
-import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.TransactionRepository;
-import com.infotech.isg.util.HashGenerator;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -24,19 +21,15 @@ public abstract class RequestValidator {
 
     protected OperatorRepository operatorRepository;
     protected PaymentChannelRepository paymentChannelRepository;
-    protected ClientRepository clientRepository;
     protected TransactionRepository transactionRepository;
     protected int operatorId;
 
-    public int validate(String username, String password, String action,
-                        String bankCode, int amount, int channel,
-                        String state, String bankReceipt, String orderId,
-                        String consumer, String customerIp, String remoteIp) {
+    public int validate(String action, String bankCode, int amount,
+                        int channel, String state, String bankReceipt,
+                        String orderId, String consumer, String customerIp) {
         int result;
 
-        if ((username == null)
-            || (password == null)
-            || (action == null)
+        if ((action == null)
             || (bankCode == null)
             || (state == null)
             || (bankReceipt == null)
@@ -49,13 +42,6 @@ public abstract class RequestValidator {
             || (consumer.isEmpty())
             || (customerIp.isEmpty())) {
             return ErrorCodes.INSUFFICIENT_PARAMETERS;
-        }
-
-        Client client = clientRepository.findByUsername(username);
-
-        result = validateClient(username, password, remoteIp);
-        if (result != ErrorCodes.OK) {
-            return result;
         }
 
         result = validateAction(action);
@@ -88,29 +74,13 @@ public abstract class RequestValidator {
             return result;
         }
 
-        result = validateTransaction(bankReceipt, bankCode, client.getId(), orderId, amount,
+        // TODO client id
+        result = validateTransaction(bankReceipt, bankCode, 0 /*client.getId()*/, orderId, amount,
                                      channel, consumer, customerIp);
         if (result != ErrorCodes.OK) {
             return result;
         }
 
-        return ErrorCodes.OK;
-    }
-
-    public int validateClient(String username, String password, String remoteIp) {
-        Client client = clientRepository.findByUsername(username);
-        if (client == null) {
-            return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
-        }
-        if (!client.getPassword().equalsIgnoreCase(HashGenerator.getSHA512(password))) {
-            return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
-        }
-        if (!client.getIsActive()) {
-            return ErrorCodes.DISABLED_CLIENT_ACCOUNT;
-        }
-        if (!client.getIps().contains(remoteIp)) {
-            return ErrorCodes.INVALID_CLIENT_IP;
-        }
         return ErrorCodes.OK;
     }
 
@@ -198,5 +168,4 @@ public abstract class RequestValidator {
 
         return ErrorCodes.OK;
     }
-
 }
