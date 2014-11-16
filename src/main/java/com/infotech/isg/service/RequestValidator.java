@@ -52,7 +52,8 @@ public abstract class RequestValidator {
         }
 
         Client client = clientRepository.findByUsername(username);
-        result = validateClient(client, password, remoteIp);
+
+        result = validateClient(username, password, remoteIp);
         if (result != ErrorCodes.OK) {
             return result;
         }
@@ -96,15 +97,16 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    public int validateClient(Client client, String password, String remoteIp) {
+    public int validateClient(String username, String password, String remoteIp) {
+        Client client = clientRepository.findByUsername(username);
         if (client == null) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
-        if (client.getPassword() != HashGenerator.getSHA512(password)) {
+        if (!client.getPassword().equalsIgnoreCase(HashGenerator.getSHA512(password))) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
         if (!client.getIsActive()) {
-            return ErrorCodes.INVALID_CLIENT_ACCOUNT;
+            return ErrorCodes.DISABLED_CLIENT_ACCOUNT;
         }
         if (!client.getIps().contains(remoteIp)) {
             return ErrorCodes.INVALID_CLIENT_IP;

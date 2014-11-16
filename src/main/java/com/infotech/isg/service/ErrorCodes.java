@@ -10,7 +10,7 @@ public class ErrorCodes {
     public static final int INTERNAL_SYSTEM_ERROR = -1;
     public static final int INSUFFICIENT_PARAMETERS = -2;
     public static final int INVALID_USERNAME_OR_PASSWORD = -3;
-    public static final int INVALID_CLIENT_ACCOUNT = -4;
+    public static final int DISABLED_CLIENT_ACCOUNT = -4;
     public static final int INVALID_CLIENT_IP = -5;
     public static final int FINANCIAL_TRANSACTION_ERROR = -6;
     public static final int FINANCIAL_TRANSACTION_VERIFICATION_FAILED = -7;
