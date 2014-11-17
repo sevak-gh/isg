@@ -105,6 +105,289 @@ public class RequestValidatorTest {
         };
     }
 
+    @DataProvider(name = "provideTransactions")
+    public Object[][] provideTransactions() {
+        return new Object[][] {
+            {null, "", 0, 0, 0, "", "", ErrorCodes.OK},
+            {new Transaction() {{}}, "XY78", 0, 0, 0, "", "", ErrorCodes.DOUBLE_SPENDING_TRANSACTION},
+            {new Transaction() {{setResNum("ABC12");}}, "XY78", 0, 0, 0, "", "", ErrorCodes.DOUBLE_SPENDING_TRANSACTION},
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.OK
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MTN_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                10000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                2,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09121121245",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "1.2.1.3",          // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        //setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.DOUBLE_SPENDING_TRANSACTION
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        //setStatus(1);
+                        //setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.TRANSACTION_ALREADY_FAILED
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        //setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.TRANSACTION_ALREADY_FAILED
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(-1);
+                        setOperatorResponseCode(0);
+                        setStf(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.TRANSACTION_ALREADY_FAILED
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(1);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.OPERATOR_SERVICE_ERROR
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        //setStf(1);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.OK
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(1);
+                        setOperatorResponseCode(0);
+                        setStf(3);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.STF_ERROR
+            }
+
+        };
+    }
+
     @Test(dataProvider = "provideAmounts")
     public void testValidateAmount(int amount, int errorCode) {
         Assert.assertEquals(requestValidator.validateAmount(amount), errorCode);
@@ -128,5 +411,13 @@ public class RequestValidatorTest {
     @Test(dataProvider = "providePaymentChannels")
     public void testValidatePaymentChannel(PaymentChannel channel, int errorCode) {
         Assert.assertEquals(requestValidator.validatePaymentChannel(channel), errorCode);
+    }
+
+    @Test(dataProvider = "provideTransactions")
+    public void testValidateTransaction(Transaction transaction, String orderId,
+                                        int operatorId, int amount, int channel,
+                                        String consumer, String customerIp, int errorCode) {
+        Assert.assertEquals(requestValidator.validateTransaction(transaction, orderId, operatorId, amount,
+                            channel, consumer, customerIp), errorCode);
     }
 }

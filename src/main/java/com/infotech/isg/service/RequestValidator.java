@@ -100,7 +100,8 @@ public abstract class RequestValidator {
             return ErrorCodes.OK;
         }
 
-        if (transaction.getResNum() != orderId) {
+        if (!((transaction.getResNum() != null)
+              && transaction.getResNum().equals(orderId))) {
             // possible fraud
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
@@ -108,24 +109,24 @@ public abstract class RequestValidator {
         if (!((transaction.getProvider() == operatorId)
               && (transaction.getAmount() == amount)
               && (transaction.getChannel() == channel)
-              && (transaction.getConsumer() == consumer)
-              && (transaction.getCustomerIp() == customerIp))) {
+              && ((transaction.getConsumer() != null) && (transaction.getConsumer().equals(consumer)))
+              && ((transaction.getCustomerIp() != null) && (transaction.getCustomerIp().equals(customerIp))))) {
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 
-        if ((transaction.getStatus() == null)
-            || (transaction.getStatus().intValue() != 1)
-            || (transaction.getOperatorResponseCode() == 0)
-            || (transaction.getOperatorResponseCode().intValue() != 0)) {
-            return ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE;
+        if (!((transaction.getStatus() != null)
+              && (transaction.getStatus() == 1)
+              && (transaction.getOperatorResponseCode() != null)
+              && (transaction.getOperatorResponseCode() == 0))) {
+            return ErrorCodes.TRANSACTION_ALREADY_FAILED;
         }
 
-        if ((transaction.getStf() != null) && (transaction.getStf().intValue() == 1)) {
+        if ((transaction.getStf() != null) && (transaction.getStf() == 1)) {
             return ErrorCodes.OPERATOR_SERVICE_ERROR;
         }
 
-        if ((transaction.getStf() != null) && (transaction.getStf().intValue() == 3)) {
-            return ErrorCodes.INVALID_CELL_NUMBER;
+        if ((transaction.getStf() != null) && (transaction.getStf() == 3)) {
+            return ErrorCodes.STF_ERROR;
         }
 
         return ErrorCodes.OK;

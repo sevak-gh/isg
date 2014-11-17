@@ -32,4 +32,5 @@ public class ErrorCodes {
     public static final int TRANSACTION_VERIFICATION_ERROR_DUE_TO_SOAP = -23;
     public static final int DISABLED_OPERATOR = -24;
     public static final int INVALID_OPERATOR = -25;
+    public static final int TRANSACTION_ALREADY_FAILED = -26;
 }
