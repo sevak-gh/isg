@@ -5,31 +5,24 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.ServiceActions;
-import com.infotech.isg.repository.OperatorRepository;
-import com.infotech.isg.repository.PaymentChannelRepository;
-import com.infotech.isg.repository.TransactionRepository;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 /**
-* validating service request.
+* generic service request validator.
 *
 * @author Sevak Gharibian
 */
 public abstract class RequestValidator {
 
-    protected OperatorRepository operatorRepository;
-    protected PaymentChannelRepository paymentChannelRepository;
-    protected TransactionRepository transactionRepository;
-    protected int operatorId;
-
-    public int validate(String action, String bankCode, int amount,
-                        int channel, String state, String bankReceipt,
-                        String orderId, String consumer, String customerIp) {
-        int result;
-
-        if ((action == null)
+    public int validateRequiredParams(String username, String password, String action,
+                                      String bankCode, int amount, int channel,
+                                      String state, String bankReceipt, String orderId,
+                                      String consumer, String customerIp) {
+        if ((username == null)
+            || (password == null)
+            || (action == null)
             || (bankCode == null)
             || (state == null)
             || (bankReceipt == null)
@@ -42,43 +35,6 @@ public abstract class RequestValidator {
             || (consumer.isEmpty())
             || (customerIp.isEmpty())) {
             return ErrorCodes.INSUFFICIENT_PARAMETERS;
-        }
-
-        result = validateAction(action);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        result = validateAmount(amount);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        result = validateCellNumber(consumer);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        result = validateBankCode(bankCode);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        result = validateOperator(operatorId);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        result = validatePaymentChannel(channel);
-        if (result != ErrorCodes.OK) {
-            return result;
-        }
-
-        // TODO client id
-        result = validateTransaction(bankReceipt, bankCode, 0 /*client.getId()*/, orderId, amount,
-                                     channel, consumer, customerIp);
-        if (result != ErrorCodes.OK) {
-            return result;
         }
 
         return ErrorCodes.OK;
@@ -111,8 +67,7 @@ public abstract class RequestValidator {
         return (BankCodes.isCodeExist(bankCode)) ? ErrorCodes.OK : ErrorCodes.INVALID_BANK_CODE;
     }
 
-    public int validateOperator(int operatorId) {
-        Operator operator = operatorRepository.findById(operatorId);
+    public int validateOperator(Operator operator) {
         if (operator == null) {
             return ErrorCodes.INVALID_OPERATOR;
         }
@@ -122,8 +77,7 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    public int validatePaymentChannel(int channelId) {
-        PaymentChannel channel = paymentChannelRepository.findById(Integer.toString(channelId));
+    public int validatePaymentChannel(PaymentChannel channel) {
         if (channel == null) {
             return ErrorCodes.INVALID_PAYMENT_CHANNEL;
         }
@@ -133,10 +87,18 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    public int validateTransaction(String refNum, String bankCode, int clientId,
-                                   String orderId, int amount, int channel,
+    // refnum -> bankReceipt
+    // consumer -> cellnumber
+    /**
+    * checks duplicate transactions.
+    */
+    public int validateTransaction(Transaction transaction, String orderId,
+                                   int operatorId, int amount, int channel,
                                    String consumer, String customerIp) {
-        Transaction transaction = transactionRepository.findByRefNumBankCodeClientId(refNum, bankCode, clientId);
+
+        if (transaction == null) {
+            return ErrorCodes.OK;
+        }
 
         if (transaction.getResNum() != orderId) {
             // possible fraud

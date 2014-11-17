@@ -32,7 +32,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public Client findByUsername(String username) {
         Client client = null;
-        String sql = "select id, client, pin, active from info_topup_clients where client = ?";
+        String sql = "select id, client, pin, active, vendor from info_topup_clients where client = ?";
         try {
             client = jdbcTemplate.queryForObject(sql, new Object[] {username}, new ClientRowMapper());
         } catch (EmptyResultDataAccessException e) {
@@ -56,6 +56,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             client.setUsername(rs.getString("client"));
             client.setPassword(rs.getString("pin"));
             client.setIsActive(((rs.getString("active").compareToIgnoreCase("Y") == 0) ? true : false));
+            client.setVendor(rs.getString("vendor"));
             return client;
         }
     }

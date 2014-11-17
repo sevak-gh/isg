@@ -2,7 +2,6 @@ package com.infotech.isg.service;
 
 import com.infotech.isg.domain.*;
 import com.infotech.isg.service.*;
-import com.infotech.isg.repository.*;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,14 +16,10 @@ import org.testng.annotations.DataProvider;
 public class RequestValidatorMTNTest {
 
     private RequestValidator requestValidator;
-    private OperatorRepository operatorRepository;
-    private PaymentChannelRepository paymentChannelRepository;
-    private TransactionRepository transactionRepository;
 
     @BeforeClass
     public void setUp() {
-        requestValidator = new RequestValidatorMTN(operatorRepository, paymentChannelRepository,
-                transactionRepository);
+        requestValidator = new RequestValidatorMTN();
     }
 
     @DataProvider(name = "provideAmounts")
