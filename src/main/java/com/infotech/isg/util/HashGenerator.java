@@ -28,4 +28,23 @@ public class HashGenerator {
         }
         return sb.toString();
     }
+
+    public static String getMD5(String input) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        byte[] hash = md.digest(input.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for (Byte b : hash) {
+            String hex = Integer.toHexString(b & 0xff);
+            if (hex.length() == 1) {
+                sb.append("0");
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
+    }
 }

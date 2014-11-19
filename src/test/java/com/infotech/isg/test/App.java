@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.infotech.isg.domain.*;
 import com.infotech.isg.repository.*;
 import com.infotech.isg.repository.jdbc.*;
+import com.infotech.isg.proxy.*;
 
 /**
 * app for testing container-less
@@ -23,6 +24,10 @@ public class App {
 
     private void go() {
         System.out.println("isg test app...");
+
+        MCIService  mciService = new MCIServiceImpl("http://10.20.8.120:4001/service.asmx");
+        //System.out.println(mciService.getToken());
+        mciService.recharge("token", "root", "111111", "09125067064", 20000, 123456789);
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
