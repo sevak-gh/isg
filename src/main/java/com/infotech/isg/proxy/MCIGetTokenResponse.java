@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlValue;
 
 /**
-* representing GetToken response object
+* representing GetToken response object.
 *
 * @author SEvak Gahribian
 */
-@XmlRootElement(name = "GetTokenResponse")
+@XmlRootElement(name = "GetTokenResult")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MCIGetTokenResponse {
     @XmlValue

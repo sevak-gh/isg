@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 *
 * @author Sevak Gharibian
 */
-@XmlRootElement(name = "RechargeResponse")
+@XmlRootElement(name = "RechargeResult")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MCIRechargeResponse {
 
