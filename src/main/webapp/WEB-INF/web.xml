@@ -17,6 +17,11 @@
         <servlet-name>jaxws-servlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext.xml</param-value>
+    </context-param>
  
     <!-- Register Spring Listener -->
     <listener>

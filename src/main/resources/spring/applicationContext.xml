@@ -22,5 +22,11 @@
 
     <aop:aspectj-autoproxy />
 
+    <wss:binding url="/">
+        <wss:service>
+            <ws:service bean="#ISGWS"/>
+        </wss:service>
+    </wss:binding>
+
 </beans>
 
