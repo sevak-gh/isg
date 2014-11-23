@@ -16,12 +16,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 /**
-* jdbc implementation of Client repository
+* jdbc implementation for Client repository.
 *
 * @author Sevak Gharibian
 */
-@Repository("ClientRepositoryJdbc")
-public class ClientRepositoryImpl implements ClientRepository {
+@Repository("JdbcClientRepository")
+public class JdbcClientRepositoryImpl implements ClientRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired

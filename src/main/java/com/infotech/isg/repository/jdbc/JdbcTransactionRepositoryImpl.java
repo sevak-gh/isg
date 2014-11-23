@@ -16,12 +16,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 /**
-* jdbc implementation of Transaction repository
+* jdbc implementation for Transaction repository.
 *
 * @author Sevak Gharibian
 */
-@Repository("TransactionRepositoryJdbc")
-public class TransactionRepositoryImpl implements TransactionRepository {
+@Repository("JdbcTransactionRepository")
+public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired

@@ -16,12 +16,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 /**
-* jdbc implementation of Operator repository
+* jdbc implementation for Operator repository.
 *
 * @author Sevak Gharibian
 */
-@Repository("OperatorRepositoryJdbc")
-public class OperatorRepositoryImpl implements OperatorRepository {
+@Repository("JdbcOperatorRepository")
+public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired

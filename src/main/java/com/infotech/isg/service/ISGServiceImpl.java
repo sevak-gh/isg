@@ -14,7 +14,8 @@ public class ISGServiceImpl implements ISGService {
                                   String bankCode, int amount,
                                   int channel, String state,
                                   String bankReceipt, String orderId,
-                                  String consumer, String customerIp) {
+                                  String consumer, String customerIp,
+                                  String remoteIp) {
         //TODO to be completed
         return new ISGServiceResponse() {
             {

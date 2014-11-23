@@ -127,7 +127,7 @@ public class MCIProxyImpl implements MCIProxy {
 
     @Override
     public MCIProxyRechargeResponse recharge(String token, String username, String password,
-                                             String consumer, int amount, long trId) {
+            String consumer, int amount, long trId) {
 
         // create empty soap request
         SOAPMessage request = createSOAPRequest(SOAPACTION_RECHARGE);

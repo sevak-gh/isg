@@ -8,5 +8,5 @@ package com.infotech.isg.proxy;
 public interface MCIProxy {
     public MCIProxyGetTokenResponse getToken();
     public MCIProxyRechargeResponse recharge(String token, String username, String password,
-                                             String consumer, int amount, long trId);
+            String consumer, int amount, long trId);
 }

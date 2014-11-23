@@ -71,6 +71,7 @@ public class ISGWS {
                                   @WebParam(name = "customerip") String customerIp) {
 
         return isgService.mci(username, password, bankCode, amount, channel,
-                              state, bankReceipt, orderId, consumer, customerIp);
+                              state, bankReceipt, orderId, consumer, customerIp,
+                              getClientIp());
     }
 }
