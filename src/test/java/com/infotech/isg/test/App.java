@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.infotech.isg.domain.*;
 import com.infotech.isg.repository.*;
 import com.infotech.isg.repository.jdbc.*;
-import com.infotech.isg.proxy.*;
+import com.infotech.isg.proxy.mci.*;
 
 /**
 * app for testing container-less
@@ -25,7 +25,7 @@ public class App {
     private void go() {
         System.out.println("isg test app...");
 
-        MCIService  mciService = new MCIServiceImpl("http://10.20.8.120:4001/service.asmx");
+        MCIProxy  mciService = new MCIProxyImpl("http://10.20.8.120:4001/service.asmx");
         //System.out.println(mciService.getToken());
         mciService.recharge("token", "root", "111111", "09125067064", 20000, 123456789);
 
@@ -34,7 +34,7 @@ public class App {
         System.out.println("press enter to continue....");
         System.console().readLine();
 
-        ClientRepository clientRepo = context.getBean("ClientRepositoryJdbc", ClientRepository.class);
+        ClientRepository clientRepo = context.getBean("JdbcClientRepository", ClientRepository.class);
         Client client = clientRepo.findByUsername("test");
         System.out.println("id: " + Integer.toString(client.getId()));
         System.out.println("username: " + client.getUsername());
@@ -46,7 +46,7 @@ public class App {
             System.out.println(ip);
         }
 
-        TransactionRepository transactionRepo = context.getBean("TransactionRepositoryJdbc", TransactionRepository.class);
+        TransactionRepository transactionRepo = context.getBean("JdbcTransactionRepository", TransactionRepository.class);
         Transaction transaction = null;
         /*
         transaction = new Transaction();

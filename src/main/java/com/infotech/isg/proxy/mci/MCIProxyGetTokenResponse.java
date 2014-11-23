@@ -1,4 +1,4 @@
-package com.infotech.isg.proxy;
+package com.infotech.isg.proxy.mci;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessorType;

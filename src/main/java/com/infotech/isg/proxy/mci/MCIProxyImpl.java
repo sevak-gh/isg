@@ -1,4 +1,4 @@
-package com.infotech.isg.proxy;
+package com.infotech.isg.proxy.mci;
 
 import com.infotech.isg.service.ErrorCodes;
 import com.infotech.isg.service.ISGException;
