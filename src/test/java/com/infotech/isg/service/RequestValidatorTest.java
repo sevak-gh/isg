@@ -22,7 +22,7 @@ public class RequestValidatorTest {
 
     @BeforeClass
     public void setUp() {
-        requestValidator = new RequestValidatorMCI();
+        requestValidator = new MCIRequestValidator();
     }
 
     @DataProvider(name = "provideAmounts")

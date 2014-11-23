@@ -29,6 +29,15 @@ public class ISGServiceResponse {
         return status;
     }
 
+    public ISGServiceResponse() {
+    }
+
+    public ISGServiceResponse(String status, int isgDoc, String oprDoc) {
+        this.status = status;
+        this.isgDoc = isgDoc;
+        this.oprDoc = oprDoc;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }

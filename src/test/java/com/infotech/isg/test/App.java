@@ -25,9 +25,11 @@ public class App {
     private void go() {
         System.out.println("isg test app...");
 
+        /*
         MCIProxy  mciService = new MCIProxyImpl("http://10.20.8.120:4001/service.asmx");
         //System.out.println(mciService.getToken());
         mciService.recharge("token", "root", "111111", "09125067064", 20000, 123456789);
+        */
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
 
@@ -48,7 +50,6 @@ public class App {
 
         TransactionRepository transactionRepo = context.getBean("JdbcTransactionRepository", TransactionRepository.class);
         Transaction transaction = null;
-        /*
         transaction = new Transaction();
         transaction.setProvider(Operator.MCI_ID);
         transaction.setAction(ServiceActions.TOP_UP);
@@ -67,13 +68,16 @@ public class App {
         transaction.setBankVerify(new Integer(10000));
         transaction.setVerifyDateTime(new Date());
         transactionRepo.create(transaction);
-        */
-        transaction = transactionRepo.findByRefNumBankCodeClientId("ref123456", BankCodes.SAMAN, 3);
-        if (transaction != null) {
-            System.out.println(String.format("transaction[%d]:%s,%s,%d,%d,%s", transaction.getId(),
-                                             transaction.getRefNum(), transaction.getResNum(),
-                                             transaction.getProvider(), transaction.getAction(),
-                                             transaction.getRemoteIp()));
+        System.out.println(String.format("transaction %d created", transaction.getId()));
+
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId("ref12345699", BankCodes.SAMAN, 3);
+        if (transactions != null) {
+            for (Transaction tr : transactions) {
+                System.out.println(String.format("transaction[%d]:%s,%s,%d,%d,%s", tr.getId(),
+                                                 tr.getRefNum(), tr.getResNum(),
+                                                 tr.getProvider(), tr.getAction(),
+                                                 tr.getRemoteIp()));
+            }
         } else {
             System.out.println("transaction not found!");
         }

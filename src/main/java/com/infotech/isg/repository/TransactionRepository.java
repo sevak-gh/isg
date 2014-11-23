@@ -1,5 +1,7 @@
 package com.infotech.isg.repository;
 
+import java.util.List;
+
 import com.infotech.isg.domain.Transaction;
 
 /**
@@ -8,7 +10,7 @@ import com.infotech.isg.domain.Transaction;
 * @author Sevak Gharibian
 */
 public interface TransactionRepository {
-    public Transaction findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId);
+    public List<Transaction> findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId);
     public void create(Transaction transaction);
     public void update(Transaction transaction);
 }

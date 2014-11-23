@@ -87,8 +87,6 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    // refnum -> bankReceipt
-    // consumer -> cellnumber
     /**
     * checks duplicate transactions.
     */
