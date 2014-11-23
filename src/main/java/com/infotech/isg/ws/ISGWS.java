@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* provides ISG services through XML Web service.
+* publishes ISG service endpoint through XML Web service.
 *
 * @author Sevak Gharibian
 */
@@ -54,7 +54,7 @@ public class ISGWS {
     }
 
     /**
-    * represents MCI services.
+    * represents MCI service.
     *
     */
     @WebMethod(operationName = "MCI", action = "urn:TopUpWSDL/MCI")

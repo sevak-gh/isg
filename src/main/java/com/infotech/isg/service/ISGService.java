@@ -1,7 +1,7 @@
 package com.infotech.isg.service;
 
 /**
-* provies ISG serive main functionalities.
+* provides ISG serive main functionalities.
 *
 * @atuhor Sevak Gahribian
 */
