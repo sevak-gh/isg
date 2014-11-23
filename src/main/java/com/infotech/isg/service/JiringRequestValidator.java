@@ -5,5 +5,5 @@ package com.infotech.isg.service;
 *
 * @author Sevak Gharibian
 */
-public class RequestValidatorJiring extends RequestValidator {
+public class JiringRequestValidator extends RequestValidator {
 }

@@ -5,5 +5,5 @@ package com.infotech.isg.service;
 *
 * @author Sevak Gharibian
 */
-public class RequestValidatorMCI extends RequestValidator {
+public class MCIRequestValidator extends RequestValidator {
 }

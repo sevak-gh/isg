@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 *
 * @author Sevak Gharibian
 */
-public class RequestValidatorMTN extends RequestValidator {
+public class MTNRequestValidator extends RequestValidator {
 
     @Override
     public int validateAmount(int amount) {
