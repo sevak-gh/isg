@@ -17,4 +17,8 @@ public class ISGException extends RuntimeException {
         super(message, cause);
         this.code = code;
     }
+
+    public int getErrorCode() {
+        return code;
+    }
 }

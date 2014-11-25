@@ -20,7 +20,7 @@ public class ISGServiceResponse {
     private String status;
 
     @XmlElement(name = "ISGDoc")
-    private int isgDoc;
+    private long isgDoc;
 
     @XmlElement(name = "oprDoc")
     private String oprDoc;
@@ -32,7 +32,7 @@ public class ISGServiceResponse {
     public ISGServiceResponse() {
     }
 
-    public ISGServiceResponse(String status, int isgDoc, String oprDoc) {
+    public ISGServiceResponse(String status, long isgDoc, String oprDoc) {
         this.status = status;
         this.isgDoc = isgDoc;
         this.oprDoc = oprDoc;
@@ -42,11 +42,11 @@ public class ISGServiceResponse {
         this.status = status;
     }
 
-    public int getISGDoc() {
+    public long getISGDoc() {
         return isgDoc;
     }
 
-    public void setISGDoc(int isgDoc) {
+    public void setISGDoc(long isgDoc) {
         this.isgDoc = isgDoc;
     }
 

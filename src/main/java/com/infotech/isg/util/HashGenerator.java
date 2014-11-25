@@ -15,7 +15,7 @@ public class HashGenerator {
         try {
             md = MessageDigest.getInstance("SHA-512");
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException("SHA-512 digest error", e);
         }
         byte[] hash = md.digest(input.getBytes());
         StringBuilder sb = new StringBuilder();
@@ -34,7 +34,7 @@ public class HashGenerator {
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException("MD5 digest error", e);
         }
         byte[] hash = md.digest(input.getBytes());
         StringBuilder sb = new StringBuilder();

@@ -14,8 +14,5 @@
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-
-    <context:property-placeholder location="classpath:spring/database.properties"/>
-
 </beans>
 

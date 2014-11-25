@@ -26,20 +26,47 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.JAXBException;
 
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Required;
+
 /**
 * implementation for MCI proxy.
 *
 * @author Sevak Gharibian
 */
+@Component("MCIProxy")
 public class MCIProxyImpl implements MCIProxy {
 
+    @Value("${mci.url}")
     private String url;
-    private static final String NAMESPACE = "http:/10.20.8.210:4001/";
-    private static final String SOAPACTION_GETTOKEN = "http://10.20.8.210:4001/GetToken";
-    private static final String SOAPACTION_RECHARGE = "http://10.20.8.210:4001/Recharge";
+    
+    @Value("${mci.username}")
+    private String username;
 
-    public MCIProxyImpl(String url) {
+    @Value("${mci.password}")
+    private String password;
+
+    @Value("${mci.namespace}")
+    private String namespace;
+
+    private static final String SOAPACTION_GETTOKEN = "GetToken";
+    private static final String SOAPACTION_RECHARGE = "Recharge";
+
+    public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 
     /**
@@ -50,12 +77,12 @@ public class MCIProxyImpl implements MCIProxy {
         try {
             request = MessageFactory.newInstance().createMessage();
             SOAPEnvelope envelope = request.getSOAPPart().getEnvelope();
-            envelope.addNamespaceDeclaration("ns", NAMESPACE);
+            envelope.addNamespaceDeclaration("ns", namespace);
             SOAPBody body = request.getSOAPBody();
             request.getMimeHeaders().addHeader("SOAPAction", soapAction);
             request.saveChanges();
         } catch (SOAPException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("soap request creation error", e);
         }
         return request;
     }
@@ -71,15 +98,15 @@ public class MCIProxyImpl implements MCIProxy {
             URL endpoint = new URL(url);
             response = cnn.call(request, endpoint);
         } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE, "operator service not available", e);
+            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "operator service connection/send/receive error", e);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("malformed URL for soap connection", e);
         } finally {
             if (cnn != null) {
                 try {
                     cnn.close();
                 } catch (SOAPException e) {
-                    throw new RuntimeException(e);
+                    //TODO just log this, do not throw
                 }
             }
         }
@@ -94,15 +121,15 @@ public class MCIProxyImpl implements MCIProxy {
         T result = null;
         try {
             SOAPBody responseBody = response.getSOAPBody();
-            Iterator iterator = responseBody.getChildElements(new QName(NAMESPACE, tagName, "ns"));
+            Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
             SOAPBodyElement element = (SOAPBodyElement)iterator.next();
             JAXBContext jaxbContext = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();
         } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "operator service error");
+            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response error");
         } catch (JAXBException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "operator service error");
+            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body content unmarshalling error");
         }
 
         return result;
@@ -112,7 +139,7 @@ public class MCIProxyImpl implements MCIProxy {
     public MCIProxyGetTokenResponse getToken() {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(SOAPACTION_GETTOKEN);
+        SOAPMessage request = createSOAPRequest(url + SOAPACTION_GETTOKEN);
 
         // add request body/header
 
@@ -126,35 +153,35 @@ public class MCIProxyImpl implements MCIProxy {
     }
 
     @Override
-    public MCIProxyRechargeResponse recharge(String token, String username, String password,
-            String consumer, int amount, long trId) {
+    public MCIProxyRechargeResponse recharge(String token, String consumer, 
+                                                int amount, long trId) {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(SOAPACTION_RECHARGE);
+        SOAPMessage request = createSOAPRequest(url + SOAPACTION_RECHARGE);
 
         // add request body/header
         try {
             request.getMimeHeaders().addHeader("SOAPAction", SOAPACTION_RECHARGE);
             SOAPHeader header = request.getSOAPHeader();
-            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(NAMESPACE, "AuthHeader", "ns"));
-            SOAPElement usernameElement = headerElement.addChildElement(new QName(NAMESPACE, "UserName", "ns"));
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
             usernameElement.setValue(username);
-            SOAPElement passwordElement = headerElement.addChildElement(new QName(NAMESPACE, "Password", "ns"));
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
             String combination = username.toUpperCase() + "|" + password + "|" + token;
             passwordElement.setValue(HashGenerator.getMD5(combination));
             SOAPBody body = request.getSOAPBody();
-            SOAPBodyElement bodyElement = body.addBodyElement(new QName(NAMESPACE, "Recharge", "ns"));
-            SOAPElement element = bodyElement.addChildElement(new QName(NAMESPACE, "BrokerID", "ns"));
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, "Recharge", "ns"));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
             element.addTextNode(username);
-            element = bodyElement.addChildElement(new QName(NAMESPACE, "MobileNumber", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", "ns"));
             element.addTextNode(consumer);
-            element = bodyElement.addChildElement(new QName(NAMESPACE, "CardAmount", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", "ns"));
             element.addTextNode(Integer.toString(amount));
-            element = bodyElement.addChildElement(new QName(NAMESPACE, "TransactionID", "ns"));
+            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", "ns"));
             element.addTextNode("MCI" + Long.toString(trId));
             request.saveChanges();
         } catch (SOAPException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("soap extended request creation error", e);
         }
 
         // send message and get response

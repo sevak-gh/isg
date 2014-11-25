@@ -11,6 +11,9 @@ import com.infotech.isg.repository.*;
 import com.infotech.isg.repository.jdbc.*;
 import com.infotech.isg.proxy.mci.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
 * app for testing container-less
 *
@@ -23,7 +26,13 @@ public class App {
     }
 
     private void go() {
-        System.out.println("isg test app...");
+
+        Logger monitor = LoggerFactory.getLogger("monitor");
+        monitor.debug("monitoring information...");
+        monitor.debug("\033[32m OK \033[0m");
+        monitor.debug("\033[31m NOK \033[0m");
+
+        System.out.println("\033[33misg test app...\033[0m");
 
         /*
         MCIProxy  mciService = new MCIProxyImpl("http://10.20.8.120:4001/service.asmx");
