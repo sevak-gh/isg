@@ -87,7 +87,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                     ps.setLong(7, transaction.getRevNum());
                 } else {
                     ps.setNull(7, java.sql.Types.BIGINT);
-                } 
+                }
                 ps.setString(8, transaction.getRemoteIp());
                 ps.setLong(9, transaction.getAmount());
                 ps.setInt(10, transaction.getChannel());
@@ -102,7 +102,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                     ps.setNull(16, java.sql.Types.INTEGER);
                 }
                 if (transaction.getVerifyDateTime() != null) {
-                   ps.setTimestamp(17, new Timestamp(transaction.getVerifyDateTime().getTime()));
+                    ps.setTimestamp(17, new Timestamp(transaction.getVerifyDateTime().getTime()));
                 } else {
                     ps.setNull(17, java.sql.Types.TIMESTAMP);
                 }
@@ -130,7 +130,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                     ps.setNull(24, java.sql.Types.TINYINT);
                 }
                 if (transaction.getStfResult() != null) {
-                    ps.setInt(25, transaction.getStfResult());               
+                    ps.setInt(25, transaction.getStfResult());
                 } else {
                     ps.setNull(25, java.sql.Types.TINYINT);
                 }

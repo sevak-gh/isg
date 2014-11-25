@@ -27,7 +27,7 @@ public class ExceptionHandler {
         Object result = null;
         logger.debug("before running service...");
         try {
-            result = joinPoint.proceed();        
+            result = joinPoint.proceed();
         } catch (RuntimeException e) {
             logger.error(e.getMessage());
             return new ISGServiceResponse("ERROR", ErrorCodes.INTERNAL_SYSTEM_ERROR, "");

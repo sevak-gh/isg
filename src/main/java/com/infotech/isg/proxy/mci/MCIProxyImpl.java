@@ -40,7 +40,7 @@ public class MCIProxyImpl implements MCIProxy {
 
     @Value("${mci.url}")
     private String url;
-    
+
     @Value("${mci.username}")
     private String username;
 
@@ -153,8 +153,8 @@ public class MCIProxyImpl implements MCIProxy {
     }
 
     @Override
-    public MCIProxyRechargeResponse recharge(String token, String consumer, 
-                                                int amount, long trId) {
+    public MCIProxyRechargeResponse recharge(String token, String consumer,
+            int amount, long trId) {
 
         // create empty soap request
         SOAPMessage request = createSOAPRequest(url + SOAPACTION_RECHARGE);

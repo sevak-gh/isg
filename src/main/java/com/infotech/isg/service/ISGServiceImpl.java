@@ -76,9 +76,9 @@ public class ISGServiceImpl implements ISGService {
 
         // check for required params
         errorCode = validator.validateRequiredParams(username, password, "top-up",
-                                                       bankCode, amount, channel,
-                                                       state, bankReceipt, orderId,
-                                                       consumer, customerIp);
+                    bankCode, amount, channel,
+                    state, bankReceipt, orderId,
+                    consumer, customerIp);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
@@ -113,25 +113,25 @@ public class ISGServiceImpl implements ISGService {
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
-    
+
         // validate payment channel
         PaymentChannel paymentChannel = paymentChannelRepository.findById(Integer.toString(channel));
         errorCode = validator.validatePaymentChannel(paymentChannel);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
-        
+
         // validate if transaction is duplicate
         List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
         for (Transaction transaction : transactions) {
             errorCode = validator.validateTransaction(transaction, orderId,
-                                                        operatorId, amount, channel,
-                                                        consumer, customerIp);
+                        operatorId, amount, channel,
+                        consumer, customerIp);
             if (errorCode != ErrorCodes.OK) {
                 return new ISGServiceResponse("ERROR", errorCode, null);
             }
         }
-        
+
         // register ongoing transaction
         Transaction transaction = new Transaction();
         transaction.setProvider(operatorId);
@@ -150,7 +150,7 @@ public class ISGServiceImpl implements ISGService {
         transaction.setStatus(-1);
         transaction.setBankVerify(amount);
         transaction.setVerifyDateTime(new Date());
-        transactionRepository.create(transaction);        
+        transactionRepository.create(transaction);
 
         // get token from MCI
         MCIProxyGetTokenResponse getTokenResponse = mciProxy.getToken();
@@ -162,10 +162,10 @@ public class ISGServiceImpl implements ISGService {
         // request MCI to recharge
         MCIProxyRechargeResponse rechargeResponse = null;
         try {
-            rechargeResponse =  mciProxy.recharge(token, 
-                                                    consumer, 
-                                                    amount, 
-                                                    transaction.getId());
+            rechargeResponse =  mciProxy.recharge(token,
+                                                  consumer,
+                                                  amount,
+                                                  transaction.getId());
         } catch (ISGException e) {
             // something failed, set for STF
             transaction.setStf(1);
@@ -178,9 +178,9 @@ public class ISGServiceImpl implements ISGService {
 
         // check recharge response
         if ((rechargeResponse == null)
-                || (rechargeResponse.getResponse() == null)
-                || (rechargeResponse.getResponse().size() < 2)
-                || (rechargeResponse.getCode() == null)) {
+            || (rechargeResponse.getResponse() == null)
+            || (rechargeResponse.getResponse().size() < 2)
+            || (rechargeResponse.getCode() == null)) {
             // invalid response, set for STF
             transaction.setStf(1);
             transaction.setStfResult(0);
@@ -188,14 +188,14 @@ public class ISGServiceImpl implements ISGService {
             transactionRepository.update(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
- 
+
         if (!rechargeResponse.getCode().equalsIgnoreCase("0")) {
             // recharge was not successful
-            transaction.setStatus(-1);                
+            transaction.setStatus(-1);
             transaction.setOperatorDateTime(new Date());
             transaction.setOperatorResponseCode(Integer.valueOf(rechargeResponse.getCode()));
             transaction.setOperatorResponse(rechargeResponse.getDetail());
-            transaction.setToken(token);    
+            transaction.setToken(token);
             transaction.setOperatorTId(rechargeResponse.getDetail());
             transactionRepository.update(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE, null);
@@ -203,11 +203,11 @@ public class ISGServiceImpl implements ISGService {
         }
 
         // recharge was successful, OK
-        transaction.setStatus(1);                
+        transaction.setStatus(1);
         transaction.setOperatorDateTime(new Date());
         transaction.setOperatorResponseCode(Integer.valueOf(rechargeResponse.getCode()));
         transaction.setOperatorResponse(rechargeResponse.getDetail());
-        transaction.setToken(token);    
+        transaction.setToken(token);
         transaction.setOperatorTId(rechargeResponse.getDetail());
         transactionRepository.update(transaction);
         return new ISGServiceResponse("OK", transaction.getId(), rechargeResponse.getDetail());
