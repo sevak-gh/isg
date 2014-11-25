@@ -186,6 +186,20 @@
 
     <build>  
         <finalName>isg</finalName>
+
+        <!-- 
+             exclude isg.ini from package
+             to be deployed in external location in filesystem such as /etc/isg/isg.ini
+        -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                    <excludes>
+                        <exclude>isg.ini</exclude>
+                    </excludes>
+            </resource>
+        </resources>
+
         <plugins>
 
             <plugin>
