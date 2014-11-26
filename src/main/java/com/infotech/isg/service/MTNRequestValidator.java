@@ -3,11 +3,14 @@ package com.infotech.isg.service;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import org.springframework.stereotype.Component;
+
 /**
 * validating MTN service request.
 *
 * @author Sevak Gharibian
 */
+@Component("MTNValidator")
 public class MTNRequestValidator extends RequestValidator {
 
     @Override

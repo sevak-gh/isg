@@ -106,7 +106,7 @@ public class MCIProxyImpl implements MCIProxy {
                 try {
                     cnn.close();
                 } catch (SOAPException e) {
-                    //TODO just log this, do not throw
+                    //TODO: just log this, do not throw
                 }
             }
         }

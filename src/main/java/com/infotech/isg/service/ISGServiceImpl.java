@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
+import javax.annotation.Resource;
 
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
@@ -35,23 +36,26 @@ public class ISGServiceImpl implements ISGService {
     private PaymentChannelRepository paymentChannelRepository;
     private TransactionRepository transactionRepository;
     private MCIProxy mciProxy;
+    private RequestValidator mciValidator;
+    private RequestValidator mtnValidator;
+    private RequestValidator jiringValidator;
 
     @Autowired
     public void setAccesControl(AccessControl accessControl) {
         this.accessControl = accessControl;
     }
 
-    @Autowired
+    @Resource(name = "JdbcOperatorRepository")
     public void setOperatorRepository(OperatorRepository operatorRepository) {
         this.operatorRepository = operatorRepository;
     }
 
-    @Autowired
+    @Resource(name = "JdbcPaymentChannelRepository")
     public void setPaymentChannelRepository(PaymentChannelRepository paymentChannelRepository) {
         this.paymentChannelRepository = paymentChannelRepository;
     }
 
-    @Autowired
+    @Resource(name = "JdbcTransactionRepository")
     public void setTransactionRepository(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
@@ -59,6 +63,21 @@ public class ISGServiceImpl implements ISGService {
     @Autowired
     public void setMCIProxy(MCIProxy mciProxy) {
         this.mciProxy = mciProxy;
+    }
+
+    @Resource(name = "MCIValidator")
+    public void setMCIValidator(RequestValidator validator) {
+        this.mciValidator = validator;
+    }
+
+    @Resource(name = "MTNValidator")
+    public void setMTNValidator(RequestValidator validator) {
+        this.mtnValidator = validator;
+    }
+
+    @Resource(name = "JiringValidator")
+    public void setJiringValidator(RequestValidator validator) {
+        this.jiringValidator = validator;
     }
 
     @Override
@@ -69,13 +88,12 @@ public class ISGServiceImpl implements ISGService {
                                   String consumer, String customerIp,
                                   String remoteIp) {
 
-        RequestValidator validator = new MCIRequestValidator();
         int operatorId = Operator.MCI_ID;
         int action = ServiceActions.TOP_UP;
         int errorCode = ErrorCodes.OK;
 
         // check for required params
-        errorCode = validator.validateRequiredParams(username, password, "top-up",
+        errorCode = mciValidator.validateRequiredParams(username, password, "top-up",
                     bankCode, amount, channel,
                     state, bankReceipt, orderId,
                     consumer, customerIp);
@@ -84,19 +102,19 @@ public class ISGServiceImpl implements ISGService {
         }
 
         // validate amount
-        errorCode = validator.validateAmount(amount);
+        errorCode = mciValidator.validateAmount(amount);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
         // validate cell number
-        errorCode = validator.validateCellNumber(consumer);
+        errorCode = mciValidator.validateCellNumber(consumer);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
         // validate bank code
-        errorCode = validator.validateBankCode(bankCode);
+        errorCode = mciValidator.validateBankCode(bankCode);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
@@ -109,14 +127,14 @@ public class ISGServiceImpl implements ISGService {
 
         // check if this operator is valid
         Operator operator = operatorRepository.findById(operatorId);
-        errorCode = validator.validateOperator(operator);
+        errorCode = mciValidator.validateOperator(operator);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
         // validate payment channel
         PaymentChannel paymentChannel = paymentChannelRepository.findById(Integer.toString(channel));
-        errorCode = validator.validatePaymentChannel(paymentChannel);
+        errorCode = mciValidator.validatePaymentChannel(paymentChannel);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
@@ -124,7 +142,7 @@ public class ISGServiceImpl implements ISGService {
         // validate if transaction is duplicate
         List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
         for (Transaction transaction : transactions) {
-            errorCode = validator.validateTransaction(transaction, orderId,
+            errorCode = mciValidator.validateTransaction(transaction, orderId,
                         operatorId, amount, channel,
                         consumer, customerIp);
             if (errorCode != ErrorCodes.OK) {
@@ -172,7 +190,7 @@ public class ISGServiceImpl implements ISGService {
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(2);
             transactionRepository.update(transaction);
-            //TODO log exception
+            //TODO: log exception
             return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
         }
 
