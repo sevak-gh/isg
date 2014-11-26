@@ -25,7 +25,7 @@ public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepositor
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    public JdbcPaymentChannelRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

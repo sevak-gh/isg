@@ -25,7 +25,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    public JdbcOperatorRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

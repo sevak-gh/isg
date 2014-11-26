@@ -25,7 +25,7 @@ public class JdbcClientRepositoryImpl implements ClientRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    public JdbcClientRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

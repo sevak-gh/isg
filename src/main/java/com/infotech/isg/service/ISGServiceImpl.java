@@ -22,6 +22,7 @@ import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
 * ISG service implementation.
@@ -41,43 +42,22 @@ public class ISGServiceImpl implements ISGService {
     private RequestValidator jiringValidator;
 
     @Autowired
-    public void setAccessControl(AccessControl accessControl) {
+    public ISGServiceImpl(AccessControl accessControl,
+                            @Qualifier("JdbcOperatorRepository") OperatorRepository operatorRepository,
+                            @Qualifier("JdbcPaymentChannelRepository") PaymentChannelRepository paymentChannelRepository,
+                            @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
+                            MCIProxy mciProxy,
+                            @Qualifier("MCIValidator") RequestValidator mciValidator,
+                            @Qualifier("MTNValidator") RequestValidator mtnValidator,
+                            @Qualifier("JiringValidator") RequestValidator jiringValidator) {
         this.accessControl = accessControl;
-    }
-
-    @Resource(name = "JdbcOperatorRepository")
-    public void setOperatorRepository(OperatorRepository operatorRepository) {
         this.operatorRepository = operatorRepository;
-    }
-
-    @Resource(name = "JdbcPaymentChannelRepository")
-    public void setPaymentChannelRepository(PaymentChannelRepository paymentChannelRepository) {
         this.paymentChannelRepository = paymentChannelRepository;
-    }
-
-    @Resource(name = "JdbcTransactionRepository")
-    public void setTransactionRepository(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-    }
-
-    @Autowired
-    public void setMCIProxy(MCIProxy mciProxy) {
         this.mciProxy = mciProxy;
-    }
-
-    @Resource(name = "MCIValidator")
-    public void setMCIValidator(RequestValidator validator) {
-        this.mciValidator = validator;
-    }
-
-    @Resource(name = "MTNValidator")
-    public void setMTNValidator(RequestValidator validator) {
-        this.mtnValidator = validator;
-    }
-
-    @Resource(name = "JiringValidator")
-    public void setJiringValidator(RequestValidator validator) {
-        this.jiringValidator = validator;
+        this.mciValidator = mciValidator;
+        this.mtnValidator = mtnValidator;
+        this.jiringValidator = jiringValidator;
     }
 
     @Override

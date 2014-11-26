@@ -30,7 +30,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    public JdbcTransactionRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

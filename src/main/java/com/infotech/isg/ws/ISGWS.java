@@ -47,9 +47,8 @@ public class ISGWS {
         return request.getRemoteAddr();
     }
 
-    @WebMethod(exclude = true)
     @Autowired
-    public void setISGService(ISGService isgService) {
+    public ISGWS(ISGService isgService) {
         this.isgService = isgService;
     }
 
