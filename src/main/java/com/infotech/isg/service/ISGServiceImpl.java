@@ -41,7 +41,7 @@ public class ISGServiceImpl implements ISGService {
     private RequestValidator jiringValidator;
 
     @Autowired
-    public void setAccesControl(AccessControl accessControl) {
+    public void setAccessControl(AccessControl accessControl) {
         this.accessControl = accessControl;
     }
 
@@ -217,7 +217,6 @@ public class ISGServiceImpl implements ISGService {
             transaction.setOperatorTId(rechargeResponse.getDetail());
             transactionRepository.update(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE, null);
-
         }
 
         // recharge was successful, OK
