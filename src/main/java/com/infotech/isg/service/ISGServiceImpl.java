@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
-import javax.annotation.Resource;
 
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;

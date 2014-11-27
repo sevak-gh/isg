@@ -73,11 +73,7 @@ public class AccessControlTest {
             }
         };
 
-        accessControl = new AccessControlImpl() {
-            {
-                setClientRepository(clientRepository);
-            }
-        };
+        accessControl = new AccessControlImpl(clientRepository);
     }
 
     @DataProvider(name = "provideClients")

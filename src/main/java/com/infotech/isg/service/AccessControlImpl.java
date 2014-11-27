@@ -4,9 +4,9 @@ import com.infotech.isg.domain.Client;
 import com.infotech.isg.util.HashGenerator;
 import com.infotech.isg.repository.ClientRepository;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
 * performing access control logic for clients
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 @Service("AccessControl")
 public class AccessControlImpl implements AccessControl {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
     private Client client;
     private boolean isAuthenticated;
 
-    @Resource(name = "JdbcClientRepository")
-    public void setClientRepository(ClientRepository clientRepository) {
+    @Autowired
+    public AccessControlImpl(@Qualifier("JdbcClientRepository") ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
