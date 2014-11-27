@@ -30,7 +30,7 @@ public class AccessControlImpl implements AccessControl {
         if (client == null) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
-        if (!client.getPassword().equalsIgnoreCase(HashGenerator.getSHA512(password))) {
+        if (client.getPassword().compareTo(HashGenerator.getSHA512(password)) != 0) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
         if (!client.getIsActive()) {

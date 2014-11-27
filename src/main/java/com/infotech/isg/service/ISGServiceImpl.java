@@ -186,7 +186,7 @@ public class ISGServiceImpl implements ISGService {
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
 
-        if (!rechargeResponse.getCode().equalsIgnoreCase("0")) {
+        if (rechargeResponse.getCode().compareToIgnoreCase("0") != 0) {
             // recharge was not successful
             transaction.setStatus(-1);
             transaction.setOperatorDateTime(new Date());

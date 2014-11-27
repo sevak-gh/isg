@@ -99,7 +99,7 @@ public abstract class RequestValidator {
         }
 
         if (!((transaction.getResNum() != null)
-              && transaction.getResNum().equals(orderId))) {
+              && (transaction.getResNum().compareTo(orderId) == 0))) {
             // possible fraud
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
@@ -107,8 +107,8 @@ public abstract class RequestValidator {
         if (!((transaction.getProvider() == operatorId)
               && (transaction.getAmount() == amount)
               && (transaction.getChannel() == channel)
-              && ((transaction.getConsumer() != null) && (transaction.getConsumer().equals(consumer)))
-              && ((transaction.getCustomerIp() != null) && (transaction.getCustomerIp().equals(customerIp))))) {
+              && ((transaction.getConsumer() != null) && (transaction.getConsumer().compareTo(consumer) == 0))
+              && ((transaction.getCustomerIp() != null) && (transaction.getCustomerIp().compareTo(customerIp) == 0)))) {
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 
