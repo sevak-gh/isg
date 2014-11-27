@@ -43,13 +43,13 @@ public class ISGServiceImpl implements ISGService {
 
     @Autowired
     public ISGServiceImpl(AccessControl accessControl,
-                            @Qualifier("JdbcOperatorRepository") OperatorRepository operatorRepository,
-                            @Qualifier("JdbcPaymentChannelRepository") PaymentChannelRepository paymentChannelRepository,
-                            @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
-                            MCIProxy mciProxy,
-                            @Qualifier("MCIValidator") RequestValidator mciValidator,
-                            @Qualifier("MTNValidator") RequestValidator mtnValidator,
-                            @Qualifier("JiringValidator") RequestValidator jiringValidator) {
+                          @Qualifier("JdbcOperatorRepository") OperatorRepository operatorRepository,
+                          @Qualifier("JdbcPaymentChannelRepository") PaymentChannelRepository paymentChannelRepository,
+                          @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
+                          MCIProxy mciProxy,
+                          @Qualifier("MCIValidator") RequestValidator mciValidator,
+                          @Qualifier("MTNValidator") RequestValidator mtnValidator,
+                          @Qualifier("JiringValidator") RequestValidator jiringValidator) {
         this.accessControl = accessControl;
         this.operatorRepository = operatorRepository;
         this.paymentChannelRepository = paymentChannelRepository;
