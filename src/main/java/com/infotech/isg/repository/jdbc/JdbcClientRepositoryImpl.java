@@ -22,7 +22,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 */
 @Repository("JdbcClientRepository")
 public class JdbcClientRepositoryImpl implements ClientRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public JdbcClientRepositoryImpl(DataSource dataSource) {

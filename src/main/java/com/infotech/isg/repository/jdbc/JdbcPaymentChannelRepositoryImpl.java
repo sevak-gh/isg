@@ -22,7 +22,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 */
 @Repository("JdbcPaymentChannelRepository")
 public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public JdbcPaymentChannelRepositoryImpl(DataSource dataSource) {

@@ -22,7 +22,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 */
 @Repository("JdbcOperatorRepository")
 public class JdbcOperatorRepositoryImpl implements OperatorRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public JdbcOperatorRepositoryImpl(DataSource dataSource) {

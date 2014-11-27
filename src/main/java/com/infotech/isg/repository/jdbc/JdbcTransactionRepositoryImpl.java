@@ -27,7 +27,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 */
 @Repository("JdbcTransactionRepository")
 public class JdbcTransactionRepositoryImpl implements TransactionRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public JdbcTransactionRepositoryImpl(DataSource dataSource) {

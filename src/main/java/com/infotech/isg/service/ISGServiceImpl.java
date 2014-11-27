@@ -31,14 +31,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @Service("ISGService")
 public class ISGServiceImpl implements ISGService {
 
-    private AccessControl accessControl;
-    private OperatorRepository operatorRepository;
-    private PaymentChannelRepository paymentChannelRepository;
-    private TransactionRepository transactionRepository;
-    private MCIProxy mciProxy;
-    private RequestValidator mciValidator;
-    private RequestValidator mtnValidator;
-    private RequestValidator jiringValidator;
+    private final AccessControl accessControl;
+    private final OperatorRepository operatorRepository;
+    private final PaymentChannelRepository paymentChannelRepository;
+    private final TransactionRepository transactionRepository;
+    private final MCIProxy mciProxy;
+    private final RequestValidator mciValidator;
+    private final RequestValidator mtnValidator;
+    private final RequestValidator jiringValidator;
 
     @Autowired
     public ISGServiceImpl(AccessControl accessControl,

@@ -36,7 +36,7 @@ public class ISGWS {
     @Resource
     private WebServiceContext context;
 
-    private ISGService isgService;
+    private final ISGService isgService;
 
     /**
     * gets client remote IP through web service context
