@@ -12,8 +12,6 @@ import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.ErrorCodes;
-import com.infotech.isg.repository.OperatorRepository;
-import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyImpl;
@@ -33,8 +31,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class ISGServiceImpl implements ISGService {
 
     private final AccessControl accessControl;
-    private final OperatorRepository operatorRepository;
-    private final PaymentChannelRepository paymentChannelRepository;
     private final TransactionRepository transactionRepository;
     private final MCIProxy mciProxy;
     private final RequestValidator mciValidator;
@@ -43,16 +39,12 @@ public class ISGServiceImpl implements ISGService {
 
     @Autowired
     public ISGServiceImpl(AccessControl accessControl,
-                          @Qualifier("JdbcOperatorRepository") OperatorRepository operatorRepository,
-                          @Qualifier("JdbcPaymentChannelRepository") PaymentChannelRepository paymentChannelRepository,
                           @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
                           MCIProxy mciProxy,
                           @Qualifier("MCIValidator") RequestValidator mciValidator,
                           @Qualifier("MTNValidator") RequestValidator mtnValidator,
                           @Qualifier("JiringValidator") RequestValidator jiringValidator) {
         this.accessControl = accessControl;
-        this.operatorRepository = operatorRepository;
-        this.paymentChannelRepository = paymentChannelRepository;
         this.transactionRepository = transactionRepository;
         this.mciProxy = mciProxy;
         this.mciValidator = mciValidator;
@@ -100,15 +92,13 @@ public class ISGServiceImpl implements ISGService {
         }
 
         // check if this operator is valid
-        Operator operator = operatorRepository.findById(operatorId);
-        errorCode = mciValidator.validateOperator(operator);
+        errorCode = mciValidator.validateOperator(operatorId);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
         // validate payment channel
-        PaymentChannel paymentChannel = paymentChannelRepository.findById(Integer.toString(channel));
-        errorCode = mciValidator.validatePaymentChannel(paymentChannel);
+        errorCode = mciValidator.validatePaymentChannel(channel);
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }

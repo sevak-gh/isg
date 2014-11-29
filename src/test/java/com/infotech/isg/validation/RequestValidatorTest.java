@@ -4,6 +4,8 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Transaction;
+import com.infotech.isg.repository.OperatorRepository;
+import com.infotech.isg.repository.PaymentChannelRepository;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -23,10 +25,45 @@ import static org.hamcrest.Matchers.is;
 public class RequestValidatorTest {
 
     private RequestValidator requestValidator;
+    private OperatorRepository operatorRepository;
+    private PaymentChannelRepository paymentChannelRepository;
 
     @BeforeClass
     public void setUp() {
-        requestValidator = new MCIRequestValidator();
+        operatorRepository = new OperatorRepository() {
+            private Map<Integer, Operator> operators = new HashMap<Integer, Operator>() {
+                {
+                    put(Operator.MCI_ID, new Operator() {{setId(Operator.MTN_ID); setName("MTN"); setIsActive(true);}});
+                    put(Operator.MTN_ID, new Operator() {{setId(Operator.MCI_ID); setName("MCI"); setIsActive(true);}});
+                    put(Operator.JIRING_ID, new Operator() {{setId(Operator.JIRING_ID); setName("JIRING"); setIsActive(false);}});
+                }
+            };
+
+            @Override
+            public Operator findById(int operatorId) {
+                return operators.get(operatorId);
+            }
+        };
+
+        paymentChannelRepository = new PaymentChannelRepository() {
+            private Map<String, PaymentChannel> channels = new HashMap<String, PaymentChannel>() {
+                {
+                    put("59", new PaymentChannel() {{setId("59"); setIsActive(true);}});
+                    put("14", new PaymentChannel() {{setId("14"); setIsActive(true);}});
+                    put("5", new PaymentChannel() {{setId("5"); setIsActive(true);}});
+                    put("25", new PaymentChannel() {{setId("25"); setIsActive(false);}});
+                    put("10", new PaymentChannel() {{setId("10"); setIsActive(true);}});
+                }
+            };
+
+            @Override
+            public PaymentChannel findById(String channelId) {
+                return channels.get(channelId);
+            }
+        };
+
+
+        requestValidator = new MCIRequestValidator(operatorRepository, paymentChannelRepository);
     }
 
     @DataProvider(name = "provideAmounts")
@@ -88,24 +125,24 @@ public class RequestValidatorTest {
     @DataProvider(name = "provideOperators")
     public Object[][] provideOperators() {
         return new Object[][] {
-            {null, ErrorCodes.INVALID_OPERATOR},
-            {new Operator() {{setId(5); setName("test2"); setIsActive(false);}}, ErrorCodes.DISABLED_OPERATOR},
-            {new Operator() {{setId(Operator.MTN_ID); setName("MTN"); setIsActive(true);}}, ErrorCodes.OK},
-            {new Operator() {{setId(Operator.MCI_ID); setName("MCI"); setIsActive(true);}}, ErrorCodes.OK},
-            {new Operator() {{setId(Operator.JIRING_ID); setName("JIRING"); setIsActive(true);}}, ErrorCodes.OK},
-            {new Operator() {{setId(4); setName("test1"); setIsActive(true);}}, ErrorCodes.OK}
+            { -1, ErrorCodes.INVALID_OPERATOR},
+            {0, ErrorCodes.INVALID_OPERATOR},
+            {Operator.JIRING_ID, ErrorCodes.DISABLED_OPERATOR},
+            {Operator.MTN_ID, ErrorCodes.OK},
+            {Operator.MCI_ID, ErrorCodes.OK}
         };
     }
 
     @DataProvider(name = "providePaymentChannels")
     public Object[][] providePaymentChannels() {
         return new Object[][] {
-            {null, ErrorCodes.INVALID_PAYMENT_CHANNEL},
-            {new PaymentChannel() {{setId("59"); setIsActive(true);}}, ErrorCodes.OK},
-            {new PaymentChannel() {{setId("14"); setIsActive(true);}}, ErrorCodes.OK},
-            {new PaymentChannel() {{setId("5"); setIsActive(true);}}, ErrorCodes.OK},
-            {new PaymentChannel() {{setId("25"); setIsActive(false);}}, ErrorCodes.DISABLED_PAYMENT_CHANNEL},
-            {new PaymentChannel() {{setId("10"); setIsActive(true);}}, ErrorCodes.OK}
+            { -1, ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {0, ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {59, ErrorCodes.OK},
+            {14, ErrorCodes.OK},
+            {5, ErrorCodes.OK},
+            {25, ErrorCodes.DISABLED_PAYMENT_CHANNEL},
+            {10, ErrorCodes.OK}
         };
     }
 
@@ -429,24 +466,24 @@ public class RequestValidatorTest {
     }
 
     @Test(dataProvider = "provideOperators")
-    public void shouldValidateOperatorReturnExpectedErrorCode(Operator operator, int errorCode) {
+    public void shouldValidateOperatorReturnExpectedErrorCode(int operatorId, int errorCode) {
         // arrange
         // different cases provided by data provider
 
         // act
-        int result = requestValidator.validateOperator(operator);
+        int result = requestValidator.validateOperator(operatorId);
 
         // assert
         assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "providePaymentChannels")
-    public void shouldValidatePaymentChannelReturnExpectedErrorCode(PaymentChannel channel, int errorCode) {
+    public void shouldValidatePaymentChannelReturnExpectedErrorCode(int channelId, int errorCode) {
         // arrange
         // different cases provided by data provider
 
         // act
-        int result = requestValidator.validatePaymentChannel(channel);
+        int result = requestValidator.validatePaymentChannel(channelId);
 
         // assert
         assertThat(result, is(errorCode));

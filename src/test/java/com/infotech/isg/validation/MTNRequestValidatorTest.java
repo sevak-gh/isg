@@ -18,7 +18,7 @@ public class MTNRequestValidatorTest {
 
     @BeforeClass
     public void setUp() {
-        requestValidator = new MTNRequestValidator();
+        requestValidator = new MTNRequestValidator(null, null);
     }
 
     @DataProvider(name = "provideAmounts")

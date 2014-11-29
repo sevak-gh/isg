@@ -5,6 +5,8 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.ServiceActions;
+import com.infotech.isg.repository.OperatorRepository;
+import com.infotech.isg.repository.PaymentChannelRepository;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -15,6 +17,14 @@ import java.util.regex.Matcher;
 * @author Sevak Gharibian
 */
 public abstract class RequestValidator {
+
+    private final OperatorRepository operatorRepository;
+    private final PaymentChannelRepository paymentChannelRepository;
+
+    protected RequestValidator(OperatorRepository operatorRepository, PaymentChannelRepository paymentChannelRepository) {
+        this.operatorRepository = operatorRepository;
+        this.paymentChannelRepository = paymentChannelRepository;
+    }
 
     public int validateRequiredParams(String username, String password, String action,
                                       String bankCode, int amount, int channel,
@@ -67,7 +77,8 @@ public abstract class RequestValidator {
         return (BankCodes.isCodeExist(bankCode)) ? ErrorCodes.OK : ErrorCodes.INVALID_BANK_CODE;
     }
 
-    public int validateOperator(Operator operator) {
+    public int validateOperator(int operatorId) {
+        Operator operator = operatorRepository.findById(operatorId);
         if (operator == null) {
             return ErrorCodes.INVALID_OPERATOR;
         }
@@ -77,7 +88,8 @@ public abstract class RequestValidator {
         return ErrorCodes.OK;
     }
 
-    public int validatePaymentChannel(PaymentChannel channel) {
+    public int validatePaymentChannel(int channelId) {
+        PaymentChannel channel = paymentChannelRepository.findById(Integer.toString(channelId));
         if (channel == null) {
             return ErrorCodes.INVALID_PAYMENT_CHANNEL;
         }

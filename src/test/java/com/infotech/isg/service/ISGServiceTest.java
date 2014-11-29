@@ -3,6 +3,7 @@ package com.infotech.isg.service;
 import java.util.Arrays;
 
 import com.infotech.isg.domain.Client;
+import com.infotech.isg.domain.Operator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.repository.TransactionRepository;
@@ -44,12 +45,6 @@ public class ISGServiceTest {
     private TransactionRepository transactionRepository;
 
     @Mock
-    private OperatorRepository operatorRepository;
-
-    @Mock
-    private PaymentChannelRepository paymentChannelRepository;
-
-    @Mock
     private RequestValidator mciValidator;
 
     @Mock
@@ -62,8 +57,8 @@ public class ISGServiceTest {
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        isgService = new ISGServiceImpl(accessControl, operatorRepository, paymentChannelRepository,
-                                        transactionRepository, mciProxy, mciValidator, mtnValidator, jiringValidator);
+        isgService = new ISGServiceImpl(accessControl, transactionRepository, mciProxy,
+                                        mciValidator, mtnValidator, jiringValidator);
     }
 
     @Test
@@ -77,8 +72,8 @@ public class ISGServiceTest {
         when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyObject())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyObject())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateTransaction(anyObject(), anyString(),
                                               anyInt(), anyInt(), anyInt(),
                                               anyString(), anyString())).thenReturn(ErrorCodes.OK);
@@ -111,8 +106,8 @@ public class ISGServiceTest {
         when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyObject())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyObject())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
         when(mciValidator.validateTransaction(anyObject(), anyString(),
                                               anyInt(), anyInt(), anyInt(),
                                               anyString(), anyString())).thenReturn(ErrorCodes.OK);
@@ -138,6 +133,7 @@ public class ISGServiceTest {
         String customer = "customer";
         String remoteIp = "ip";
         String action = "top-up";
+        int operatorId = Operator.MCI_ID;
         ISGServiceResponse response = isgService.mci(username, password, bankcode, amount,
                                       channel, state, bankReceipt, orderId,
                                       consumer, customer, remoteIp);
@@ -150,7 +146,7 @@ public class ISGServiceTest {
         verify(mciValidator).validateAmount(amount);
         verify(mciValidator).validateCellNumber(consumer);
         verify(mciValidator).validateBankCode(bankcode);
-        verify(mciValidator).validateOperator(null);
-        verify(mciValidator).validatePaymentChannel(null);
+        verify(mciValidator).validateOperator(operatorId);
+        verify(mciValidator).validatePaymentChannel(channel);
     }
 }
