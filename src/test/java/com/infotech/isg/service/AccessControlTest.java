@@ -1,16 +1,18 @@
 package com.infotech.isg.service;
 
-import com.infotech.isg.domain.*;
-import com.infotech.isg.service.*;
-import com.infotech.isg.repository.*;
+import com.infotech.isg.domain.Client;
+import com.infotech.isg.service.AccessControl;
+import com.infotech.isg.service.AccessControlImpl;
+import com.infotech.isg.repository.ClientRepository;
 
 import java.util.Map;
 import java.util.HashMap;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
 * test cases for access control.
@@ -96,7 +98,14 @@ public class AccessControlTest {
     }
 
     @Test(dataProvider = "provideClients")
-    public void testAuthenticate(String username, String password, String ip, int errorCode) {
-        Assert.assertEquals(accessControl.authenticate(username, password, ip), errorCode);
+    public void shouldAuthenticateReturnExpectedErrorNode(String username, String password, String ip, int errorCode) {
+        // arrange
+        // username,password,ip combinations and expected error codes provided through data provider
+
+        // act
+        int result = accessControl.authenticate(username, password, ip);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 }

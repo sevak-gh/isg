@@ -15,14 +15,17 @@ import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 
-import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
-import static org.mockito.Mockito.*;
-import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyObject;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
 * test cases for ISG service.
@@ -66,8 +69,9 @@ public class ISGServiceTest {
     }
 
     @Test
-    public void testMCIReturnOK() {
+    public void shouldMCIReturnOK() {
         //arrange
+        // bypass all validators
         when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
                 anyInt(), anyInt(), anyString(), anyString(),
                 anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
@@ -80,16 +84,19 @@ public class ISGServiceTest {
         when(mciValidator.validateTransaction(anyObject(), anyString(),
                                               anyInt(), anyInt(), anyInt(),
                                               anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // bypass authentication
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         when(accessControl.getClient()).thenReturn(new Client() {{setId(1);}});
+        // bypass proxy
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken("");}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
+                .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
 
         // act
         ISGServiceResponse response = isgService.mci("", "", "", 1, 1, "", "", "", "", "", "");
+        int result = (int)response.getISGDoc();
 
         // assert
-        assertEquals(response.getISGDoc(), ErrorCodes.OK);
+        assertThat(result, is(ErrorCodes.OK));
     }
 }

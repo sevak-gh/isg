@@ -1,15 +1,22 @@
 package com.infotech.isg.service;
 
-import com.infotech.isg.domain.*;
-import com.infotech.isg.service.*;
+import com.infotech.isg.domain.Operator;
+import com.infotech.isg.domain.BankCodes;
+import com.infotech.isg.domain.PaymentChannel;
+import com.infotech.isg.domain.Transaction;
+import com.infotech.isg.service.ErrorCodes;
+import com.infotech.isg.service.RequestValidator;
+import com.infotech.isg.service.MCIRequestValidator;
 
 import java.util.Map;
 import java.util.HashMap;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 
 /**
 * test cases for RequestValidator.
@@ -389,35 +396,77 @@ public class RequestValidatorTest {
     }
 
     @Test(dataProvider = "provideAmounts")
-    public void testValidateAmount(int amount, int errorCode) {
-        Assert.assertEquals(requestValidator.validateAmount(amount), errorCode);
+    public void shouldValidateAmountReturnExpectedErrorCode(int amount, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateAmount(amount);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideCellNumbers")
-    public void testValidateCellNumber(String cellNumber, int errorCode) {
-        Assert.assertEquals(requestValidator.validateCellNumber(cellNumber), errorCode);
+    public void shouldValidateCellNumberReturnExpectedErrorCode(String cellNumber, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateCellNumber(cellNumber);
+        
+        // assert            
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideBankCodes")
-    public void testValidateBankCode(String bankCode, int errorCode) {
-        Assert.assertEquals(requestValidator.validateBankCode(bankCode), errorCode);
+    public void shouldValidateBankCodeReturnExpectedErrorCode(String bankCode, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateBankCode(bankCode);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideOperators")
-    public void testValidateOperator(Operator operator, int errorCode) {
-        Assert.assertEquals(requestValidator.validateOperator(operator), errorCode);
+    public void shouldValidateOperatorReturnExpectedErrorCode(Operator operator, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateOperator(operator);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "providePaymentChannels")
-    public void testValidatePaymentChannel(PaymentChannel channel, int errorCode) {
-        Assert.assertEquals(requestValidator.validatePaymentChannel(channel), errorCode);
+    public void shouldValidatePaymentChannelReturnExpectedErrorCode(PaymentChannel channel, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validatePaymentChannel(channel);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideTransactions")
-    public void testValidateTransaction(Transaction transaction, String orderId,
+    public void shouldValidateTransactionReturnExpectedErrorCode(Transaction transaction, String orderId,
                                         int operatorId, int amount, int channel,
                                         String consumer, String customerIp, int errorCode) {
-        Assert.assertEquals(requestValidator.validateTransaction(transaction, orderId, operatorId, amount,
-                            channel, consumer, customerIp), errorCode);
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateTransaction(transaction, orderId, operatorId, amount,
+                                                            channel, consumer, customerIp);
+
+        // assert
+        assertThat(result, is(errorCode));
     }
 }

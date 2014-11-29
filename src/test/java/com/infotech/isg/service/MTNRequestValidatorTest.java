@@ -1,19 +1,22 @@
 package com.infotech.isg.service;
 
-import com.infotech.isg.domain.*;
-import com.infotech.isg.service.*;
+import com.infotech.isg.service.ErrorCodes;
+import com.infotech.isg.service.RequestValidator;
+import com.infotech.isg.service.MTNRequestValidator;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 
 /**
 * test cases for RequestValidatorMTN.
 *
 * @author Sevak Gharibian
 */
-public class RequestValidatorMTNTest {
+public class MTNRequestValidatorTest {
 
     private RequestValidator requestValidator;
 
@@ -98,17 +101,38 @@ public class RequestValidatorMTNTest {
     }
 
     @Test(dataProvider = "provideAmounts")
-    public void testValidateAmount(int amount, int errorCode) {
-        Assert.assertEquals(requestValidator.validateAmount(amount), errorCode);
+    public void shouldValidateAmountReturnExpectedErrorCode(int amount, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateAmount(amount);
+        
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideCellNumbers")
-    public void testValidateCellNumber(String cellNumber, int errorCode) {
-        Assert.assertEquals(requestValidator.validateCellNumber(cellNumber), errorCode);
+    public void shouldValidateCellNumberReturnExpectedErrorCode(String cellNumber, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateCellNumber(cellNumber);
+        
+        // assert
+        assertThat(result, is(errorCode));
     }
 
     @Test(dataProvider = "provideActions")
-    public void testValidateAction(String action, int errorCode) {
-        Assert.assertEquals(requestValidator.validateAction(action), errorCode);
+    public void shouldValidateActionReturnExpectedErrorCode(String action, int errorCode) {
+        // arrange
+        // different cases provided by data provider
+
+        // act
+        int result = requestValidator.validateAction(action);
+        
+        // assert
+        assertThat(result, is(errorCode));
     }
 }
