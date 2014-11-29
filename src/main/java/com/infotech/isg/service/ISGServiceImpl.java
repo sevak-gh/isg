@@ -98,12 +98,6 @@ public class ISGServiceImpl implements ISGService {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
-        // authenticate client
-        errorCode = accessControl.authenticate(username, password, remoteIp);
-        if (errorCode != ErrorCodes.OK) {
-            return new ISGServiceResponse("ERROR", errorCode, null);
-        }
-
         // check if this operator is valid
         Operator operator = operatorRepository.findById(operatorId);
         errorCode = mciValidator.validateOperator(operator);
@@ -118,6 +112,11 @@ public class ISGServiceImpl implements ISGService {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
 
+        // authenticate client
+        errorCode = accessControl.authenticate(username, password, remoteIp);
+        if (errorCode != ErrorCodes.OK) {
+            return new ISGServiceResponse("ERROR", errorCode, null);
+        }
         // validate if transaction is duplicate
         List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
         for (Transaction transaction : transactions) {

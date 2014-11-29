@@ -18,6 +18,7 @@ import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
@@ -93,10 +94,66 @@ public class ISGServiceTest {
         .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
 
         // act
-        ISGServiceResponse response = isgService.mci("", "", "", 1, 1, "", "", "", "", "", "");
+        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000, 
+                                                        1, "state", "receipt", "orderid", 
+                                                        "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OK));
+    }
+
+    @Test
+    public void shouldMCICallValidatorsWithRightParams() {
+        //arrange
+        // bypass all validators
+        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
+                anyInt(), anyInt(), anyString(), anyString(),
+                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateOperator(anyObject())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validatePaymentChannel(anyObject())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateTransaction(anyObject(), anyString(),
+                                              anyInt(), anyInt(), anyInt(),
+                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // bypass authentication
+        when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(accessControl.getClient()).thenReturn(new Client() {{setId(1);}});
+        //             
+        // bypass proxy
+        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken("");}});
+        when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
+        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
+
+        // act
+        String username = "username";
+        String password = "password";
+        String bankcode = "054";
+        int amount = 10000;
+        int channel = 1;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "consumer";
+        String customer = "customer";
+        String remoteIp = "ip";
+        String action = "top-up";
+        ISGServiceResponse response = isgService.mci(username, password, bankcode, amount, 
+                                                    channel, state, bankReceipt, orderId, 
+                                                    consumer, customer, remoteIp);
+        int result = (int)response.getISGDoc();
+
+        // assert
+        assertThat(result, is(ErrorCodes.OK));
+        verify(mciValidator).validateRequiredParams(username, password, action, bankcode, amount, channel,
+                                                    state, bankReceipt, orderId, consumer, customer);
+        verify(mciValidator).validateAmount(amount);
+        verify(mciValidator).validateCellNumber(consumer);
+        verify(mciValidator).validateBankCode(bankcode);
+        verify(mciValidator).validateOperator(null);
+        verify(mciValidator).validatePaymentChannel(null);
     }
 }
