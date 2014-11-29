@@ -1,6 +1,7 @@
 package com.infotech.isg.service;
 
 import com.infotech.isg.domain.Client;
+import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.util.HashGenerator;
 import com.infotech.isg.repository.ClientRepository;
 

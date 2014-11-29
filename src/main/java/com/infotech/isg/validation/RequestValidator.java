@@ -1,4 +1,4 @@
-package com.infotech.isg.service;
+package com.infotech.isg.validation;
 
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.Operator;

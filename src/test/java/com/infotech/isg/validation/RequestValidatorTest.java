@@ -1,12 +1,9 @@
-package com.infotech.isg.service;
+package com.infotech.isg.validation;
 
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Transaction;
-import com.infotech.isg.service.ErrorCodes;
-import com.infotech.isg.service.RequestValidator;
-import com.infotech.isg.service.MCIRequestValidator;
 
 import java.util.Map;
 import java.util.HashMap;

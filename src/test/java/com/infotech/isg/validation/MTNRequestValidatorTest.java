@@ -1,8 +1,4 @@
-package com.infotech.isg.service;
-
-import com.infotech.isg.service.ErrorCodes;
-import com.infotech.isg.service.RequestValidator;
-import com.infotech.isg.service.MTNRequestValidator;
+package com.infotech.isg.validation;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;

@@ -1,4 +1,4 @@
-package com.infotech.isg.service;
+package com.infotech.isg.validation;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;

@@ -1,4 +1,4 @@
-package com.infotech.isg.service;
+package com.infotech.isg.validation;
 
 /**
 * representing service error codes.

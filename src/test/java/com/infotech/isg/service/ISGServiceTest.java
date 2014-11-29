@@ -3,11 +3,8 @@ package com.infotech.isg.service;
 import java.util.Arrays;
 
 import com.infotech.isg.domain.Client;
-import com.infotech.isg.service.ErrorCodes;
-import com.infotech.isg.service.ISGService;
-import com.infotech.isg.service.ISGServiceImpl;
-import com.infotech.isg.service.ISGServiceResponse;
-import com.infotech.isg.service.RequestValidator;
+import com.infotech.isg.validation.ErrorCodes;
+import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
@@ -94,9 +91,9 @@ public class ISGServiceTest {
         .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000, 
-                                                        1, "state", "receipt", "orderid", 
-                                                        "consumer", "customer", "ip");
+        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+                                      1, "state", "receipt", "orderid",
+                                      "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
 
         // assert
@@ -122,7 +119,7 @@ public class ISGServiceTest {
         // bypass authentication
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         when(accessControl.getClient()).thenReturn(new Client() {{setId(1);}});
-        //             
+        //
         // bypass proxy
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken("");}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
@@ -141,15 +138,15 @@ public class ISGServiceTest {
         String customer = "customer";
         String remoteIp = "ip";
         String action = "top-up";
-        ISGServiceResponse response = isgService.mci(username, password, bankcode, amount, 
-                                                    channel, state, bankReceipt, orderId, 
-                                                    consumer, customer, remoteIp);
+        ISGServiceResponse response = isgService.mci(username, password, bankcode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customer, remoteIp);
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OK));
         verify(mciValidator).validateRequiredParams(username, password, action, bankcode, amount, channel,
-                                                    state, bankReceipt, orderId, consumer, customer);
+                state, bankReceipt, orderId, consumer, customer);
         verify(mciValidator).validateAmount(amount);
         verify(mciValidator).validateCellNumber(consumer);
         verify(mciValidator).validateBankCode(bankcode);

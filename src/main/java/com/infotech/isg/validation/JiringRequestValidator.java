@@ -1,4 +1,4 @@
-package com.infotech.isg.service;
+package com.infotech.isg.validation;
 
 import org.springframework.stereotype.Component;
 
