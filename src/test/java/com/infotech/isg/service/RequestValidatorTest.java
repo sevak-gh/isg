@@ -414,8 +414,8 @@ public class RequestValidatorTest {
 
         // act
         int result = requestValidator.validateCellNumber(cellNumber);
-        
-        // assert            
+
+        // assert
         assertThat(result, is(errorCode));
     }
 
@@ -457,14 +457,14 @@ public class RequestValidatorTest {
 
     @Test(dataProvider = "provideTransactions")
     public void shouldValidateTransactionReturnExpectedErrorCode(Transaction transaction, String orderId,
-                                        int operatorId, int amount, int channel,
-                                        String consumer, String customerIp, int errorCode) {
+            int operatorId, int amount, int channel,
+            String consumer, String customerIp, int errorCode) {
         // arrange
         // different cases provided by data provider
 
         // act
         int result = requestValidator.validateTransaction(transaction, orderId, operatorId, amount,
-                                                            channel, consumer, customerIp);
+                     channel, consumer, customerIp);
 
         // assert
         assertThat(result, is(errorCode));

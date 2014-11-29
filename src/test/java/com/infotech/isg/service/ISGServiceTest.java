@@ -90,7 +90,7 @@ public class ISGServiceTest {
         // bypass proxy
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken("");}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-                .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
+        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
 
         // act
         ISGServiceResponse response = isgService.mci("", "", "", 1, 1, "", "", "", "", "", "");

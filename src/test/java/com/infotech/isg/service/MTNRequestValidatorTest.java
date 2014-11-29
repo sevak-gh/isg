@@ -107,7 +107,7 @@ public class MTNRequestValidatorTest {
 
         // act
         int result = requestValidator.validateAmount(amount);
-        
+
         // assert
         assertThat(result, is(errorCode));
     }
@@ -119,7 +119,7 @@ public class MTNRequestValidatorTest {
 
         // act
         int result = requestValidator.validateCellNumber(cellNumber);
-        
+
         // assert
         assertThat(result, is(errorCode));
     }
@@ -131,7 +131,7 @@ public class MTNRequestValidatorTest {
 
         // act
         int result = requestValidator.validateAction(action);
-        
+
         // assert
         assertThat(result, is(errorCode));
     }
