@@ -324,7 +324,7 @@ public class ISGServiceTest {
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // bypass proxy
+        // recharge throws ISGException
         String token = "token";
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
@@ -369,7 +369,7 @@ public class ISGServiceTest {
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // bypass proxy
+        // recharge response invalid
         String token = "token";
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
 
@@ -412,7 +412,7 @@ public class ISGServiceTest {
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // bypass proxy
+        // recharge responds NOK
         String token = "token";
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         int responseCode = 1011;
@@ -438,5 +438,37 @@ public class ISGServiceTest {
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
         assertThat(transaction.getToken(), is(token));
         assertThat(transaction.getOperatorTId(), is(responseDetail));
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void shouldReThrowRuntimeException() {
+        // arrange
+        // set all validators to OK
+        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
+                anyInt(), anyInt(), anyString(), anyString(),
+                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
+        when(mciValidator.validateTransaction(anyObject(), anyString(),
+                                              anyInt(), anyInt(), anyInt(),
+                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // set authentication to OK
+        when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        int clientId = 1;
+        when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // getToken throw exception
+        when(mciProxy.getToken()).thenThrow(new RuntimeException());
+
+        // act
+        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+                                      1, "state", "receipt", "orderid",
+                                      "consumer", "customer", "ip");
+        int result = (int)response.getISGDoc();
+
+        // assert
     }
 }
