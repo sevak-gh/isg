@@ -108,6 +108,7 @@ public class ISGServiceImpl implements ISGService {
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
+
         // validate if transaction is duplicate
         List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
         for (Transaction transaction : transactions) {
@@ -141,6 +142,9 @@ public class ISGServiceImpl implements ISGService {
 
         // get token from MCI
         MCIProxyGetTokenResponse getTokenResponse = mciProxy.getToken();
+        if (getTokenResponse == null) {
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        }
         String token = getTokenResponse.getToken();
         if (token == null) {
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
