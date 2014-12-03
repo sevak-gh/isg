@@ -32,7 +32,7 @@ public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepositor
     @Override
     public PaymentChannel findById(String id) {
         PaymentChannel paymentChannel = null;
-        String sql = "select channel, active info_topup_payment_channel where channel = ?";
+        String sql = "select channel, active from info_topup_payment_channel where channel = ?";
         try {
             paymentChannel = jdbcTemplate.queryForObject(sql, new Object[] {id}, new PaymentChannelRowMapper());
         } catch (EmptyResultDataAccessException e) {

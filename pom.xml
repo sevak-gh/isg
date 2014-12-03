@@ -50,10 +50,45 @@
 
         <checkstyle.version>2.13</checkstyle.version>
 
-        <!--    skip integration tests by default  -->
-        <skip.integration.tests>true</skip.integration.tests>
-
     </properties>      
+
+    <profiles>
+        <profile>
+            <id>env-dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <skip.integration.tests>true</skip.integration.tests>
+                <deploy.server.url>http://localhost:8080/manager/text</deploy.server.url>
+                <deploy.server.name>TomcatServer</deploy.server.name>
+                <deploy.server.username>tomcat</deploy.server.username>
+                <deploy.server.password>tomcat</deploy.server.password>
+                <deploy.path>/isg</deploy.path>
+            </properties>
+        </profile>
+         <profile>
+            <id>env-test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>test</value>
+                </property>
+            </activation>
+            <properties>
+                <skip.integration.tests>false</skip.integration.tests>
+                <deploy.server.url>http://localhost:8080/manager/text</deploy.server.url>
+                <deploy.server.name>TomcatServer</deploy.server.name>
+                <deploy.server.username>tomcat</deploy.server.username>
+                <deploy.server.password>tomcat</deploy.server.password>
+                <deploy.path>/isg</deploy.path>
+            </properties>            
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -255,11 +290,21 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <server>TomcatServer</server>
-                    <path>/isg</path>
+                    <url>${deploy.server.url}</url>
+                    <username>${deploy.server.username}</username>
+                    <password>${deploy.server.password}</password>
+                    <path>${deploy.path}</path>
                     <update>true</update>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

@@ -1,6 +1,7 @@
 package com.infotech.com.it;
 
 import com.infotech.isg.domain.Operator;
+import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.BankCodes;
@@ -8,6 +9,7 @@ import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.ClientRepository;
+import com.infotech.isg.repository.PaymentChannelRepository;
 
 import javax.sql.DataSource;
 import java.util.Date;
@@ -34,10 +36,13 @@ import org.slf4j.LoggerFactory;
 @ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
 public class RepositoryIT extends AbstractTestNGSpringContextTests {
 
-    private static final Logger logger = LoggerFactory.getLogger("monitor");
+    private static final Logger logger = LoggerFactory.getLogger(RepositoryIT.class);
 
     @Autowired
     private OperatorRepository operatorRepo;
+
+    @Autowired
+    private PaymentChannelRepository paymentChannelRepo;
 
     @Autowired
     private TransactionRepository transactionRepo;
@@ -65,11 +70,39 @@ public class RepositoryIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void shouldfindOperatorById() {
+    public void shouldFindOperatorById() {
         logger.info("finding operator by id:" + Operator.MCI_ID);
         Operator operator = operatorRepo.findById(Operator.MCI_ID);
         assertThat(operator, is(notNullValue()));
         assertThat(operator.getId(), is(Operator.MCI_ID));
+        operator = operatorRepo.findById(0);
+        assertThat(operator, is(nullValue()));
+    }
+
+    @Test
+    public void shouldFindPaymentChannelById() {
+        logger.info("finding channel by id...");
+        PaymentChannel channel = paymentChannelRepo.findById("1");
+        assertThat(channel, is(nullValue()));
+        channel = paymentChannelRepo.findById("59");
+        assertThat(channel, is(notNullValue()));
+        assertThat(channel.getId(), is("59"));
+        assertThat(channel.getIsActive(), is(true));
+    }
+
+    @Test
+    public void shouldFindClientByUsername() {
+        Client client = clientRepo.findByUsername("test");
+        assertThat(client, is(nullValue()));
+
+        client = clientRepo.findByUsername("root");
+        assertThat(client, is(notNullValue()));
+        assertThat(client.getUsername(), is("root"));
+        assertThat(client.getVendor(), is("vendor"));
+        assertThat(client.getIsActive(), is(true));
+        assertThat(client.getIps(), is(notNullValue()));
+        assertThat(client.getIps().size(), is(2));
+        assertThat(client.getIps().get(0), is("1.1.1.1"));
     }
 
     @Test
@@ -117,17 +150,5 @@ public class RepositoryIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.get(0).getRefNum(), is("ref123456"));
         assertThat(transactions.get(0).getStatus(), is(1));
         assertThat(transactions.get(0).getOperatorResponseCode(), is(0));
-
-        Client client = clientRepo.findByUsername("test");
-        assertThat(client, is(nullValue()));
-
-        client = clientRepo.findByUsername("root");
-        assertThat(client, is(notNullValue()));
-        assertThat(client.getUsername(), is("root"));
-        assertThat(client.getVendor(), is("vendor"));
-        assertThat(client.getIsActive(), is(true));
-        assertThat(client.getIps(), is(notNullValue()));
-        assertThat(client.getIps().size(), is(2));
-        assertThat(client.getIps().get(0), is("1.1.1.1"));
     }
 }
