@@ -32,6 +32,7 @@ import org.mockito.ArgumentCaptor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 /**
 * test cases for ISG service.
@@ -99,7 +100,7 @@ public class ISGServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OK));
+        assertThat(result, is(greaterThanOrEqualTo(0)));
     }
 
     @Test
@@ -150,7 +151,7 @@ public class ISGServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OK));
+        assertThat(result, is(greaterThanOrEqualTo(0)));
         verify(mciValidator).validateRequiredParams(username, password, action, bankCode, amount, channel,
                 state, bankReceipt, orderId, consumer, customerIp);
         verify(mciValidator).validateAmount(amount);
