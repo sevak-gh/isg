@@ -188,7 +188,7 @@ public class MCIProxyImpl implements MCIProxy {
         SOAPMessage response = callSOAP(request);
 
         // process response
-        MCIProxyRechargeResponse rechargeResponse = parseResponse(response, "RechargeReponse", MCIProxyRechargeResponse.class);
+        MCIProxyRechargeResponse rechargeResponse = parseResponse(response, "RechargeResponse", MCIProxyRechargeResponse.class);
 
         return rechargeResponse;
     }
