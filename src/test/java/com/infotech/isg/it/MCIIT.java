@@ -142,6 +142,165 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void shouldReturnInvalidUsernamePassword() {
+        // arrange
+        String token = "token";
+        String mciResponseCode = "0";
+        String mciResponseDetail = "12345679797";
+        MCIService mciService = new MCIService() {
+            @Override
+            public MCIProxyGetTokenResponse getToken() {
+                MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
+                response.setToken(token);
+                return response;
+            }
+
+            @Override
+            public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
+                List<String> response = new ArrayList<String>();
+                response.add(mciResponseCode);      // response code
+                response.add(mciResponseDetail);    // response detail: serial number
+                MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
+                rechargeResponse.setResponse(response);
+                return rechargeResponse;
+            }
+        };
+        mciws.setServiceImpl(mciService);
+        mciws.publish();
+        String username = "root";
+        String password = "root";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_USERNAME_OR_PASSWORD));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
+    public void shouldReturnInvalidCellNumber() {
+        // arrange
+        String token = "token";
+        String mciResponseCode = "0";
+        String mciResponseDetail = "12345679797";
+        MCIService mciService = new MCIService() {
+            @Override
+            public MCIProxyGetTokenResponse getToken() {
+                MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
+                response.setToken(token);
+                return response;
+            }
+
+            @Override
+            public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
+                List<String> response = new ArrayList<String>();
+                response.add(mciResponseCode);      // response code
+                response.add(mciResponseDetail);    // response detail: serial number
+                MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
+                rechargeResponse.setResponse(response);
+                return rechargeResponse;
+            }
+        };
+        mciws.setServiceImpl(mciService);
+        mciws.publish();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "077856698";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_CELL_NUMBER));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
+    public void shouldReturnInvalidPaymentChannel() {
+        // arrange
+        String token = "token";
+        String mciResponseCode = "0";
+        String mciResponseDetail = "12345679797";
+        MCIService mciService = new MCIService() {
+            @Override
+            public MCIProxyGetTokenResponse getToken() {
+                MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
+                response.setToken(token);
+                return response;
+            }
+
+            @Override
+            public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
+                List<String> response = new ArrayList<String>();
+                response.add(mciResponseCode);      // response code
+                response.add(mciResponseDetail);    // response detail: serial number
+                MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
+                rechargeResponse.setResponse(response);
+                return rechargeResponse;
+            }
+        };
+        mciws.setServiceImpl(mciService);
+        mciws.publish();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 54;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_PAYMENT_CHANNEL));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
     public void shouldReturnErrorWhenOperationNotdSucceed() {
         // arrange
         String token = "token";
@@ -301,6 +460,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getOperatorResponse(), is(nullValue()));
         assertThat(transaction.getStf(), is(nullValue()));
     }
+
     @Test
     public void shouldReturnErrorAndSetSTFWhenRechargeResultUknown() {
         // arrange
