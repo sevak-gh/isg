@@ -79,7 +79,7 @@ public class MCIProxyImpl implements MCIProxy {
             SOAPEnvelope envelope = request.getSOAPPart().getEnvelope();
             envelope.addNamespaceDeclaration("ns", namespace);
             SOAPBody body = request.getSOAPBody();
-            request.getMimeHeaders().addHeader("SOAPAction", soapAction);
+            request.getMimeHeaders().addHeader("SOAPAction", "\"" + soapAction + "\"");
             request.saveChanges();
         } catch (SOAPException e) {
             throw new RuntimeException("soap request creation error", e);
@@ -139,7 +139,7 @@ public class MCIProxyImpl implements MCIProxy {
     public MCIProxyGetTokenResponse getToken() {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(url + SOAPACTION_GETTOKEN);
+        SOAPMessage request = createSOAPRequest(namespace + SOAPACTION_GETTOKEN);
 
         // add request body/header
 
@@ -157,11 +157,10 @@ public class MCIProxyImpl implements MCIProxy {
             int amount, long trId) {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(url + SOAPACTION_RECHARGE);
+        SOAPMessage request = createSOAPRequest(namespace + SOAPACTION_RECHARGE);
 
         // add request body/header
         try {
-            request.getMimeHeaders().addHeader("SOAPAction", SOAPACTION_RECHARGE);
             SOAPHeader header = request.getSOAPHeader();
             SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
             SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
