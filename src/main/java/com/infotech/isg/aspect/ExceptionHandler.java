@@ -20,20 +20,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExceptionHandler.class);
 
     // around execution any public method in ISGServiceImpl class in service package
     @Around("execution(public * com.infotech.isg.service.ISGServiceImpl.*(..))")
     public Object translateException(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
-        logger.debug("before running service...");
+        LOG.debug("before running service...");
         try {
             result = joinPoint.proceed();
         } catch (ISGException e) {
             //TODO: log exception
+            LOG.error("", e);
             return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
         } catch (RuntimeException e) {
-            logger.error(e.getMessage());
+            LOG.error("", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.INTERNAL_SYSTEM_ERROR, "");
         }
         return result;
