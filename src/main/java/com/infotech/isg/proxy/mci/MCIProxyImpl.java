@@ -122,7 +122,13 @@ public class MCIProxyImpl implements MCIProxy {
         try {
             SOAPBody responseBody = response.getSOAPBody();
             Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
+            if (!iterator.hasNext()) {
+                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body missing expected item");
+            }
             SOAPBodyElement element = (SOAPBodyElement)iterator.next();
+            if (element.getFirstChild() == null) {
+                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body missing expected item");
+            }
             JAXBContext jaxbContext = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();

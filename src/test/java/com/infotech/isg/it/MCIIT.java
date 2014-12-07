@@ -15,8 +15,6 @@ import com.infotech.isg.it.wsclient.ISGClient;
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.xml.ws.Endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -81,7 +79,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         mciws.stop();
     }
 
-    @Test(enabled = false)
+    @Test
     public void HappyPathShouldSucceed() {
         // arrange
         String token = "token";
@@ -143,7 +141,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStf(), is(nullValue()));
     }
 
-    @Test(enabled = false)
+    @Test
     public void shouldReturnErrorWhenOperationNotdSucceed() {
         // arrange
         String token = "token";
@@ -206,7 +204,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void shouldReturnErrorWhenExceptionThrown() {
+    public void shouldReturnErrorWhenGetTokenThrowsException() {
         // arrange
         String token = "token";
         String mciResponseCode = "0";
@@ -214,7 +212,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         MCIService mciService = new MCIService() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
-                throw new RuntimeException("something bad happened with network connection");
+                throw new RuntimeException("something bad happened!!!");
             }
 
             @Override
@@ -263,5 +261,157 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getOperatorResponseCode(), is(nullValue()));
         assertThat(transaction.getOperatorResponse(), is(nullValue()));
         assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldReturnErrorWhenEndpointNotAvailable() {
+        // arrange
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getToken(), is(nullValue()));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode(), is(nullValue()));
+        assertThat(transaction.getOperatorResponse(), is(nullValue()));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+    @Test
+    public void shouldReturnErrorAndSetSTFWhenRechargeResultUknown() {
+        // arrange
+        String token = "token";
+        String mciResponseCode = "0";
+        String mciResponseDetail = "12366655";
+        MCIService mciService = new MCIService() {
+            @Override
+            public MCIProxyGetTokenResponse getToken() {
+                MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
+                response.setToken(token);
+                return response;
+            }
+
+            @Override
+            public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
+                return null;
+            }
+        };
+        mciws.setServiceImpl(mciService);
+        mciws.publish();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getStf(), is(notNullValue()));
+        assertThat(transaction.getStf(), is(1));
+        assertThat(transaction.getStfResult(), is(0));
+    }
+
+    @Test
+    public void shouldReturnErrorAndSetSTFWhenRechargeThrowsException() {
+        // arrange
+        String token = "token";
+        String mciResponseCode = "0";
+        String mciResponseDetail = "12366655";
+        MCIService mciService = new MCIService() {
+            @Override
+            public MCIProxyGetTokenResponse getToken() {
+                MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
+                response.setToken(token);
+                return response;
+            }
+
+            @Override
+            public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
+                throw new RuntimeException("something bad happened!!!");
+            }
+        };
+        mciws.setServiceImpl(mciService);
+        mciws.publish();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mci(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getStf(), is(notNullValue()));
+        assertThat(transaction.getStf(), is(1));
+        assertThat(transaction.getStfResult(), is(0));
     }
 }

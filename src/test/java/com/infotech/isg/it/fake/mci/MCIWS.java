@@ -18,6 +18,12 @@ import javax.xml.ws.Endpoint;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
+/**
+* fake web service for MCI, used for untegration tests.
+* annotated as spring component so that app properties can be used.
+*
+* @author Sevak Gharibian
+*/
 @WebService(name = "MCIWS", targetNamespace = "http://mci.service/")
 @HandlerChain(file = "handler-chain.xml")
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL)

@@ -4,7 +4,7 @@ import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 
 /**
-* interface for MCI web service operations/methods.
+* MCI web service operations/methods.
 *
 * @uathor Sevak Gharibian
 */
