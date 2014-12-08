@@ -29,6 +29,8 @@ import javax.xml.bind.JAXBException;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Required;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * implementation for MCI proxy.
@@ -37,6 +39,8 @@ import org.springframework.beans.factory.annotation.Required;
 */
 @Component("MCIProxy")
 public class MCIProxyImpl implements MCIProxy {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MCIProxyImpl.class);
 
     @Value("${mci.url}")
     private String url;
@@ -106,7 +110,7 @@ public class MCIProxyImpl implements MCIProxy {
                 try {
                     cnn.close();
                 } catch (SOAPException e) {
-                    //TODO: just log this, do not throw
+                    LOG.error("error closing soap connection, ignorred", e);
                 }
             }
         }
@@ -133,7 +137,7 @@ public class MCIProxyImpl implements MCIProxy {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();
         } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response error");
+            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response processing error");
         } catch (JAXBException e) {
             throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body content unmarshalling error");
         }

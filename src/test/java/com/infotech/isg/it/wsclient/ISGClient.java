@@ -127,7 +127,7 @@ public class ISGClient {
                 try {
                     cnn.close();
                 } catch (SOAPException e) {
-                    //TODO: just log this, do not throw
+                    LOG.error("error closing soap connection, ignorred", e);
                 }
             }
         }

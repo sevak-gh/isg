@@ -21,6 +21,8 @@ import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * ISG service implementation.
@@ -29,6 +31,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 */
 @Service("ISGService")
 public class ISGServiceImpl implements ISGService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ISGServiceImpl.class);
 
     private final AccessControl accessControl;
     private final TransactionRepository transactionRepository;
@@ -62,10 +66,11 @@ public class ISGServiceImpl implements ISGService {
 
         int operatorId = Operator.MCI_ID;
         int action = ServiceActions.TOP_UP;
+        String actionName = "top-up";
         int errorCode = ErrorCodes.OK;
 
         // check for required params
-        errorCode = mciValidator.validateRequiredParams(username, password, "top-up",
+        errorCode = mciValidator.validateRequiredParams(username, password, actionName,
                     bankCode, amount, channel,
                     state, bankReceipt, orderId,
                     consumer, customerIp);
@@ -163,7 +168,7 @@ public class ISGServiceImpl implements ISGService {
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(2);
             transactionRepository.update(transaction);
-            //TODO: log exception
+            LOG.error("error calling mci recharge, STF set and operator_service_error code returned", e);
             return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
         }
 

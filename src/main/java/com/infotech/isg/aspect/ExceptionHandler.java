@@ -26,15 +26,13 @@ public class ExceptionHandler {
     @Around("execution(public * com.infotech.isg.service.ISGServiceImpl.*(..))")
     public Object translateException(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
-        LOG.debug("before running service...");
         try {
             result = joinPoint.proceed();
         } catch (ISGException e) {
-            //TODO: log exception
-            LOG.error("", e);
+            LOG.error("error handling service request, error code returned", e);
             return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
         } catch (RuntimeException e) {
-            LOG.error("", e);
+            LOG.error("internal error handling service request, internal_system_error code returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.INTERNAL_SYSTEM_ERROR, "");
         }
         return result;
