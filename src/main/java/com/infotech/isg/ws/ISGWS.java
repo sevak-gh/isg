@@ -2,6 +2,7 @@ package com.infotech.isg.ws;
 
 import com.infotech.isg.service.ISGService;
 import com.infotech.isg.service.ISGServiceResponse;
+import com.infotech.isg.validation.ErrorCodes;
 
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 @Service("ISGWS")
 public class ISGWS {
 
-    private static final Logger logger = LoggerFactory.getLogger(ISGWS.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ISGWS.class);
 
     @Resource
     private WebServiceContext context;
@@ -69,8 +70,15 @@ public class ISGWS {
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp) {
 
-        return isgService.mci(username, password, bankCode, amount, channel,
-                              state, bankReceipt, orderId, consumer, customerIp,
-                              getClientIp());
+        ISGServiceResponse response = isgService.mci(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp());
+
+        LOG.info("\u001B[32mMCI\u001B[0m top-up for [{},{}] from [{},'{}',{}] => {}{}\u001B[0m,{},{}",
+                 consumer, amount, username, getClientIp(), channel,
+                 (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m", response.getStatus(),
+                 ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc());
+
+        return response;
     }
 }

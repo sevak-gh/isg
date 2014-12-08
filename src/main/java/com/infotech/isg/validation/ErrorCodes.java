@@ -33,4 +33,37 @@ public class ErrorCodes {
     public static final int DISABLED_OPERATOR = -24;
     public static final int INVALID_OPERATOR = -25;
     public static final int TRANSACTION_ALREADY_FAILED = -26;
+
+    public static String toString(int errorCode) {
+        switch (errorCode) {
+            case OK: return "OK";
+            case INTERNAL_SYSTEM_ERROR: return "INTERNAL_SYSTEM_ERROR";
+            case INSUFFICIENT_PARAMETERS: return "INSUFFICIENT_PARAMETERS";
+            case INVALID_USERNAME_OR_PASSWORD: return "INVALID_USERNAME_OR_PASSWORD";
+            case DISABLED_CLIENT_ACCOUNT: return "DISABLED_CLIENT_ACCOUNT";
+            case INVALID_CLIENT_IP: return "INVALID_CLIENT_IP";
+            case FINANCIAL_TRANSACTION_ERROR: return "FINANCIAL_TRANSACTION_ERROR";
+            case FINANCIAL_TRANSACTION_VERIFICATION_FAILED: return "FINANCIAL_TRANSACTION_VERIFICATION_FAILED";
+            case INVALID_BANK_CODE: return "INVALID_BANK_CODE";
+            case INVALID_AMOUNT: return "INVALID_AMOUNT";
+            case OPERATOR_SERVICE_ERROR: return "OPERATOR_SERVICE_ERROR";
+            case BANK_SERVICE_UNAVAILABLE: return "BANK_SERVICE_UNAVAILABLE";
+            case DOUBLE_SPENDING_TRANSACTION: return "DOUBLE_SPENDING_TRANSACTION";
+            case INVALID_BANK_RECEIPT: return "INVALID_BANK_RECEIPT";
+            case AMOUNT_MISMATCHED: return "AMOUNT_MISMATCHED";
+            case REPETITIVE_TRANSACTION: return "REPETITIVE_TRANSACTION";
+            case INVALID_OPERATOR_ACTION: return "INVALID_OPERATOR_ACTION";
+            case OPERATOR_SERVICE_UNAVAILABLE: return "OPERATOR_SERVICE_UNAVAILABLE";
+            case INVALID_PAYMENT_CHANNEL: return "INVALID_PAYMENT_CHANNEL";
+            case DISABLED_PAYMENT_CHANNEL: return "DISABLED_PAYMENT_CHANNEL";
+            case TRANSACTION_REVERSE_ERROR: return "TRANSACTION_REVERSE_ERROR";
+            case STF_ERROR: return "STF_ERROR";
+            case INVALID_CELL_NUMBER: return "INVALID_CELL_NUMBER";
+            case TRANSACTION_VERIFICATION_ERROR_DUE_TO_SOAP: return "TRANSACTION_VERIFICATION_ERROR_DUE_TO_SOAP";
+            case DISABLED_OPERATOR: return "DISABLED_OPERATOR";
+            case INVALID_OPERATOR: return "INVALID_OPERATOR";
+            case TRANSACTION_ALREADY_FAILED: return "TRANSACTION_ALREADY_FAILED";
+            default: return "";
+        }
+    }
 }
