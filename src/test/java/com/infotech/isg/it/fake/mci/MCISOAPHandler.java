@@ -36,7 +36,7 @@ public class MCISOAPHandler implements SOAPHandler<SOAPMessageContext> {
                     body.addBodyElement(new QName("http://mci.service/", "GetToken"));
                 }
             } catch (SOAPException e) {
-                e.printStackTrace();
+                throw new RuntimeException("error getting soap messsage in handler", e);
             }
         }
 

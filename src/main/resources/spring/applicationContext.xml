@@ -31,9 +31,16 @@
 
     <wss:binding url="/">
         <wss:service>
-            <ws:service bean="#ISGWS"/>
+            <ws:service bean="#ISGWS">
+                <ws:handlers>
+                  <ref bean="ISGWSHandler" />
+                </ws:handlers>
+            </ws:service>
         </wss:service>
     </wss:binding>
+<!--
+    <bean id="myHandler" class="com.infotech.com.ws.ISGWSHandler" />
+-->
 
 </beans>
 
