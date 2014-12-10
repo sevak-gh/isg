@@ -39,9 +39,9 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 *
 * @author Sevak Gharibian
 */
-public class ISGServiceTest {
+public class MCIServiceTest {
 
-    private ISGService isgService;
+    private MCIService mciService;
 
     @Mock
     private MCIProxy mciProxy;
@@ -55,18 +55,11 @@ public class ISGServiceTest {
     @Mock
     private RequestValidator mciValidator;
 
-    @Mock
-    private RequestValidator mtnValidator;
-
-    @Mock
-    private RequestValidator jiringValidator;
-
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        isgService = new ISGServiceImpl(accessControl, transactionRepository, mciProxy,
-                                        mciValidator, mtnValidator, jiringValidator);
+        mciService = new MCIServiceImpl(accessControl, transactionRepository, mciProxy, mciValidator);
     }
 
     @Test
@@ -94,7 +87,7 @@ public class ISGServiceTest {
         .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -145,7 +138,7 @@ public class ISGServiceTest {
         .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList(Integer.toString(responseCode), responseDetail));}});
 
         // act
-        ISGServiceResponse response = isgService.mci(username, password, bankCode, amount,
+        ISGServiceResponse response = mciService.mci(username, password, bankCode, amount,
                                       channel, state, bankReceipt, orderId,
                                       consumer, customerIp, remoteIp);
         int result = (int)response.getISGDoc();
@@ -192,7 +185,7 @@ public class ISGServiceTest {
         when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.INVALID_AMOUNT);
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -226,7 +219,7 @@ public class ISGServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -257,7 +250,7 @@ public class ISGServiceTest {
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.INVALID_USERNAME_OR_PASSWORD);
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -290,7 +283,7 @@ public class ISGServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -332,7 +325,7 @@ public class ISGServiceTest {
         .thenThrow(new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "recharge operation failed"));
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -375,7 +368,7 @@ public class ISGServiceTest {
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -422,7 +415,7 @@ public class ISGServiceTest {
         .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList(Integer.toString(responseCode), responseDetail));}});
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();
@@ -465,7 +458,7 @@ public class ISGServiceTest {
         when(mciProxy.getToken()).thenThrow(new RuntimeException());
 
         // act
-        ISGServiceResponse response = isgService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip");
         int result = (int)response.getISGDoc();

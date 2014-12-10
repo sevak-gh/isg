@@ -8,8 +8,7 @@ import com.infotech.isg.service.ISGServiceResponse;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
-import com.infotech.isg.it.fake.mci.MCIWS;
-import com.infotech.isg.it.fake.mci.MCIService;
+import com.infotech.isg.it.fake.mci.MCIWSFake;
 import com.infotech.isg.it.wsclient.ISGClient;
 
 import javax.sql.DataSource;
@@ -51,7 +50,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
     // fake mci web service
     // defined as spring managed bean so that app properties can be used
     @Autowired
-    MCIWS mciws;
+    MCIWSFake mciws;
 
     // isg web service client
     // defined as spring managed bean so that app properties can be used
@@ -85,7 +84,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12345679797";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -147,7 +146,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12345679797";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -200,7 +199,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12345679797";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -253,7 +252,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12345679797";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -306,7 +305,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "-1011";
         String mciResponseDetail = "charge request not possible";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -368,7 +367,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12366655";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 throw new RuntimeException("something bad happened!!!");
@@ -467,7 +466,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12366655";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();
@@ -524,7 +523,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         String token = "token";
         String mciResponseCode = "0";
         String mciResponseDetail = "12366655";
-        MCIService mciService = new MCIService() {
+        MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {
                 MCIProxyGetTokenResponse response = new MCIProxyGetTokenResponse();

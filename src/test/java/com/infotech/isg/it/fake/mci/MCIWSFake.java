@@ -1,5 +1,6 @@
 package com.infotech.isg.it.fake.mci;
 
+import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 
@@ -19,25 +20,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
-* fake web service for MCI, used for untegration tests.
+* fake web service for MCI, used for integration tests.
 * annotated as spring component so that app properties can be used.
 *
 * @author Sevak Gharibian
 */
-@WebService(name = "MCIWS", targetNamespace = "http://mci.service/")
+@WebService(name = "MCIWSFake", targetNamespace = "http://mci.service/")
 @HandlerChain(file = "handler-chain.xml")
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL)
 @Component
-public class MCIWS {
+public class MCIWSFake {
 
-    private MCIService mciService;
+    private MCIProxy mciService;
     private Endpoint ep;
 
     @Value("${mci.url}")
     private String url;
 
     @WebMethod(exclude = true)
-    public void setServiceImpl(MCIService mciService) {
+    public void setServiceImpl(MCIProxy mciService) {
         this.mciService = mciService;
     }
 

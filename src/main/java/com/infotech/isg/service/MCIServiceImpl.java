@@ -25,35 +25,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* ISG service implementation.
+* MCI service implementation.
 *
 * @author Sevak Gharibian
 */
-@Service("ISGService")
-public class ISGServiceImpl implements ISGService {
+@Service("MCIServie")
+public class MCIServiceImpl implements MCIService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ISGServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MCIServiceImpl.class);
 
     private final AccessControl accessControl;
     private final TransactionRepository transactionRepository;
     private final MCIProxy mciProxy;
     private final RequestValidator mciValidator;
-    private final RequestValidator mtnValidator;
-    private final RequestValidator jiringValidator;
 
     @Autowired
-    public ISGServiceImpl(AccessControl accessControl,
+    public MCIServiceImpl(AccessControl accessControl,
                           @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
                           MCIProxy mciProxy,
-                          @Qualifier("MCIValidator") RequestValidator mciValidator,
-                          @Qualifier("MTNValidator") RequestValidator mtnValidator,
-                          @Qualifier("JiringValidator") RequestValidator jiringValidator) {
+                          @Qualifier("MCIValidator") RequestValidator mciValidator) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;
         this.mciProxy = mciProxy;
         this.mciValidator = mciValidator;
-        this.mtnValidator = mtnValidator;
-        this.jiringValidator = jiringValidator;
     }
 
     @Override

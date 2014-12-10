@@ -1,6 +1,6 @@
 package com.infotech.isg.ws;
 
-import com.infotech.isg.service.ISGService;
+import com.infotech.isg.service.MCIService;
 import com.infotech.isg.service.ISGServiceResponse;
 import com.infotech.isg.validation.ErrorCodes;
 
@@ -37,7 +37,7 @@ public class ISGWS {
     @Resource
     private WebServiceContext context;
 
-    private final ISGService isgService;
+    private final MCIService mciService;
 
     /**
     * gets client remote IP through web service context
@@ -49,8 +49,8 @@ public class ISGWS {
     }
 
     @Autowired
-    public ISGWS(ISGService isgService) {
-        this.isgService = isgService;
+    public ISGWS(MCIService mciService) {
+        this.mciService = mciService;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ISGWS {
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp) {
 
-        ISGServiceResponse response = isgService.mci(username, password, bankCode, amount, channel,
+        ISGServiceResponse response = mciService.mci(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp());
 

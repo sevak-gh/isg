@@ -1,11 +1,11 @@
 package com.infotech.isg.service;
 
 /**
-* provides ISG serive main functionalities.
+* provides MCI serive operations.
 *
-* @atuhor Sevak Gahribian
+* @author Sevak Gahribian
 */
-public interface ISGService {
+public interface MCIService {
     public ISGServiceResponse mci(String username, String password,
                                   String bankCode, int amount,
                                   int channel, String state,
