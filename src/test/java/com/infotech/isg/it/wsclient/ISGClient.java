@@ -80,27 +80,12 @@ public class ISGClient {
             element = bodyElement.addChildElement(new QName("customerip"));
             element.addTextNode(customerIp);
             request.saveChanges();
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            request.writeTo(output);
-            LOG.info("request: {}", output.toString());
         } catch (SOAPException e) {
             throw new RuntimeException("soap request creation error", e);
-        } catch (IOException e) {
-            throw new RuntimeException("soap request write error", e);
         }
 
         // send message and get response
         SOAPMessage response = callSOAP(request);
-        try {
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            response.writeTo(output);
-            LOG.info("response: {}", output.toString());
-        } catch (SOAPException e) {
-            throw new RuntimeException("soap message write error", e);
-        } catch (IOException e) {
-            throw new RuntimeException("soap message write error", e);
-        }
-
 
         // process response
         ISGServiceResponse isgServiceResponse = parseResponse(response, "MCIResponse", ISGServiceResponse.class);
@@ -117,8 +102,14 @@ public class ISGClient {
         try {
             cnn = SOAPConnectionFactory.newInstance().createConnection();
             URL endpoint = new URL(url);
+            if (LOG.isDebugEnabled()) {
+                logSOAPMessage("sending to", url.toString(), request);
+            }
             response = cnn.call(request, endpoint);
-        } catch (SOAPException e) {
+            if (LOG.isDebugEnabled()) {
+                logSOAPMessage("received from", url.toString(), response);
+            }
+       } catch (SOAPException e) {
             throw new RuntimeException("operator service connection/send/receive error", e);
         } catch (MalformedURLException e) {
             throw new RuntimeException("malformed URL for soap connection", e);
@@ -133,6 +124,48 @@ public class ISGClient {
         }
 
         return response;
+    }
+
+    private void logSOAPMessage(String text, String host, SOAPMessage message) {
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n");
+            if (message.getMimeHeaders().getHeader("Host") != null) {
+                sb.append(String.format("Host: %s\n", message.getMimeHeaders().getHeader("Host")));
+            }
+            if (message.getMimeHeaders().getHeader("Server") != null) {
+                sb.append(String.format("Server: %s\n", message.getMimeHeaders().getHeader("Server")));
+            }
+            if (message.getMimeHeaders().getHeader("Accept") != null) {
+                sb.append(String.format("Accept: %s\n", message.getMimeHeaders().getHeader("Accept")));
+            }
+            if (message.getMimeHeaders().getHeader("Accept-Encoding") != null) {
+                sb.append(String.format("Accept-Encoding: %s\n", message.getMimeHeaders().getHeader("Accept-Encoding")));
+            }
+            if (message.getMimeHeaders().getHeader("Content-Encoding") != null) {
+                sb.append(String.format("Content-Encoding: %s\n", message.getMimeHeaders().getHeader("Content-Encoding")));
+            }
+            if (message.getMimeHeaders().getHeader("Content-Type") != null) {
+                sb.append(String.format("Content-Type: %s\n", message.getMimeHeaders().getHeader("Content-Type")));
+            }
+            if (message.getMimeHeaders().getHeader("Content-Length") != null) {
+                sb.append(String.format("Content-Length: %s\n", message.getMimeHeaders().getHeader("Content-Length")));
+            }
+            if (message.getMimeHeaders().getHeader("SOAPAction") != null) {
+                sb.append(String.format("SOAPAction: %s\n", message.getMimeHeaders().getHeader("SOAPAction")));
+            }
+            if (message.getMimeHeaders().getHeader("Date") != null) {
+                sb.append(String.format("Date: %s\n", message.getMimeHeaders().getHeader("Date")));
+            }
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            message.writeTo(output);
+            sb.append(output);
+            LOG.debug("{} [{}]:{}", text, host, sb);
+        } catch (SOAPException e) {
+            throw new RuntimeException("error writing soap message to log", e);
+        } catch (IOException e) {
+            throw new RuntimeException("error writing soap message to log", e);
+        }       
     }
 
     /**
