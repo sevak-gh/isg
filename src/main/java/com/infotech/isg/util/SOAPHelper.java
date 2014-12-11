@@ -64,7 +64,7 @@ public class SOAPHelper {
             }
             response = cnn.call(request, endpoint);
             if (LOG.isDebugEnabled()) {
-                LOG.debug("received from [{}]:{}", url.toString(), SOAPHelper.toString(request));
+                LOG.debug("received from [{}]:{}", url.toString(), SOAPHelper.toString(response));
             }
         } catch (SOAPException e) {
             throw new ISGException("operator service connection/send/receive error", e);
