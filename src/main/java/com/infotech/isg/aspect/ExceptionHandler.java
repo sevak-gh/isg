@@ -28,9 +28,6 @@ public class ExceptionHandler {
         Object result = null;
         try {
             result = joinPoint.proceed();
-        } catch (ISGException e) {
-            LOG.error("error handling service request, error code returned", e);
-            return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
         } catch (RuntimeException e) {
             LOG.error("internal error handling service request, internal_system_error code returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.INTERNAL_SYSTEM_ERROR, "");

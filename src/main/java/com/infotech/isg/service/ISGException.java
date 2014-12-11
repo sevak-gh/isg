@@ -6,19 +6,19 @@ package com.infotech.isg.service;
 * @author Sevak Gharibian
 */
 public class ISGException extends RuntimeException {
-    private int code;
 
-    public ISGException(int code, String message) {
+    public ISGException() {
+    }
+
+    public ISGException(String message) {
         super(message);
-        this.code = code;
     }
 
-    public ISGException(int code, String message, Throwable cause) {
+    public ISGException(Throwable cause) {
+        super(cause);
+    }
+
+    public ISGException(String message, Throwable cause) {
         super(message, cause);
-        this.code = code;
-    }
-
-    public int getErrorCode() {
-        return code;
     }
 }

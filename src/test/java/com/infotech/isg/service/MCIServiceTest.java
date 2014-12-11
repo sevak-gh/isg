@@ -289,7 +289,7 @@ public class MCIServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
         verify(mciProxy).getToken();
         verifyNoMoreInteractions(mciProxy);
         verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
@@ -299,7 +299,7 @@ public class MCIServiceTest {
     }
 
     @Test
-    public void shouldReturnOperatorErrorWhenRechargeThrowsException() {
+    public void shouldReturnOperatorErrorNotReverseWhenRechargeThrowsException() {
         // arrange
         // set all validators to OK
         when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
@@ -322,7 +322,7 @@ public class MCIServiceTest {
         String token = "token";
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenThrow(new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "recharge operation failed"));
+        .thenThrow(new ISGException("recharge operation failed"));
 
         // act
         ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
@@ -344,7 +344,7 @@ public class MCIServiceTest {
     }
 
     @Test
-    public void shouldReturnOperatorErrorWhenRechargeResponseInvalid() {
+    public void shouldReturnOperatorErrorNotReverseWhenRechargeResponseInvalid() {
         // arrange
         // set all validators to OK
         when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
@@ -387,7 +387,7 @@ public class MCIServiceTest {
     }
 
     @Test
-    public void shouldReturnServiceUnavailableWhenRechargeNotSuccessful() {
+    public void shouldReturnNOKWhenRechargeNotSuccessful() {
         // arrange
         // set all validators to OK
         when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),

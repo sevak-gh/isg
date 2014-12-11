@@ -140,13 +140,19 @@ public class MCIServiceImpl implements MCIService {
         transactionRepository.create(transaction);
 
         // get token from MCI
-        MCIProxyGetTokenResponse getTokenResponse = mciProxy.getToken();
+        MCIProxyGetTokenResponse getTokenResponse = null;
+        try {
+            getTokenResponse = mciProxy.getToken();
+        } catch (ISGException e) {
+            LOG.error("error calling mci get token, operator_service_error code returned", e);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        }
         if (getTokenResponse == null) {
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
         String token = getTokenResponse.getToken();
         if (token == null) {
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
 
         // request MCI to recharge
@@ -162,8 +168,8 @@ public class MCIServiceImpl implements MCIService {
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(2);
             transactionRepository.update(transaction);
-            LOG.error("error calling mci recharge, STF set and operator_service_error code returned", e);
-            return new ISGServiceResponse("ERROR", e.getErrorCode(), null);
+            LOG.error("error calling mci recharge, STF set and operator_service_error_donot_reverse code returned", e);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
 
         // check recharge response

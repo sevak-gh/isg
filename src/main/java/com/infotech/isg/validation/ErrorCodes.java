@@ -16,7 +16,7 @@ public class ErrorCodes {
     public static final int FINANCIAL_TRANSACTION_VERIFICATION_FAILED = -7;
     public static final int INVALID_BANK_CODE = -8;
     public static final int INVALID_AMOUNT = -9;
-    public static final int OPERATOR_SERVICE_ERROR_DONOT_REVERSE_DONOT_REVERSE = -10;
+    public static final int OPERATOR_SERVICE_ERROR_DONOT_REVERSE = -10;
     public static final int BANK_SERVICE_UNAVAILABLE = -11;
     public static final int DOUBLE_SPENDING_TRANSACTION = -12;
     public static final int INVALID_BANK_RECEIPT = -13;
@@ -33,7 +33,7 @@ public class ErrorCodes {
     public static final int DISABLED_OPERATOR = -24;
     public static final int INVALID_OPERATOR = -25;
     public static final int TRANSACTION_ALREADY_FAILED = -26;
-    public static final int OPERATOR_SERVICE_ERROR_DONOT_REVERSE = -27;
+    public static final int OPERATOR_SERVICE_ERROR = -27;
 
     public static String toString(int errorCode) {
         switch (errorCode) {

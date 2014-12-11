@@ -67,7 +67,7 @@ public class SOAPHelper {
                 LOG.debug("received from [{}]:{}", url.toString(), SOAPHelper.toString(request));
             }
         } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "operator service connection/send/receive error", e);
+            throw new ISGException("operator service connection/send/receive error", e);
         } catch (MalformedURLException e) {
             throw new RuntimeException("malformed URL for soap connection", e);
         } finally {
@@ -92,19 +92,19 @@ public class SOAPHelper {
             SOAPBody responseBody = response.getSOAPBody();
             Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
             if (!iterator.hasNext()) {
-                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "soap response body missing expected item");
+                throw new ISGException("soap response body missing expected item");
             }
             SOAPBodyElement element = (SOAPBodyElement)iterator.next();
             if (element.getFirstChild() == null) {
-                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "soap response body missing expected item");
+                throw new ISGException("soap response body missing expected item");
             }
             JAXBContext jaxbContext = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();
         } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "soap response processing error");
+            throw new ISGException("soap response processing error");
         } catch (JAXBException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "soap response body content unmarshalling error");
+            throw new ISGException("soap response body content unmarshalling error");
         }
 
         return result;

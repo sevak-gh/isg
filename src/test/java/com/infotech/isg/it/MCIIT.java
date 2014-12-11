@@ -300,7 +300,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void shouldReturnErrorWhenOperationNotdSucceed() {
+    public void shouldReturnNOKWhenOperationNotdSucceed() {
         // arrange
         String token = "token";
         String mciResponseCode = "-1011";
@@ -405,7 +405,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         // assert
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
-        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
         assertThat(response.getOPRDoc(), is(nullValue()));
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
@@ -444,7 +444,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         // assert
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
-        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
         assertThat(response.getOPRDoc(), is(nullValue()));
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
