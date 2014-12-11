@@ -1,7 +1,5 @@
 package com.infotech.isg.proxy.mci;
 
-import com.infotech.isg.validation.ErrorCodes;
-import com.infotech.isg.service.ISGException;
 import com.infotech.isg.util.HashGenerator;
 import com.infotech.isg.util.SOAPHelper;
 
