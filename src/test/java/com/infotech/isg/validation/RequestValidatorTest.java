@@ -381,7 +381,7 @@ public class RequestValidatorTest {
                 1,                  // channel
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
-                ErrorCodes.OPERATOR_SERVICE_ERROR
+                ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE
             },
             {
                 new Transaction() {{

@@ -142,11 +142,11 @@ public class MCIServiceImpl implements MCIService {
         // get token from MCI
         MCIProxyGetTokenResponse getTokenResponse = mciProxy.getToken();
         if (getTokenResponse == null) {
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
         String token = getTokenResponse.getToken();
         if (token == null) {
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
 
         // request MCI to recharge
@@ -176,7 +176,7 @@ public class MCIServiceImpl implements MCIService {
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(2);
             transactionRepository.update(transaction);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
 
         if (rechargeResponse.getCode().compareToIgnoreCase("0") != 0) {
@@ -188,7 +188,7 @@ public class MCIServiceImpl implements MCIService {
             transaction.setToken(token);
             transaction.setOperatorTId(rechargeResponse.getDetail());
             transactionRepository.update(transaction);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, null);
         }
 
         // recharge was successful, OK

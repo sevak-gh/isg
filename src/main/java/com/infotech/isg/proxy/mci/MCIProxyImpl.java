@@ -5,9 +5,6 @@ import com.infotech.isg.service.ISGException;
 import com.infotech.isg.util.HashGenerator;
 import com.infotech.isg.util.SOAPHelper;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPElement;
@@ -15,21 +12,11 @@ import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPHeaderElement;
 import javax.xml.soap.SOAPBodyElement;
-import javax.xml.soap.SOAPConnectionFactory;
-import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPException;
 import javax.xml.namespace.QName;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.Iterator;
-import org.w3c.dom.Node;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.JAXBException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Required;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,97 +61,17 @@ public class MCIProxyImpl implements MCIProxy {
         this.namespace = namespace;
     }
 
-    /**
-    * creates empty soap request message
-    */
-    private SOAPMessage createSOAPRequest(String soapAction) {
-        SOAPMessage request = null;
-        try {
-            request = MessageFactory.newInstance().createMessage();
-            SOAPEnvelope envelope = request.getSOAPPart().getEnvelope();
-            envelope.addNamespaceDeclaration("ns", namespace);
-            SOAPBody body = request.getSOAPBody();
-            request.getMimeHeaders().addHeader("SOAPAction", "\"" + soapAction + "\"");
-            request.saveChanges();
-        } catch (SOAPException e) {
-            throw new RuntimeException("soap request creation error", e);
-        }
-        return request;
-    }
-
-    /**
-    * sends soap request and returns soap response.
-    */
-    private SOAPMessage callSOAP(SOAPMessage request) {
-        SOAPMessage response = null;
-        SOAPConnection cnn = null;
-        try {
-            cnn = SOAPConnectionFactory.newInstance().createConnection();
-            URL endpoint = new URL(url);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("sending to [{}]:{}", url.toString(), SOAPHelper.toString(request));
-            }
-            response = cnn.call(request, endpoint);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("received from [{}]:{}", url.toString(), SOAPHelper.toString(request));
-            }
-        } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "operator service connection/send/receive error", e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("malformed URL for soap connection", e);
-        } finally {
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SOAPException e) {
-                    LOG.error("error closing soap connection, ignorred", e);
-                }
-            }
-        }
-
-        return response;
-    }
-
-    /**
-    * parses response and returns T
-    */
-    private <T> T parseResponse(SOAPMessage response, String tagName, Class<T> type) {
-        T result = null;
-        try {
-            SOAPBody responseBody = response.getSOAPBody();
-            Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
-            if (!iterator.hasNext()) {
-                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body missing expected item");
-            }
-            SOAPBodyElement element = (SOAPBodyElement)iterator.next();
-            if (element.getFirstChild() == null) {
-                throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body missing expected item");
-            }
-            JAXBContext jaxbContext = JAXBContext.newInstance(type);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();
-        } catch (SOAPException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response processing error");
-        } catch (JAXBException e) {
-            throw new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "soap response body content unmarshalling error");
-        }
-
-        return result;
-    }
-
     @Override
     public MCIProxyGetTokenResponse getToken() {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(namespace + SOAPACTION_GETTOKEN);
-
-        // add request body/header
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_GETTOKEN);
 
         // send message and get response
-        SOAPMessage response = callSOAP(request);
+        SOAPMessage response = SOAPHelper.callSOAP(request, url);
 
         // process response
-        MCIProxyGetTokenResponse getTokenResponse = parseResponse(response, "GetTokenResponse", MCIProxyGetTokenResponse.class);
+        MCIProxyGetTokenResponse getTokenResponse = SOAPHelper.parseResponse(response, namespace, "GetTokenResponse", MCIProxyGetTokenResponse.class);
 
         return getTokenResponse;
     }
@@ -174,7 +81,7 @@ public class MCIProxyImpl implements MCIProxy {
             int amount, long trId) {
 
         // create empty soap request
-        SOAPMessage request = createSOAPRequest(namespace + SOAPACTION_RECHARGE);
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_RECHARGE);
 
         // add request body/header
         try {
@@ -201,10 +108,10 @@ public class MCIProxyImpl implements MCIProxy {
         }
 
         // send message and get response
-        SOAPMessage response = callSOAP(request);
+        SOAPMessage response = SOAPHelper.callSOAP(request, url);
 
         // process response
-        MCIProxyRechargeResponse rechargeResponse = parseResponse(response, "RechargeResponse", MCIProxyRechargeResponse.class);
+        MCIProxyRechargeResponse rechargeResponse = SOAPHelper.parseResponse(response, namespace, "RechargeResponse", MCIProxyRechargeResponse.class);
 
         return rechargeResponse;
     }

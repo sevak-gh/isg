@@ -132,7 +132,7 @@ public abstract class RequestValidator {
         }
 
         if ((transaction.getStf() != null) && (transaction.getStf() == 1)) {
-            return ErrorCodes.OPERATOR_SERVICE_ERROR;
+            return ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE;
         }
 
         if ((transaction.getStf() != null) && (transaction.getStf() == 3)) {

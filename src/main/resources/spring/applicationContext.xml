@@ -38,9 +38,6 @@
             </ws:service>
         </wss:service>
     </wss:binding>
-<!--
-    <bean id="myHandler" class="com.infotech.com.ws.ISGWSHandler" />
--->
 
 </beans>
 

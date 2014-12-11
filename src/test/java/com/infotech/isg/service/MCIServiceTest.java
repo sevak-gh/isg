@@ -289,7 +289,7 @@ public class MCIServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verify(mciProxy).getToken();
         verifyNoMoreInteractions(mciProxy);
         verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
@@ -322,7 +322,7 @@ public class MCIServiceTest {
         String token = "token";
         when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenThrow(new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR, "recharge operation failed"));
+        .thenThrow(new ISGException(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, "recharge operation failed"));
 
         // act
         ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
@@ -331,7 +331,7 @@ public class MCIServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verify(mciProxy).getToken();
         verify(mciProxy).recharge(token, "consumer", 10000, 0);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
@@ -374,7 +374,7 @@ public class MCIServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verify(mciProxy).getToken();
         verify(mciProxy).recharge(token, "consumer", 10000, 0);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
@@ -421,7 +421,7 @@ public class MCIServiceTest {
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_UNAVAILABLE));
+        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         verify(mciProxy).getToken();
         verify(mciProxy).recharge(token, "consumer", 10000, 0);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
