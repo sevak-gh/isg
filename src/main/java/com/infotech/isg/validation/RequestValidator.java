@@ -100,7 +100,7 @@ public abstract class RequestValidator {
     }
 
     /**
-    * checks duplicate transactions.
+    * checks for duplicate transactions and STF result.
     */
     public int validateTransaction(Transaction transaction, String orderId,
                                    int operatorId, int amount, int channel,
@@ -110,35 +110,37 @@ public abstract class RequestValidator {
             return ErrorCodes.OK;
         }
 
-        if (!((transaction.getResNum() != null)
-              && (transaction.getResNum().compareTo(orderId) == 0))) {
+        if (!((transaction.getProvider() == operatorId)
+              && (transaction.getAmount() == amount)
+              && (transaction.getChannel() == channel)
+              && ((transaction.getResNum() != null)  && (transaction.getResNum().compareTo(orderId) == 0))
+              && ((transaction.getConsumer() != null) && (transaction.getConsumer().compareTo(consumer) == 0))
+              && ((transaction.getCustomerIp() != null) && (transaction.getCustomerIp().compareTo(customerIp) == 0)))) {
             // possible fraud
             return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
         }
 
-        if (!((transaction.getProvider() == operatorId)
-              && (transaction.getAmount() == amount)
-              && (transaction.getChannel() == channel)
-              && ((transaction.getConsumer() != null) && (transaction.getConsumer().compareTo(consumer) == 0))
-              && ((transaction.getCustomerIp() != null) && (transaction.getCustomerIp().compareTo(customerIp) == 0)))) {
-            return ErrorCodes.DOUBLE_SPENDING_TRANSACTION;
+        if (transaction.getStf() == null) {
+            // not set for STF, means already handled
+            return ErrorCodes.REPETITIVE_TRANSACTION;
         }
 
-        if (!((transaction.getStatus() != null)
-              && (transaction.getStatus() == 1)
-              && (transaction.getOperatorResponseCode() != null)
-              && (transaction.getOperatorResponseCode() == 0))) {
-            return ErrorCodes.TRANSACTION_ALREADY_FAILED;
-        }
-
-        if ((transaction.getStf() != null) && (transaction.getStf() == 1)) {
+        if (transaction.getStf() == 1) {
+            // STF not resolved yet
             return ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE;
         }
 
-        if ((transaction.getStf() != null) && (transaction.getStf() == 3)) {
-            return ErrorCodes.STF_ERROR;
+        if (transaction.getStf() == 3) {
+            // STF resolved to FAILED
+            return ErrorCodes.STF_RESOLVED_FAILED;
         }
 
-        return ErrorCodes.OK;
+        if (transaction.getStf() == 2) {
+            // STF resolved to SUCCESSFUL
+            return ErrorCodes.STF_RESOLVED_SUCCESSFUL;
+        }
+
+        // invalid STF value
+        return ErrorCodes.STF_ERROR;
     }
 }

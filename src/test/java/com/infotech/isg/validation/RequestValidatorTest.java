@@ -166,27 +166,6 @@ public class RequestValidatorTest {
                     }
                 },
                 "ABC12",            // orderId
-                Operator.MCI_ID,    // provider
-                20000,              // amount
-                1,                  // channel
-                "09125067064",      // consumer
-                "10.20.1.5",        // customerIP
-                ErrorCodes.OK
-            },
-            {
-                new Transaction() {{
-                        setResNum("ABC12");
-                        setProvider(Operator.MCI_ID);
-                        setAmount(20000);
-                        setChannel(1);
-                        setConsumer("09125067064");
-                        setCustomerIp("10.20.1.5");
-                        setStatus(1);
-                        setOperatorResponseCode(0);
-                        setStf(0);
-                    }
-                },
-                "ABC12",            // orderId
                 Operator.MTN_ID,    // provider
                 20000,              // amount
                 1,                  // channel
@@ -307,30 +286,8 @@ public class RequestValidatorTest {
                         setChannel(1);
                         setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
-                        //setStatus(1);
-                        //setOperatorResponseCode(0);
-                        setStf(0);
-                    }
-                },
-                "ABC12",            // orderId
-                Operator.MCI_ID,    // provider
-                20000,              // amount
-                1,                  // channel
-                "09125067064",      // consumer
-                "10.20.1.5",        // customerIP
-                ErrorCodes.TRANSACTION_ALREADY_FAILED
-            },
-            {
-                new Transaction() {{
-                        setResNum("ABC12");
-                        setProvider(Operator.MCI_ID);
-                        setAmount(20000);
-                        setChannel(1);
-                        setConsumer("09125067064");
-                        setCustomerIp("10.20.1.5");
-                        //setStatus(1);
+                        setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
@@ -339,7 +296,7 @@ public class RequestValidatorTest {
                 1,                  // channel
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
-                ErrorCodes.TRANSACTION_ALREADY_FAILED
+                ErrorCodes.REPETITIVE_TRANSACTION
             },
             {
                 new Transaction() {{
@@ -350,8 +307,7 @@ public class RequestValidatorTest {
                         setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
                         setStatus(-1);
-                        setOperatorResponseCode(0);
-                        setStf(0);
+                        setOperatorResponseCode(-1011);
                     }
                 },
                 "ABC12",            // orderId
@@ -360,7 +316,7 @@ public class RequestValidatorTest {
                 1,                  // channel
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
-                ErrorCodes.TRANSACTION_ALREADY_FAILED
+                ErrorCodes.REPETITIVE_TRANSACTION
             },
             {
                 new Transaction() {{
@@ -370,9 +326,10 @@ public class RequestValidatorTest {
                         setChannel(1);
                         setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
-                        setStatus(1);
-                        setOperatorResponseCode(0);
+                        setStatus(-1);
+                        setOperatorResponseCode(2);
                         setStf(1);
+                        setStfResult(0);
                     }
                 },
                 "ABC12",            // orderId
@@ -391,9 +348,10 @@ public class RequestValidatorTest {
                         setChannel(1);
                         setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
-                        setStatus(1);
-                        setOperatorResponseCode(0);
-                        //setStf(1);
+                        setStatus(-1);
+                        setOperatorResponseCode(2);
+                        setStf(2);
+                        setStfResult(0);
                     }
                 },
                 "ABC12",            // orderId
@@ -402,7 +360,7 @@ public class RequestValidatorTest {
                 1,                  // channel
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
-                ErrorCodes.OK
+                ErrorCodes.STF_RESOLVED_SUCCESSFUL
             },
             {
                 new Transaction() {{
@@ -412,9 +370,32 @@ public class RequestValidatorTest {
                         setChannel(1);
                         setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
-                        setStatus(1);
-                        setOperatorResponseCode(0);
+                        setStatus(-1);
+                        setOperatorResponseCode(2);
                         setStf(3);
+                        setStfResult(0);
+                    }
+                },
+                "ABC12",            // orderId
+                Operator.MCI_ID,    // provider
+                20000,              // amount
+                1,                  // channel
+                "09125067064",      // consumer
+                "10.20.1.5",        // customerIP
+                ErrorCodes.STF_RESOLVED_FAILED
+            },
+            {
+                new Transaction() {{
+                        setResNum("ABC12");
+                        setProvider(Operator.MCI_ID);
+                        setAmount(20000);
+                        setChannel(1);
+                        setConsumer("09125067064");
+                        setCustomerIp("10.20.1.5");
+                        setStatus(-1);
+                        setOperatorResponseCode(2);
+                        setStf(5);
+                        setStfResult(0);
                     }
                 },
                 "ABC12",            // orderId

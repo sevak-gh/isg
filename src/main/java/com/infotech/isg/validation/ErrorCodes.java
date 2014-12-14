@@ -34,6 +34,8 @@ public class ErrorCodes {
     public static final int INVALID_OPERATOR = -25;
     public static final int TRANSACTION_ALREADY_FAILED = -26;
     public static final int OPERATOR_SERVICE_ERROR = -27;
+    public static final int STF_RESOLVED_FAILED = -28;
+    public static final int STF_RESOLVED_SUCCESSFUL = -29;
 
     public static String toString(int errorCode) {
         switch (errorCode) {

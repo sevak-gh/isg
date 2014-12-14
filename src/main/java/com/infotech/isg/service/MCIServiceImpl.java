@@ -115,7 +115,28 @@ public class MCIServiceImpl implements MCIService {
                         operatorId, amount, channel,
                         consumer, customerIp);
             if (errorCode != ErrorCodes.OK) {
-                return new ISGServiceResponse("ERROR", errorCode, null);
+                // TODO: may need more review
+                switch (errorCode) {
+                    case ErrorCodes.STF_RESOLVED_SUCCESSFUL:
+                        // STF has resolved this transaction as successful
+                        return new ISGServiceResponse("OK", transaction.getId(), transaction.getOperatorResponse());
+
+                    case ErrorCodes.STF_RESOLVED_FAILED:
+                        // STF has resolved this transaction as failed
+                        return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, null);
+
+                    case ErrorCodes.STF_ERROR:
+                        // invalid STF status, set for STF to try again
+                        transaction.setStf(1);
+                        transaction.setStfResult(0);
+                        transaction.setOperatorResponseCode(2);
+                        transactionRepository.update(transaction);
+                        return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
+
+                    default:
+                        return new ISGServiceResponse("ERROR", errorCode, null);
+
+                }
             }
         }
 

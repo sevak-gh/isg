@@ -26,7 +26,7 @@ public class Transaction {
     // orderId from request
     private String resNum;
 
-    // bankReceipt from request
+    // bankReceipt/RRN from request
     private String refNum;
 
     // seems like not being used anymore
@@ -81,6 +81,8 @@ public class Transaction {
     private Date operatorDateTime;
 
     // =1 means this transaction is set to be processed by STF service, in case of failure.
+    // =2 means stf checked and action was successfull.
+    // =3 means stf checked and action was not successfull.
     private Integer stf;
 
     // apparently set by STF service

@@ -50,7 +50,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
         String sql = "update info_topup_transactions set provider=?, token=?, type=?, "
                      + "state=?, resnum=?, refnum=?, revnum=?, clientip=?, amount=?, "
                      + "channel=?, consumer=?, bankcode=?, client=?, customerip=?, "
-                     + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?,"
+                     + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?, "
                      + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
                      + "stfresult=?, opreverse=?, bkreverse=? where id=?";
         jdbcTemplate.update(sql, new Object[] {transaction.getProvider(), transaction.getToken(), transaction.getAction(),
