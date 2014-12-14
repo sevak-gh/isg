@@ -53,17 +53,80 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                      + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?, "
                      + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
                      + "stfresult=?, opreverse=?, bkreverse=? where id=?";
-        jdbcTemplate.update(sql, new Object[] {transaction.getProvider(), transaction.getToken(), transaction.getAction(),
-                                               transaction.getState(), transaction.getResNum(), transaction.getRefNum(),
-                                               transaction.getRevNum(), transaction.getRemoteIp(), transaction.getAmount(),
-                                               transaction.getChannel(), transaction.getConsumer(), transaction.getBankCode(),
-                                               transaction.getClientId(), transaction.getCustomerIp(), transaction.getTrDateTime(),
-                                               transaction.getBankVerify(), transaction.getVerifyDateTime(), transaction.getStatus(),
-                                               transaction.getOperatorResponseCode(), transaction.getOperatorCommand(), transaction.getOperatorResponse(),
-                                               transaction.getOperatorTId(), transaction.getOperatorDateTime(), transaction.getStf(),
-                                               transaction.getStfResult(), transaction.getOpReverse(), transaction.getBkReverse(),
-                                               transaction.getId()
-                                              });
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps =  connection.prepareStatement(sql);
+                ps.setInt(1, transaction.getProvider());
+                ps.setString(2, transaction.getToken());
+                ps.setInt(3, transaction.getAction());
+                ps.setString(4, transaction.getState());
+                ps.setString(5, transaction.getResNum());
+                ps.setString(6, transaction.getRefNum());
+                if (transaction.getRevNum() != null) {
+                    ps.setLong(7, transaction.getRevNum());
+                } else {
+                    ps.setNull(7, java.sql.Types.BIGINT);
+                }
+                ps.setString(8, transaction.getRemoteIp());
+                ps.setLong(9, transaction.getAmount());
+                ps.setInt(10, transaction.getChannel());
+                ps.setString(11, transaction.getConsumer());
+                ps.setString(12, transaction.getBankCode());
+                ps.setInt(13, transaction.getClientId());
+                ps.setString(14, transaction.getCustomerIp());
+                ps.setTimestamp(15, new Timestamp(transaction.getTrDateTime().getTime()));
+                if (transaction.getBankVerify() != null) {
+                    ps.setInt(16, transaction.getBankVerify());
+                } else {
+                    ps.setNull(16, java.sql.Types.INTEGER);
+                }
+                if (transaction.getVerifyDateTime() != null) {
+                    ps.setTimestamp(17, new Timestamp(transaction.getVerifyDateTime().getTime()));
+                } else {
+                    ps.setNull(17, java.sql.Types.TIMESTAMP);
+                }
+                if (transaction.getStatus() != null) {
+                    ps.setInt(18, transaction.getStatus());
+                } else {
+                    ps.setNull(18, java.sql.Types.INTEGER);
+                }
+                if (transaction.getOperatorResponseCode() != null) {
+                    ps.setInt(19, transaction.getOperatorResponseCode());
+                } else {
+                    ps.setNull(19, java.sql.Types.INTEGER);
+                }
+                ps.setString(20, transaction.getOperatorCommand());
+                ps.setString(21, transaction.getOperatorResponse());
+                ps.setString(22, transaction.getOperatorTId());
+                if (transaction.getOperatorDateTime() != null) {
+                    ps.setTimestamp(23, new Timestamp(transaction.getOperatorDateTime().getTime()));
+                } else {
+                    ps.setNull(23, java.sql.Types.TIMESTAMP);
+                }
+                if (transaction.getStf() != null) {
+                    ps.setInt(24, transaction.getStf());
+                } else {
+                    ps.setNull(24, java.sql.Types.TINYINT);
+                }
+                if (transaction.getStfResult() != null) {
+                    ps.setInt(25, transaction.getStfResult());
+                } else {
+                    ps.setNull(25, java.sql.Types.TINYINT);
+                }
+                if (transaction.getOpReverse() != null) {
+                    ps.setInt(26, transaction.getOpReverse());
+                } else {
+                    ps.setNull(26, java.sql.Types.TINYINT);
+                }
+                if (transaction.getBkReverse() != null) {
+                    ps.setInt(27, transaction.getBkReverse());
+                } else {
+                    ps.setNull(27, java.sql.Types.TINYINT);
+                }
+                ps.setLong(28, transaction.getId());
+                return ps;
+            }
+        });
     }
 
     @Override
