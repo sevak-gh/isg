@@ -33,4 +33,9 @@ public class MCIProxyRechargeResponse {
     public String getDetail() {
         return response.get(1);
     }
+
+    @Override
+    public String toString() {
+        return response.toString();
+    }
 }

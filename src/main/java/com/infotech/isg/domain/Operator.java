@@ -41,5 +41,19 @@ public class Operator {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s(%d):%s]", name, id, (isActive) ? "Active" : "Disabled");
+    }
+
+    public static String getName(int id) {
+        switch (id) {
+            case MTN_ID: return "MTN";
+            case MCI_ID: return "MCI";
+            case JIRING_ID: return "Jiring";
+            default: return "";
+        }
+    }
 }
 

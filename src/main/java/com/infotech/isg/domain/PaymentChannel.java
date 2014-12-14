@@ -24,4 +24,9 @@ public class PaymentChannel {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s:%s]", id, (isActive) ? "Active" : "Disabled");
+    }
 }

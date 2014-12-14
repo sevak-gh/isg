@@ -317,4 +317,11 @@ public class Transaction {
     public void setBkReverse(Integer bkReverse) {
         this.bkReverse = bkReverse;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d:(%s,%d,%s)RRN:%s,status:%d,operatorResCode:%d,STF:%d(%s)]",
+                             id, consumer, amount, Operator.getName(provider), refNum, status, operatorResponseCode, stf, trDateTime);
+    }
+
 }

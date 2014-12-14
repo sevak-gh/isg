@@ -73,4 +73,9 @@ public class Client {
     public void addIp(String ip) {
         getIps().add(ip);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s:%s][%s]", username, (isActive) ? "Active" : "Disabled", getIps());
+    }
 }

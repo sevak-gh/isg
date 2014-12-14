@@ -57,4 +57,9 @@ public class ISGServiceResponse {
     public void setOPRDoc(String oprDoc) {
         this.oprDoc = oprDoc;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[status:%s,ISGDoc:%d,oprDoc:%s]", status, isgDoc, oprDoc);
+    }
 }
