@@ -28,15 +28,16 @@ public class MCISOAPHandler implements SOAPHandler<SOAPMessageContext> {
         Boolean isResponse = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         if (!isResponse) {
+            // request
             try {
-                SOAPMessage soapMsg = context.getMessage();
-                SOAPBody body = soapMsg.getSOAPBody();
+                SOAPMessage request = context.getMessage();
+                SOAPBody body = request.getSOAPBody();
                 if (!(body.getChildElements().hasNext())) {
                     // soap body is empty
                     body.addBodyElement(new QName("http://mci.service/", "GetToken"));
                 }
             } catch (SOAPException e) {
-                throw new RuntimeException("error getting soap messsage in handler", e);
+                throw new RuntimeException("error manipulating soap messsage in handler", e);
             }
         }
 
