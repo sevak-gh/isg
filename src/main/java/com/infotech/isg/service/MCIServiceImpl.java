@@ -135,7 +135,6 @@ public class MCIServiceImpl implements MCIService {
 
                     default:
                         return new ISGServiceResponse("ERROR", errorCode, null);
-
                 }
             }
         }

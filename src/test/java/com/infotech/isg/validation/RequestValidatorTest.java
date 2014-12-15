@@ -162,11 +162,10 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
-                Operator.MTN_ID,    // provider
+                Operator.MTN_ID,    // provider, different
                 20000,              // amount
                 1,                  // channel
                 "09125067064",      // consumer
@@ -183,12 +182,11 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
                 Operator.MCI_ID,    // provider
-                10000,              // amount
+                10000,              // amount, different
                 1,                  // channel
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
@@ -204,13 +202,12 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
                 Operator.MCI_ID,    // provider
                 20000,              // amount
-                2,                  // channel
+                2,                  // channel, different
                 "09125067064",      // consumer
                 "10.20.1.5",        // customerIP
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -225,14 +222,13 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
                 Operator.MCI_ID,    // provider
                 20000,              // amount
                 1,                  // channel
-                "09121121245",      // consumer
+                "09121121245",      // consumer, different
                 "10.20.1.5",        // customerIP
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
             },
@@ -246,7 +242,6 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
@@ -254,7 +249,7 @@ public class RequestValidatorTest {
                 20000,              // amount
                 1,                  // channel
                 "09125067064",      // consumer
-                "1.2.1.3",          // customerIP
+                "1.2.1.3",          // customerIP, different
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
             },
             {
@@ -263,18 +258,17 @@ public class RequestValidatorTest {
                         setProvider(Operator.MCI_ID);
                         setAmount(20000);
                         setChannel(1);
-                        //setConsumer("09125067064");
+                        setConsumer("09125067064");
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
-                        setStf(0);
                     }
                 },
                 "ABC12",            // orderId
                 Operator.MCI_ID,    // provider
                 20000,              // amount
                 1,                  // channel
-                "09125067064",      // consumer
+                "",                 // consumer, different
                 "10.20.1.5",        // customerIP
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
             },
@@ -288,6 +282,7 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(1);
                         setOperatorResponseCode(0);
+                        // STF is NULL
                     }
                 },
                 "ABC12",            // orderId
@@ -308,6 +303,7 @@ public class RequestValidatorTest {
                         setCustomerIp("10.20.1.5");
                         setStatus(-1);
                         setOperatorResponseCode(-1011);
+                        // STF is NULL
                     }
                 },
                 "ABC12",            // orderId
@@ -406,7 +402,6 @@ public class RequestValidatorTest {
                 "10.20.1.5",        // customerIP
                 ErrorCodes.STF_ERROR
             }
-
         };
     }
 
