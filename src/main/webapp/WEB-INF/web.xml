@@ -23,12 +23,19 @@
         <param-value>classpath:spring/applicationContext.xml</param-value>
     </context-param>
  
+    <!-- Register ISG config Listener -->
+    <listener>
+        <listener-class>
+            com.infotech.isg.context.ISGConfigListener
+        </listener-class>
+    </listener>
+
     <!-- Register Spring Listener -->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
- 
+
 </web-app>
 
