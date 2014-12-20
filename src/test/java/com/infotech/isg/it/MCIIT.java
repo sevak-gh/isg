@@ -65,15 +65,18 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         LOG.info("init db...");
         jdbcTemplate = new JdbcTemplate(dataSource);
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "info_topup_transactions",
+                                       "info_topup_operators",
+                                       "info_topup_payment_channel",
                                        "info_topup_clients",
                                        "info_topup_client_ips");
+        jdbcTemplate.update("insert into info_topup_operators values(1,'MTN','active'), (2,'MCI','active'), (3,'Jiring','active')");
+        jdbcTemplate.update("insert into info_topup_payment_channel values(59,'Y'), (14,'Y'), (5,'Y')");
         // add client: username=root, password=123456, active='Y', ips: 127.0.0.1, 172.16.10.15
         jdbcTemplate.update("insert into info_topup_clients(id,client,pin,name,contact,tel,vendor,created,active) values(1, 'root', "
                             + "'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346"
                             + "ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413'"
                             + ", 'name', 'contact', 'tel', 'vendor', '2014-01-01 13:05:23','Y')");
-        jdbcTemplate.update("insert into info_topup_client_ips values(1,'127.0.0.1')");
-        jdbcTemplate.update("insert into info_topup_client_ips values(1,'172.16.10.15')");
+        jdbcTemplate.update("insert into info_topup_client_ips values(1,'127.0.0.1'), (1, '172.16.10.15')");
     }
 
     @AfterMethod
