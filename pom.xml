@@ -48,45 +48,13 @@
         <!-- mysql driver -->
         <mysql.version>5.1.34</mysql.version>
 
-    </properties>      
+        <!-- deployment server -->
+        <deploy.server.url>http://localhost:8080/manager/text</deploy.server.url>
+        <deploy.server.username>tomcat</deploy.server.username>
+        <deploy.server.password>tomcat</deploy.server.password>
+        <deploy.path>/isg</deploy.path>
 
-    <profiles>
-        <profile>
-            <id>env-dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>env</name>
-                    <value>dev</value>
-                </property>
-            </activation>
-            <properties>
-                <skip.integration.tests>true</skip.integration.tests>
-                <deploy.server.url>http://localhost:8080/manager/text</deploy.server.url>
-                <deploy.server.name>TomcatServer</deploy.server.name>
-                <deploy.server.username>tomcat</deploy.server.username>
-                <deploy.server.password>tomcat</deploy.server.password>
-                <deploy.path>/isg</deploy.path>
-            </properties>
-        </profile>
-         <profile>
-            <id>env-test</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>test</value>
-                </property>
-            </activation>
-            <properties>
-                <skip.integration.tests>false</skip.integration.tests>
-                <deploy.server.url>http://172.16.79.206:8090/manager/text</deploy.server.url>
-                <deploy.server.name>TomcatServer</deploy.server.name>
-                <deploy.server.username>tomcat</deploy.server.username>
-                <deploy.server.password>tomcat</deploy.server.password>
-                <deploy.path>/isg</deploy.path>
-            </properties>            
-        </profile>
-    </profiles>
+    </properties>      
 
     <dependencies>
         <dependency>
@@ -290,6 +258,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 </project>
