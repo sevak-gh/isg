@@ -24,14 +24,23 @@ public class ISGConfigListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        InputStream input = null;
         try {
-            InputStream input = new FileInputStream(INI_FILE_PATH);
+            input = new FileInputStream(INI_FILE_PATH);
             Properties properties = new Properties(System.getProperties());
             properties.load(input);
             System.setProperties(properties);
             LoggerFactory.getLogger(ISGConfigListener.class).debug("properties file: {} loaded successfully", INI_FILE_PATH);
         } catch (IOException e) {
             throw new RuntimeException("error in loading properties from file: " + INI_FILE_PATH, e);
+        } finally {
+            try {
+                if (input != null) {
+                    input.close();
+                }
+            } catch (IOException e) {
+                //TODO: there is nothing to de here!!!
+            }
         }
     }
 
