@@ -1,12 +1,17 @@
 package com.infotech.isg.context;
 
+import java.util.Properties;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletContextEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.log4j.Level;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.RollingFileAppender;
 
 /**
 * context listener for loading isg.ini as system properties.
@@ -17,15 +22,16 @@ public class ISGConfigListener implements ServletContextListener {
 
     private static final String INI_FILE_PATH = "/etc/isg/isg.ini";
 
-    private static final Logger LOG = LoggerFactory.getLogger(ISGConfigListener.class);
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            System.getProperties().load(new FileInputStream(INI_FILE_PATH));
-            LOG.debug("properties file: {} loaded successfully", INI_FILE_PATH);
+            InputStream input = new FileInputStream(INI_FILE_PATH);
+            Properties properties = new Properties(System.getProperties());
+            properties.load(input);
+            System.setProperties(properties);
+            LoggerFactory.getLogger(ISGConfigListener.class).debug("properties file: {} loaded successfully", INI_FILE_PATH);
         } catch (IOException e) {
-            throw new RuntimeException("error in loading properties: " + INI_FILE_PATH, e);
+            throw new RuntimeException("error in loading properties from file: " + INI_FILE_PATH, e);
         }
     }
 
