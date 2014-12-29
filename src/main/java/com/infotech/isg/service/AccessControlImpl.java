@@ -26,6 +26,7 @@ public class AccessControlImpl implements AccessControl {
         this.clientRepository = clientRepository;
     }
 
+    @Override
     public int authenticate(String username, String password, String remoteIp) {
         client = clientRepository.findByUsername(username);
         if (client == null) {
@@ -44,10 +45,12 @@ public class AccessControlImpl implements AccessControl {
         return ErrorCodes.OK;
     }
 
+    @Override
     public boolean isAuthenticated() {
         return isAuthenticated;
     }
 
+    @Override
     public Client getClient() {
         return client;
     }
