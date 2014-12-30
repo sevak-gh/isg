@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlValue;
 /**
 * representing MCI GetToken response object.
 *
-* @author SEvak Gahribian
+* @author Sevak Gahribian
 */
 @XmlRootElement(name = "GetTokenResult")
 @XmlAccessorType(XmlAccessType.FIELD)

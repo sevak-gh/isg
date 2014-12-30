@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class MCIRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
-    public MCIRequestValidatorImpl(@Qualifier("MCIAmounValidator") AmountValidator amountValidator,
+    public MCIRequestValidatorImpl(@Qualifier("MCIAmountValidator") AmountValidator amountValidator,
                                    @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
                                    @Qualifier("MCIActionValidator") ActionValidator actionValidator,
                                    BankCodeValidator bankCodeValidator,
