@@ -13,20 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* MCI request validator.
+* Jiring request validator.
 *
 * @author Sevak Gharibian
 */
-@Component("MCIRequestValidator")
-public class MCIRequestValidatorImpl extends RequestValidatorImpl {
+@Component("JiringRequestValidator")
+public class JiringRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
-    public MCIRequestValidatorImpl(@Qualifier("MCIAmounValidator") AmountValidator amountValidator,
-                                    @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
-                                    @Qualifier("MCIActionValidator") ActionValidator actionValidator,
-                                    BankCodeValidator bankCodeValidator,
-                                    OperatorValidator operatorValidator,
-                                    PaymentChannelValidator paymentChannelValidator) {
+    public JiringRequestValidatorImpl(@Qualifier("MCIAmounValidator") AmountValidator amountValidator,
+                                        @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
+                                        @Qualifier("JiringActionValidator") ActionValidator actionValidator,
+                                        BankCodeValidator bankCodeValidator,
+                                        OperatorValidator operatorValidator,
+                                        PaymentChannelValidator paymentChannelValidator) {
         this.amountValidator = amountValidator;
         this.cellNumberValidator = cellNumberValidator;
         this.actionValidator = actionValidator;

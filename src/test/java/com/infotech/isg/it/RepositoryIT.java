@@ -5,7 +5,7 @@ import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.BankCodes;
-import com.infotech.isg.domain.ServiceActions;
+import com.infotech.isg.domain.MCIServiceActions;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.ClientRepository;
@@ -114,7 +114,7 @@ public class RepositoryIT extends AbstractTestNGSpringContextTests {
         Transaction transaction = null;
         transaction = new Transaction();
         transaction.setProvider(Operator.MCI_ID);
-        transaction.setAction(ServiceActions.TOP_UP);
+        transaction.setAction(MCIServiceActions.TOP_UP);
         transaction.setState("trstate");
         transaction.setResNum("res123456");
         transaction.setRefNum("ref123456");

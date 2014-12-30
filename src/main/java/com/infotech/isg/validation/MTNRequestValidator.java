@@ -1,5 +1,6 @@
 package com.infotech.isg.validation;
 
+import com.infotech.isg.domain.MTNServiceActions;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
 
@@ -36,5 +37,10 @@ public class MTNRequestValidator extends RequestValidator {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
         return ErrorCodes.OK;
+    }
+    
+    @Override
+    public int validateAction(String action) {
+        return (MTNServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
     }
 }

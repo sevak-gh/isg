@@ -23,7 +23,7 @@ public class MTNRequestValidatorImpl extends RequestValidatorImpl {
     @Autowired
     public MTNRequestValidatorImpl(@Qualifier("MTNAmounValidator") AmountValidator amountValidator,
                                     @Qualifier("MTNCellNumberValidator") CellNumberValidator cellNumberValidator,
-                                    ActionValidator actionValidator,
+                                    @Qualifier("MTNActionValidator") ActionValidator actionValidator,
                                     BankCodeValidator bankCodeValidator,
                                     OperatorValidator operatorValidator,
                                     PaymentChannelValidator paymentChannelValidator) {
