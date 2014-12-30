@@ -38,7 +38,7 @@ public class MTNRequestValidator extends RequestValidator {
         }
         return ErrorCodes.OK;
     }
-    
+
     @Override
     public int validateAction(String action) {
         return (MTNServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
