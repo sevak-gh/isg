@@ -48,11 +48,11 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     @Override
     public void update(final Transaction transaction) {
         final String sql = "update info_topup_transactions set provider=?, token=?, type=?, "
-                     + "state=?, resnum=?, refnum=?, revnum=?, clientip=?, amount=?, "
-                     + "channel=?, consumer=?, bankcode=?, client=?, customerip=?, "
-                     + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?, "
-                     + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
-                     + "stfresult=?, opreverse=?, bkreverse=? where id=?";
+                           + "state=?, resnum=?, refnum=?, revnum=?, clientip=?, amount=?, "
+                           + "channel=?, consumer=?, bankcode=?, client=?, customerip=?, "
+                           + "trtime=?, bankverify=?, verifytime=?, status=?, operator=?, "
+                           + "oprcommand=?, oprresponse=?, oprtid=?, operatortime=?, stf=?, "
+                           + "stfresult=?, opreverse=?, bkreverse=? where id=?";
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps =  connection.prepareStatement(sql);
@@ -132,10 +132,10 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     @Override
     public void create(final Transaction transaction) {
         final String sql = "insert into info_topup_transactions(provider, token, type, state, resnum, refnum, revnum, "
-                     + "clientip, amount, channel, consumer, bankcode, client, customerip, "
-                     + "trtime, bankverify, verifytime, status, operator, oprcommand, "
-                     + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, bkreverse) values( "
-                     + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                           + "clientip, amount, channel, consumer, bankcode, client, customerip, "
+                           + "trtime, bankverify, verifytime, status, operator, oprcommand, "
+                           + "oprresponse, oprtid, operatortime, stf, stfresult, opreverse, bkreverse) values( "
+                           + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {

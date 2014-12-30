@@ -22,14 +22,14 @@ public abstract class RequestValidatorImpl implements IRequestValidator {
     protected BankCodeValidator bankCodeValidator;
     protected OperatorValidator operatorValidator;
     protected PaymentChannelValidator paymentChannelValidator;
-    
+
     @Override
     public int validate(String username, String password,
                         String bankCode, int amount,
                         int channelId, String state,
                         String bankReceipt, String orderId,
                         String consumer, String customerIp,
-                        String remoteIp, String action, 
+                        String remoteIp, String action,
                         int operatorId) {
 
         int errorCode = ErrorCodes.OK;
@@ -82,6 +82,6 @@ public abstract class RequestValidatorImpl implements IRequestValidator {
             return errorCode;
         }
 
-        return ErrorCodes.OK;         
+        return ErrorCodes.OK;
     }
 }

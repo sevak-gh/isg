@@ -23,5 +23,5 @@ public class MCIAmountValidatorImpl implements AmountValidator {
             return ErrorCodes.INVALID_AMOUNT;
         }
         return ErrorCodes.OK;
-   }
+    }
 }

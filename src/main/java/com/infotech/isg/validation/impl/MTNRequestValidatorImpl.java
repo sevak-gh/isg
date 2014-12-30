@@ -22,11 +22,11 @@ public class MTNRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
     public MTNRequestValidatorImpl(@Qualifier("MTNAmounValidator") AmountValidator amountValidator,
-                                    @Qualifier("MTNCellNumberValidator") CellNumberValidator cellNumberValidator,
-                                    @Qualifier("MTNActionValidator") ActionValidator actionValidator,
-                                    BankCodeValidator bankCodeValidator,
-                                    OperatorValidator operatorValidator,
-                                    PaymentChannelValidator paymentChannelValidator) {
+                                   @Qualifier("MTNCellNumberValidator") CellNumberValidator cellNumberValidator,
+                                   @Qualifier("MTNActionValidator") ActionValidator actionValidator,
+                                   BankCodeValidator bankCodeValidator,
+                                   OperatorValidator operatorValidator,
+                                   PaymentChannelValidator paymentChannelValidator) {
         this.amountValidator = amountValidator;
         this.cellNumberValidator = cellNumberValidator;
         this.actionValidator = actionValidator;

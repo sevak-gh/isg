@@ -22,11 +22,11 @@ public class MCIRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
     public MCIRequestValidatorImpl(@Qualifier("MCIAmounValidator") AmountValidator amountValidator,
-                                    @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
-                                    @Qualifier("MCIActionValidator") ActionValidator actionValidator,
-                                    BankCodeValidator bankCodeValidator,
-                                    OperatorValidator operatorValidator,
-                                    PaymentChannelValidator paymentChannelValidator) {
+                                   @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
+                                   @Qualifier("MCIActionValidator") ActionValidator actionValidator,
+                                   BankCodeValidator bankCodeValidator,
+                                   OperatorValidator operatorValidator,
+                                   PaymentChannelValidator paymentChannelValidator) {
         this.amountValidator = amountValidator;
         this.cellNumberValidator = cellNumberValidator;
         this.actionValidator = actionValidator;
