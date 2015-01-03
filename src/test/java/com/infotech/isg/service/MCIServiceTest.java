@@ -1,5 +1,6 @@
 package com.infotech.isg.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.infotech.isg.domain.Client;
@@ -7,13 +8,17 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.ErrorCodes;
-import com.infotech.isg.validation.RequestValidator;
+import com.infotech.isg.validation.IRequestValidator;
+import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
+import com.infotech.isg.proxy.ServiceProvider;
+import com.infotech.isg.proxy.ServiceProviderResponse;
+import com.infotech.isg.service.impl.MCIServiceImpl;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
@@ -35,16 +40,16 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 /**
-* test cases for ISG service.
+* test cases for MCI implementation for ISG service.
 *
 * @author Sevak Gharibian
 */
 public class MCIServiceTest {
 
-    private MCIService mciService;
+    private ISGService mciService;
 
     @Mock
-    private MCIProxy mciProxy;
+    private ServiceProvider mciServiceProvider;
 
     @Mock
     private AccessControl accessControl;
@@ -53,43 +58,39 @@ public class MCIServiceTest {
     private TransactionRepository transactionRepository;
 
     @Mock
-    private RequestValidator mciValidator;
+    private IRequestValidator requestValidator;
 
+    @Mock
+    private TransactionValidator transactionValidator;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mciService = new MCIServiceImpl(accessControl, transactionRepository, mciProxy, mciValidator);
+        mciService = new MCIServiceImpl(accessControl, transactionRepository, mciServiceProvider,
+                                        requestValidator, transactionValidator);
     }
 
     @Test
     public void shouldReturnOKWhenSuccessful() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         when(accessControl.getClient()).thenReturn(new Client() {{setId(1);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy
-        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken("");}});
-        when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList("0", "OK"));}});
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong())).thenReturn(new ServiceProviderResponse() {{setCode("0"); setMessage("OK");}});
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
@@ -115,49 +116,38 @@ public class MCIServiceTest {
         long expectedTransactionId = 0L;
         int expectedStatus = 1;
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy
         String token = "token";
-        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         int responseCode = 0;
         String responseDetail = "OK";
-        when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList(Integer.toString(responseCode), responseDetail));}});
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
+        .thenReturn(new ServiceProviderResponse() {{setCode(Integer.toString(responseCode)); setMessage(responseDetail); setTransactionId(token);}});
 
         // act
-        ISGServiceResponse response = mciService.mci(username, password, bankCode, amount,
+        ISGServiceResponse response = mciService.topup(username, password, bankCode, amount,
                                       channel, state, bankReceipt, orderId,
-                                      consumer, customerIp, remoteIp);
+                                      consumer, customerIp, remoteIp, action);
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is((int)expectedTransactionId));
-        verify(mciValidator).validateRequiredParams(username, password, action, bankCode, amount, channel,
-                state, bankReceipt, orderId, consumer, customerIp);
-        verify(mciValidator).validateAmount(amount);
-        verify(mciValidator).validateCellNumber(consumer);
-        verify(mciValidator).validateBankCode(bankCode);
-        verify(mciValidator).validateOperator(operatorId);
-        verify(mciValidator).validatePaymentChannel(channel);
+        verify(requestValidator).validate(username, password, bankCode, amount, channel,
+                                          state, bankReceipt, orderId, consumer, customerIp, remoteIp, action, operatorId);
         verify(accessControl).authenticate(username, password, remoteIp);
-        verify(transactionRepository).findByRefNumBankCodeClientId(bankReceipt, bankCode, clientId);
-        verify(mciProxy).getToken();
-        verify(mciProxy).recharge(token, consumer, amount, expectedTransactionId);
+        verify(transactionValidator).validate(bankReceipt, bankCode, clientId, orderId,
+                                              operatorId, amount, channel, consumer, customerIp);
+        verify(mciServiceProvider).topup(consumer, amount, expectedTransactionId);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).create(captor.capture());
         Transaction transaction = captor.getValue();
@@ -171,310 +161,258 @@ public class MCIServiceTest {
         assertThat(transaction.getToken(), is(token));
         assertThat(transaction.getOperatorResponseCode(), is(responseCode));
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
-        assertThat(transaction.getOperatorTId(), is(responseDetail));
+        assertThat(transaction.getOperatorTId(), is(token));
         assertThat(transaction.getStf(), is(nullValue()));
         verifyNoMoreInteractions(transactionRepository);
-        verifyNoMoreInteractions(mciProxy);
+        verifyNoMoreInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenValidationError() {
         // arrange
         // set amount validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.INVALID_AMOUNT);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.INVALID_AMOUNT);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.INVALID_AMOUNT));
+        verifyZeroInteractions(mciServiceProvider);
+        verifyZeroInteractions(accessControl);
+        verifyZeroInteractions(transactionValidator);
         verifyZeroInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
     }
 
     @Test
-    public void shouldNotHaveProxyInteractionsWhenDuplicateTransactionError() {
+    public void shouldNotHaveProxyInteractionsWhenDoubleSpendingTransactionError() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.DOUBLE_SPENDING_TRANSACTION);
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.DOUBLE_SPENDING_TRANSACTION);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.DOUBLE_SPENDING_TRANSACTION));
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
-        verifyNoMoreInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(transactionRepository);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenRepetitiveTransactionError() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.REPETITIVE_TRANSACTION);
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.REPETITIVE_TRANSACTION);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.REPETITIVE_TRANSACTION));
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
-        verifyNoMoreInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(transactionRepository);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenSTFNotResolvedError() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);   // means STF not resolved yet
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
-        verifyNoMoreInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(transactionRepository);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenSTFResolvedFailedError() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.STF_RESOLVED_FAILED);   // means STF resolved to failed
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
-        verifyNoMoreInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(transactionRepository);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
-    public void shouldNotHaveProxyInteractionsWhenSTFResolvedSuccessfuldError() {
+    public void shouldNotHaveProxyInteractionsWhenSTFResolvedSuccessful() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.STF_RESOLVED_SUCCESSFUL);   // means STF resolved to successful
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.STF_RESOLVED_SUCCESSFUL);
+        // set transaction repository
+        long transactionId = 5L;
+        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
+        .thenReturn(new ArrayList<Transaction>() {{add(new Transaction() {{setId(transactionId);}});}});
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(greaterThanOrEqualTo(0)));    // tr ID, any positive number
+        assertThat(result, is((int)transactionId));
+        assertThat(response.getStatus(), is("OK"));
         verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
         verifyNoMoreInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenSTFInvalidError() {
         // arrange
-        // set transaction validator to error
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
-        .thenReturn(Arrays.asList(new Transaction()));
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.STF_ERROR);   // invalid STF value
+        // set transaction validator to OK
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
-        ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
-        verify(transactionRepository).update(captor.capture());
-        Transaction transaction = captor.getValue();
-        assertThat(transaction.getStf(), is(1));
-        assertThat(transaction.getStfResult(), is(0));
-        assertThat(transaction.getOperatorResponseCode(), is(2));
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldNotHaveProxyInteractionsWhenAuthenticationError() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(), anyInt(), anyInt(), anyInt(), anyString(), anyString()))
-        .thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to error
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.INVALID_USERNAME_OR_PASSWORD);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.INVALID_USERNAME_OR_PASSWORD));
         verifyZeroInteractions(transactionRepository);
-        verifyZeroInteractions(mciProxy);
+        verifyZeroInteractions(transactionValidator);
+        verifyZeroInteractions(mciServiceProvider);
     }
 
     @Test
     public void shouldReturnOperatorErrorWhenGetTokenFailed() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // bypass proxy, null means operation failed in any reason, but not ambiguous
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong())).thenReturn(null);
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
-        verify(mciProxy).getToken();
-        verifyNoMoreInteractions(mciProxy);
-        verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).create(captor.capture());
         verifyNoMoreInteractions(transactionRepository);
@@ -484,81 +422,30 @@ public class MCIServiceTest {
     public void shouldReturnOperatorErrorNotReverseWhenRechargeThrowsException() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // recharge throws ISGException
-        String token = "token";
-        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
-        when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenThrow(new ISGException("recharge operation failed"));
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // mci proxy throws ISGException
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
+        .thenThrow(new ISGException("ambiguous response from service provider during charge"));
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        verify(mciProxy).getToken();
-        verify(mciProxy).recharge(token, "consumer", 10000, 0);
-        ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
-        verify(transactionRepository).update(captor.capture());
-        Transaction transaction = captor.getValue();
-        assertThat(transaction.getStatus(), is(-1));
-        assertThat(transaction.getStf(), is(1));
-        assertThat(transaction.getStfResult(), is(0));
-        assertThat(transaction.getOperatorResponseCode(), is(2));
-    }
-
-    @Test
-    public void shouldReturnOperatorErrorNotReverseWhenRechargeResponseInvalid() {
-        // arrange
-        // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        // set authentication to OK
-        when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        int clientId = 1;
-        when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // recharge response invalid
-        String token = "token";
-        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
-
-        // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
-        int result = (int)response.getISGDoc();
-
-        // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        verify(mciProxy).getToken();
-        verify(mciProxy).recharge(token, "consumer", 10000, 0);
+        verify(mciServiceProvider).topup("consumer", 10000, 0L);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
@@ -572,40 +459,33 @@ public class MCIServiceTest {
     public void shouldReturnNOKWhenRechargeNotSuccessful() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // recharge responds NOK
         String token = "token";
-        when(mciProxy.getToken()).thenReturn(new MCIProxyGetTokenResponse() {{setToken(token);}});
         int responseCode = -1011;
         String responseDetail = "NOK";
-        when(mciProxy.recharge(anyString(), anyString(), anyInt(), anyLong()))
-        .thenReturn(new MCIProxyRechargeResponse() {{setResponse(Arrays.asList(Integer.toString(responseCode), responseDetail));}});
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
+        .thenReturn(new ServiceProviderResponse() {{setCode(Integer.toString(responseCode)); setMessage(responseDetail); setTransactionId(token);}});
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
+                                      "consumer", "customer", "ip", "top-up");
         int result = (int)response.getISGDoc();
 
         // assert
         assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
-        verify(mciProxy).getToken();
-        verify(mciProxy).recharge(token, "consumer", 10000, 0);
+        verify(mciServiceProvider).topup("consumer", 10000, 0L);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
@@ -613,38 +493,32 @@ public class MCIServiceTest {
         assertThat(transaction.getOperatorResponseCode(), is(responseCode));
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
         assertThat(transaction.getToken(), is(token));
-        assertThat(transaction.getOperatorTId(), is(responseDetail));
+        assertThat(transaction.getOperatorTId(), is(token));
     }
 
     @Test(expectedExceptions = RuntimeException.class)
     public void shouldReThrowRuntimeException() {
         // arrange
         // set all validators to OK
-        when(mciValidator.validateRequiredParams(anyString(), anyString(), anyString(), anyString(),
-                anyInt(), anyInt(), anyString(), anyString(),
-                anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAmount(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateAction(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateCellNumber(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateBankCode(anyString())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateOperator(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validatePaymentChannel(anyInt())).thenReturn(ErrorCodes.OK);
-        when(mciValidator.validateTransaction(anyObject(), anyString(),
-                                              anyInt(), anyInt(), anyInt(),
-                                              anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
+                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
+                                       anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
         when(accessControl.authenticate(anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         int clientId = 1;
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
-        // getToken throw exception
-        when(mciProxy.getToken()).thenThrow(new RuntimeException());
+        // set transaction validation to OK
+        when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
+                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+        // mci proxy throws RuntimeException
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
+        .thenThrow(new RuntimeException("something strange happened during charge"));
 
         // act
-        ISGServiceResponse response = mciService.mci("username", "password", "054", 10000,
+        ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
-                                      "consumer", "customer", "ip");
-        int result = (int)response.getISGDoc();
-
+                                      "consumer", "customer", "ip", "top-up");
         // assert
     }
 }
