@@ -1,6 +1,6 @@
 package com.infotech.isg.validation.impl;
 
-import com.infotech.isg.validation.IRequestValidator;
+import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.AmountValidator;
 import com.infotech.isg.validation.CellNumberValidator;
 import com.infotech.isg.validation.ActionValidator;
@@ -14,7 +14,7 @@ import com.infotech.isg.validation.ErrorCodes;
 *
 * @author Sevak Gharibian
 */
-public abstract class RequestValidatorImpl implements IRequestValidator {
+public abstract class RequestValidatorImpl implements RequestValidator {
 
     protected AmountValidator amountValidator;
     protected CellNumberValidator cellNumberValidator;

@@ -1,6 +1,5 @@
 package com.infotech.isg.validation.impl;
 
-import com.infotech.isg.validation.IRequestValidator;
 import com.infotech.isg.validation.AmountValidator;
 import com.infotech.isg.validation.CellNumberValidator;
 import com.infotech.isg.validation.ActionValidator;

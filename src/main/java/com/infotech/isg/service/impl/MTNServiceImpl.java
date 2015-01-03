@@ -4,7 +4,7 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.service.AccessControl;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.validation.TransactionValidator;
-import com.infotech.isg.validation.IRequestValidator;
+import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.proxy.ServiceProvider;
 
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class MTNServiceImpl extends ISGServiceImpl {
     public MTNServiceImpl(AccessControl accessControl,
                           TransactionRepository transactionRepository,
                           @Qualifier("MTNServiceProvider") ServiceProvider serviceProvider,
-                          @Qualifier("MTNRequestValidator") IRequestValidator requestValidator,
+                          @Qualifier("MTNRequestValidator") RequestValidator requestValidator,
                           TransactionValidator transactionValidator) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;

@@ -2,7 +2,7 @@ package com.infotech.isg.service.impl;
 
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
-import com.infotech.isg.validation.IRequestValidator;
+import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.repository.TransactionRepository;
@@ -31,7 +31,7 @@ public abstract class ISGServiceImpl implements ISGService {
     protected AccessControl accessControl;
     protected TransactionRepository transactionRepository;
     protected ServiceProvider serviceProvider;
-    protected IRequestValidator requestValidator;
+    protected RequestValidator requestValidator;
     protected TransactionValidator transactionValidator;
     protected int operatorId;
 

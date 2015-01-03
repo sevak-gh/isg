@@ -8,7 +8,7 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.ErrorCodes;
-import com.infotech.isg.validation.IRequestValidator;
+import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.OperatorRepository;
@@ -58,7 +58,7 @@ public class MCIServiceTest {
     private TransactionRepository transactionRepository;
 
     @Mock
-    private IRequestValidator requestValidator;
+    private RequestValidator requestValidator;
 
     @Mock
     private TransactionValidator transactionValidator;
