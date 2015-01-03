@@ -56,7 +56,7 @@ public class TransactionValidatorImpl implements TransactionValidator {
 
             if (transaction.getStf() == 3) {
                 // STF resolved to FAILED
-                return ErrorCodes.STF_RESOLVED_FAILED;
+                return ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK;
             }
 
             if (transaction.getStf() == 2) {
@@ -65,7 +65,12 @@ public class TransactionValidatorImpl implements TransactionValidator {
             }
 
             // invalid STF value
-            return ErrorCodes.STF_ERROR;
+            // set for STF to try again
+            transaction.setStf(1);
+            transaction.setStfResult(0);
+            transaction.setOperatorResponseCode(2);
+            transactionRepository.update(transaction);
+            return ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE;
         }
 
         // transaction not tried before

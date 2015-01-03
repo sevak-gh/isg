@@ -1,7 +1,7 @@
 package com.infotech.isg.proxy;
 
 /**
-* service provider response.
+* generic service provider response.
 *
 * @author Sevak Gharibian
 */

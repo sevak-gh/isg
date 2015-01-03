@@ -319,7 +319,8 @@ public class TransactionValidatorTest {
                 1,                  // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
-                ErrorCodes.STF_RESOLVED_FAILED
+                // STF_RESOLVED_FAILED, operator service was not successful
+                ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK
             },
             {
                 "666",              // refnum/bankReceipt
@@ -331,7 +332,8 @@ public class TransactionValidatorTest {
                 1,                  // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
-                ErrorCodes.STF_ERROR
+                // STF_ERROR, invalid STF value, should bet set for retry
+                ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE
             }
         };
     }

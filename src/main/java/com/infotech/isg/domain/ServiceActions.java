@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
-* representing supported MTN service actions.
+* generic service actions
 *
 * @author Sevak Gharibian
 */
-public class MTNServiceActions {
+public class ServiceActions {
     private static Map<String, Integer> actions = new HashMap<String, Integer>();
 
     public static final int TOP_UP = 1;

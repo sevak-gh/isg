@@ -1,9 +1,9 @@
 package com.infotech.isg.proxy;
 
 /**
-* service provider API
+* generic service provider API
 *
-* null respone means error in communicating with service provider
+* null response means error in communication with service provider
 * if result is ambiguous it will throw ISGException, should be set for STF
 *
 * @author Sevak Gharibian

@@ -62,10 +62,12 @@ public class MCIServiceProviderImpl implements ServiceProvider {
             throw new ISGException("recharge response is ambiguous from MCI, should be set for STF");
         }
 
+        // ser response, status not exist for MCI
         ServiceProviderResponse response = new ServiceProviderResponse();
         response.setCode(rechargeResponse.getCode());
         response.setMessage(rechargeResponse.getDetail());
         response.setTransactionId(token);
+
         return response;
     }
 }

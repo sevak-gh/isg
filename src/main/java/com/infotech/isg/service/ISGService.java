@@ -1,7 +1,7 @@
 package com.infotech.isg.service;
 
 /**
-* ISG serive API
+* generic ISG serive API
 *
 * @author Sevak Gahribian
 */

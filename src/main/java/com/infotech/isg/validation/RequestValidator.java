@@ -4,7 +4,7 @@ import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.BankCodes;
-import com.infotech.isg.domain.MCIServiceActions;
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
 
@@ -62,7 +62,7 @@ public abstract class RequestValidator {
     }
 
     public int validateAction(String action) {
-        return (MCIServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
+        return (ServiceActions.isActionExist(action)) ? ErrorCodes.OK : ErrorCodes.INVALID_OPERATOR_ACTION;
     }
 
     public int validateCellNumber(String cellNumber) {

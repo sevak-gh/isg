@@ -3,6 +3,7 @@ package com.infotech.isg.service;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Transaction;
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.IRequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.ErrorCodes;
@@ -37,7 +38,6 @@ public abstract class ISGServiceImpl implements ISGService {
     protected IRequestValidator requestValidator;
     protected TransactionValidator transactionValidator;
     protected int operatorId;
-    protected int actionCode;
 
     @Override
     public ISGServiceResponse topup(String username, String password,
@@ -67,10 +67,10 @@ public abstract class ISGServiceImpl implements ISGService {
                     orderId, operatorId, amount, channel, consumer, customerIp);
         if (errorCode != ErrorCodes.OK) {
             // TODO: may need more review
-            List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
             switch (errorCode) {
                 case ErrorCodes.STF_RESOLVED_SUCCESSFUL:
                     // STF has resolved this transaction as successful
+                    List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
                     long transactionId = 0;
                     String operatorResponse = null;
                     if ((transactions != null) && (transactions.size() > 0)) {
@@ -78,20 +78,6 @@ public abstract class ISGServiceImpl implements ISGService {
                         operatorResponse = transactions.get(0).getOperatorResponse();
                     }
                     return new ISGServiceResponse("OK", transactionId, operatorResponse);
-
-                case ErrorCodes.STF_RESOLVED_FAILED:
-                    // STF has resolved this transaction as failed
-                    return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, null);
-
-                case ErrorCodes.STF_ERROR:
-                    // invalid STF status, set for STF to try again
-                    if ((transactions != null) && (transactions.size() > 0)) {
-                        transactions.get(0).setStf(1);
-                        transactions.get(0).setStfResult(0);
-                        transactions.get(0).setOperatorResponseCode(2);
-                        transactionRepository.update(transactions.get(0));
-                    }
-                    return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
 
                 default:
                     return new ISGServiceResponse("ERROR", errorCode, null);
@@ -101,7 +87,7 @@ public abstract class ISGServiceImpl implements ISGService {
         // register ongoing transaction
         Transaction transaction = new Transaction();
         transaction.setProvider(operatorId);
-        transaction.setAction(actionCode);
+        transaction.setAction(ServiceActions.getActionCode(action));
         transaction.setState(state);
         transaction.setResNum(orderId);
         transaction.setRefNum(bankReceipt);

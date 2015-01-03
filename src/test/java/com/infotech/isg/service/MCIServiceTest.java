@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.Transaction;
-import com.infotech.isg.domain.MCIServiceActions;
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.repository.TransactionRepository;
@@ -162,7 +162,7 @@ public class MCIServiceTest {
         verify(transactionRepository).create(captor.capture());
         Transaction transaction = captor.getValue();
         assertThat(transaction.getId(), is(expectedTransactionId));
-        assertThat(transaction.getAction(), is(MCIServiceActions.TOP_UP));
+        assertThat(transaction.getAction(), is(ServiceActions.TOP_UP));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         verify(transactionRepository).update(captor.capture());

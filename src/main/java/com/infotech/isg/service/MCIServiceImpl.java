@@ -9,7 +9,7 @@ import java.io.IOException;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.PaymentChannel;
 import com.infotech.isg.domain.Transaction;
-import com.infotech.isg.domain.MCIServiceActions;
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.repository.TransactionRepository;
@@ -59,7 +59,7 @@ public class MCIServiceImpl implements MCIService {
                                   String remoteIp) {
 
         int operatorId = Operator.MCI_ID;
-        int action = MCIServiceActions.TOP_UP;
+        int action = ServiceActions.TOP_UP;
         String actionName = "top-up";
         int errorCode = ErrorCodes.OK;
 
