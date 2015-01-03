@@ -1,6 +1,6 @@
 package com.infotech.isg.ws;
 
-import com.infotech.isg.service.MCIService;
+import com.infotech.isg.service.ISGService;
 import com.infotech.isg.service.ISGServiceResponse;
 import com.infotech.isg.validation.ErrorCodes;
 
@@ -18,6 +18,7 @@ import javax.jws.soap.SOAPBinding.Use;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,9 @@ public class ISGWS {
     @Resource
     private WebServiceContext context;
 
-    private final MCIService mciService;
+    private final ISGService mtnService;
+    private final ISGService mciService;
+    private final ISGService jiringService;
 
     /**
     * gets client remote IP through web service context
@@ -49,8 +52,12 @@ public class ISGWS {
     }
 
     @Autowired
-    public ISGWS(MCIService mciService) {
+    public ISGWS(@Qualifier("MTNService") ISGService mtnService,
+                 @Qualifier("MCIService") ISGService mciService,
+                 @Qualifier("JiringService") ISGService jiringService) {
+        this.mtnService = mtnService;
         this.mciService = mciService;
+        this.jiringService = jiringService;
     }
 
     /**
@@ -70,9 +77,9 @@ public class ISGWS {
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp) {
 
-        ISGServiceResponse response = mciService.mci(username, password, bankCode, amount, channel,
+        ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp());
+                                      getClientIp(), "top-up");
 
         LOG.info("\u001B[32mMCI\u001B[0m top-up for [{},{}] from [{},'{}',{}] => {}{}\u001B[0m,{},{}",
                  consumer, amount, username, getClientIp(), channel,

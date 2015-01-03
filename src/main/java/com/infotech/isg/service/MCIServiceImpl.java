@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 *
 * @author Sevak Gharibian
 */
-@Service("MCIServie")
+@Service("MCIServieee")
 public class MCIServiceImpl implements MCIService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MCIServiceImpl.class);
