@@ -48,7 +48,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
             Operator operator = new Operator();
             operator.setId(rs.getInt("id"));
             operator.setName(rs.getString("name"));
-            operator.setIsActive(((rs.getString("status").compareToIgnoreCase("active") == 0) ? true : false));
+            operator.setIsActive(((rs.getString("status").equalsIgnoreCase("active")) ? true : false));
             return operator;
         }
     }

@@ -47,7 +47,7 @@ public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepositor
         public PaymentChannel mapRow(ResultSet rs, int rowNum) throws SQLException {
             PaymentChannel paymentChannel = new PaymentChannel();
             paymentChannel.setId(rs.getString("channel"));
-            paymentChannel.setIsActive(((rs.getString("active").compareToIgnoreCase("Y") == 0) ? true : false));
+            paymentChannel.setIsActive(((rs.getString("active").equalsIgnoreCase("Y")) ? true : false));
             return paymentChannel;
         }
     }

@@ -55,7 +55,7 @@ public class JdbcClientRepositoryImpl implements ClientRepository {
             client.setId(rs.getInt("id"));
             client.setUsername(rs.getString("client"));
             client.setPassword(rs.getString("pin"));
-            client.setIsActive(((rs.getString("active").compareToIgnoreCase("Y") == 0) ? true : false));
+            client.setIsActive(((rs.getString("active").equalsIgnoreCase("Y")) ? true : false));
             client.setVendor(rs.getString("vendor"));
             return client;
         }
