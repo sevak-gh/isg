@@ -323,5 +323,4 @@ public class Transaction {
         return String.format("[%d:(%s,%d,%s)RRN:%s,status:%d,operatorResCode:%d,STF:%d(%s)]",
                              id, consumer, amount, Operator.getName(provider), refNum, status, operatorResponseCode, stf, trDateTime);
     }
-
 }

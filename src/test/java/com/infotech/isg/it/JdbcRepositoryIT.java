@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,20 +35,24 @@ import org.slf4j.LoggerFactory;
 * @author Sevak Gahribian
 */
 @ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
-public class RepositoryIT extends AbstractTestNGSpringContextTests {
+public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
-    private static final Logger logger = LoggerFactory.getLogger(RepositoryIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcRepositoryIT.class);
 
     @Autowired
+    @Qualifier("JdbcOperatorRepository")
     private OperatorRepository operatorRepo;
 
     @Autowired
+    @Qualifier("JdbcPaymentChannelRepository")
     private PaymentChannelRepository paymentChannelRepo;
 
     @Autowired
+    @Qualifier("JdbcTransactionRepository")
     private TransactionRepository transactionRepo;
 
     @Autowired
+    @Qualifier("JdbcClientRepository")
     private ClientRepository clientRepo;
 
     @Autowired
