@@ -19,7 +19,9 @@ public class MCIAmountValidatorImpl implements AmountValidator {
               || (amount == 20000)
               || (amount == 50000)
               || (amount == 100000)
-              || (amount == 200000))) {
+              || (amount == 200000)
+              || (amount == 500000)
+              || (amount == 1000000))) {
             return ErrorCodes.INVALID_AMOUNT;
         }
         return ErrorCodes.OK;

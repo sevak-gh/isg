@@ -30,8 +30,12 @@ public class AmountValidatorTest {
             {50000, ErrorCodes.OK},
             {100000, ErrorCodes.OK},
             {200000, ErrorCodes.OK},
+            {500000, ErrorCodes.OK},
+            {1000000, ErrorCodes.OK},
             {300000, ErrorCodes.INVALID_AMOUNT},
-            {500000, ErrorCodes.INVALID_AMOUNT}
+            {600000, ErrorCodes.INVALID_AMOUNT},
+            {800000, ErrorCodes.INVALID_AMOUNT},
+            {12000000, ErrorCodes.INVALID_AMOUNT}
         };
     }
 
