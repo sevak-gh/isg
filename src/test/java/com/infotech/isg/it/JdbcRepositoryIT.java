@@ -10,6 +10,7 @@ import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
+import com.infotech.isg.repository.AuditLogRepository;
 
 import javax.sql.DataSource;
 import java.util.Date;
@@ -56,6 +57,10 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
     private ClientRepository clientRepo;
 
     @Autowired
+    @Qualifier("JdbcAuditLogRepository")
+    private AuditLogRepository auditLogRepository;
+
+    @Autowired
     private DataSource dataSource;
 
     @BeforeClass
@@ -72,6 +77,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
                             + ", 'name', 'contact', 'tel', 'vendor', '2014-01-01 13:05:23','Y')");
         jdbcTemplate.update("insert into info_topup_client_ips values(1,'1.1.1.1')");
         jdbcTemplate.update("insert into info_topup_client_ips values(1,'2.2.2.2')");
+        jdbcTemplate.update("delete from info_topup_audit");
     }
 
     @Test
@@ -155,5 +161,29 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.get(0).getRefNum(), is("ref123456"));
         assertThat(transactions.get(0).getStatus(), is(1));
         assertThat(transactions.get(0).getOperatorResponseCode(), is(0));
+    }
+
+    @Test
+    public void shouldInsertAuditLog() {
+        String username = "username";
+        String bankCode = "bankCode";
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "order";
+        String consumer = "09125067064";
+        String customerIp = "1.1.1.1";
+        String remoteIp = "10.20.30.40";
+        String action = "action";
+        int operatorId = 1;
+        String status = "Error";
+        long isgDoc = -5;
+        String oprDoc = "";
+        Date timestamp = new Date();
+        long responseTime = 125;
+        auditLogRepository.create(username, bankCode, amount, channel, state, bankReceipt,
+                                  orderId, consumer, customerIp, remoteIp, action, operatorId,
+                                  status, isgDoc, oprDoc, timestamp, responseTime);
     }
 }
