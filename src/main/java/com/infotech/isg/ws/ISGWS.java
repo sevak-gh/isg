@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 @Service("ISGWS")
 public class ISGWS {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ISGWS.class);
+    private static final Logger LOG = LoggerFactory.getLogger("isg.audit");
 
     @Resource
     private WebServiceContext context;
