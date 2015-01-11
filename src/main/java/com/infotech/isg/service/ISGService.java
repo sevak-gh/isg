@@ -12,4 +12,6 @@ public interface ISGService {
                                     String bankReceipt, String orderId,
                                     String consumer, String customerIp,
                                     String remoteIp, String action);
+
+    public int getOperatorId();
 }

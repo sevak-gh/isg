@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 @Service("ISGWS")
 public class ISGWS {
 
-    private static final Logger LOG = LoggerFactory.getLogger("isg.audit");
+    private static final Logger LOG = LoggerFactory.getLogger(ISGWS.class);
 
     @Resource
     private WebServiceContext context;
@@ -77,16 +77,9 @@ public class ISGWS {
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp) {
 
-        long startTime = System.currentTimeMillis();
-
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp(), "top-up");
-
-        LOG.info("\u001B[32mMCI\u001B[0m top-up for [{},{}] from [{},'{}',{}] => [{}{}\u001B[0m,{}({}),{}] in {} msec",
-                 consumer, amount, username, getClientIp(), channel,
-                 (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m", response.getStatus(),
-                 ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc(), response.getOPRDoc(), (System.currentTimeMillis() - startTime));
 
         return response;
     }

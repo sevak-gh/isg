@@ -141,4 +141,9 @@ public abstract class ISGServiceImpl implements ISGService {
         transactionRepository.update(transaction);
         return new ISGServiceResponse("OK", transaction.getId(), serviceProviderResponse.getMessage());
     }
+
+    @Override
+    public int getOperatorId() {
+        return operatorId;
+    }
 }
