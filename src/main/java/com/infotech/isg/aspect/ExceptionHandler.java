@@ -22,10 +22,8 @@ public class ExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionHandler.class);
 
-    // around execution any public method in MCIServiceImpl in service package
-    @Around("execution(public * com.infotech.isg.service.impl.MTNServiceImpl.*(..))"
-            + " || execution(public * com.infotech.isg.service.impl.MCIServiceImpl.*(..))"
-            + " || execution(public * com.infotech.isg.service.impl.JiringServiceImpl.*(..))")
+    // around execution any public method in ISGService API
+    @Around("execution(public * com.infotech.isg.service.ISGService.*(..))")
     public Object translateException(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
         try {
