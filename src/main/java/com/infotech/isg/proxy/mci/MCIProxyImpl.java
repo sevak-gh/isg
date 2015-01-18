@@ -40,8 +40,9 @@ public class MCIProxyImpl implements MCIProxy {
     @Value("${mci.namespace}")
     private String namespace;
 
-    private static final String SOAPACTION_GETTOKEN = "GetToken";
+    private static final String SOAPACTION_GET_TOKEN = "GetToken";
     private static final String SOAPACTION_RECHARGE = "Recharge";
+    private static final String SOAPACTION_GET_REMAINED_BROKER_RECHARGE = "GetRemainedBrokerRecharge";
 
     public void setUrl(String url) {
         this.url = url;
@@ -63,7 +64,7 @@ public class MCIProxyImpl implements MCIProxy {
     public MCIProxyGetTokenResponse getToken() {
 
         // create empty soap request
-        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_GETTOKEN);
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_GET_TOKEN);
 
         // send message and get response
         SOAPMessage response = SOAPHelper.callSOAP(request, url);
@@ -91,7 +92,7 @@ public class MCIProxyImpl implements MCIProxy {
             String combination = username.toUpperCase() + "|" + password + "|" + token;
             passwordElement.setValue(HashGenerator.getMD5(combination));
             SOAPBody body = request.getSOAPBody();
-            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, "Recharge", "ns"));
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE, "ns"));
             SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
             element.addTextNode(username);
             element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", "ns"));
@@ -106,11 +107,51 @@ public class MCIProxyImpl implements MCIProxy {
         }
 
         // send message and get response
-        SOAPMessage response = SOAPHelper.callSOAP(request, url);
+        SOAPMessage soapResponse = SOAPHelper.callSOAP(request, url);
 
         // process response
-        MCIProxyRechargeResponse rechargeResponse = SOAPHelper.parseResponse(response, namespace, "RechargeResponse", MCIProxyRechargeResponse.class);
+        MCIProxyRechargeResponse response = SOAPHelper.parseResponse(soapResponse,
+                                            namespace,
+                                            "RechargeResponse",
+                                            MCIProxyRechargeResponse.class);
 
-        return rechargeResponse;
+        return response;
+    }
+
+    public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+
+        // create empty soap request
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_GET_REMAINED_BROKER_RECHARGE);
+
+        // add request body/header
+        try {
+            SOAPHeader header = request.getSOAPHeader();
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
+            usernameElement.setValue(username);
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
+            String combination = username.toUpperCase() + "|" + password + "|" + token;
+            passwordElement.setValue(HashGenerator.getMD5(combination));
+            SOAPBody body = request.getSOAPBody();
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_GET_REMAINED_BROKER_RECHARGE, "ns"));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
+            element.addTextNode(username);
+            element = bodyElement.addChildElement(new QName(namespace, "CardAmount", "ns"));
+            element.addTextNode(Integer.toString(amount));
+            request.saveChanges();
+        } catch (SOAPException e) {
+            throw new RuntimeException("soap extended request creation error", e);
+        }
+
+        // send message and get response
+        SOAPMessage soapResponse = SOAPHelper.callSOAP(request, url);
+
+        // process response
+        MCIProxyGetRemainedBrokerRechargeResponse response = SOAPHelper.parseResponse(soapResponse,
+                namespace,
+                "GetRemainedRechargeResponse",
+                MCIProxyGetRemainedBrokerRechargeResponse.class);
+
+        return response;
     }
 }

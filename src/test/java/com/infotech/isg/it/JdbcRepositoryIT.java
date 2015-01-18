@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 @ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
 public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
-    private static final Logger logger = LoggerFactory.getLogger(JdbcRepositoryIT.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcRepositoryIT.class);
 
     @Autowired
     @Qualifier("JdbcOperatorRepository")
@@ -65,7 +65,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @BeforeClass
     public void initDB() {
-        logger.info("init db...");
+        LOG.info("init db...");
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);;
         jdbcTemplate.update("delete from info_topup_transactions");
         jdbcTemplate.update("delete from info_topup_clients");
@@ -82,7 +82,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @Test
     public void shouldFindOperatorById() {
-        logger.info("finding operator by id:" + Operator.MCI_ID);
+        LOG.info("finding operator by id:" + Operator.MCI_ID);
         Operator operator = operatorRepo.findById(Operator.MCI_ID);
         assertThat(operator, is(notNullValue()));
         assertThat(operator.getId(), is(Operator.MCI_ID));
@@ -92,7 +92,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @Test
     public void shouldFindPaymentChannelById() {
-        logger.info("finding channel by id...");
+        LOG.info("finding channel by id...");
         PaymentChannel channel = paymentChannelRepo.findById("1");
         assertThat(channel, is(nullValue()));
         channel = paymentChannelRepo.findById("59");
