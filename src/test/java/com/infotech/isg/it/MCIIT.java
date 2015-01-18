@@ -352,7 +352,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), is(mciResponseCode));
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));

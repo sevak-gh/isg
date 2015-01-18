@@ -127,7 +127,7 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setOperatorTId(serviceProviderResponse.getTransactionId());
             transaction.setOperatorCommand(serviceProviderResponse.getStatus());
             transactionRepository.update(transaction);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, null);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, serviceProviderResponse.getCode());
         }
 
         // operation successful, OK
