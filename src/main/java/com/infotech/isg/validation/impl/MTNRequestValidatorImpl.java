@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* MTN request validator.
-*
-* @author Sevak Gharibian
-*/
+ * MTN request validator.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MTNRequestValidator")
 public class MTNRequestValidatorImpl extends RequestValidatorImpl {
 

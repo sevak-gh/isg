@@ -10,10 +10,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
-* test cases for amount validator
-*
-* @author Sevak Gharibian
-*/
+ * test cases for amount validator
+ *
+ * @author Sevak Gharibian
+ */
 public class AmountValidatorTest {
 
     @DataProvider(name = "provideMCIAmounts")

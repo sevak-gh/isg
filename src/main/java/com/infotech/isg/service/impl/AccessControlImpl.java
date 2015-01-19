@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
-* performing access control logic for clients
-*
-* @author Sevak Gharibian
-*/
+ * performing access control logic for clients
+ *
+ * @author Sevak Gharibian
+ */
 @Service("AccessControl")
 public class AccessControlImpl implements AccessControl {
 

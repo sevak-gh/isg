@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* MCI request validator.
-*
-* @author Sevak Gharibian
-*/
+ * MCI request validator.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIRequestValidator")
 public class MCIRequestValidatorImpl extends RequestValidatorImpl {
 

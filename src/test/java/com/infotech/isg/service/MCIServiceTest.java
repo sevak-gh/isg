@@ -40,10 +40,10 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 /**
-* test cases for MCI implementation for ISG service.
-*
-* @author Sevak Gharibian
-*/
+ * test cases for MCI implementation for ISG service.
+ *
+ * @author Sevak Gharibian
+ */
 public class MCIServiceTest {
 
     private ISGService mciService;

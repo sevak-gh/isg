@@ -33,10 +33,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* integration test for MCI service
-*
-* @author Sevak Gahribian
-*/
+ * integration test for MCI service
+ *
+ * @author Sevak Gahribian
+ */
 @ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
 public class MCIIT extends AbstractTestNGSpringContextTests {
 

@@ -1,10 +1,10 @@
 package com.infotech.isg.service;
 
 /**
-* generic ISG serive API
-*
-* @author Sevak Gahribian
-*/
+ * generic ISG serive API
+ *
+ * @author Sevak Gahribian
+ */
 public interface ISGService {
     public ISGServiceResponse topup(String username, String password,
                                     String bankCode, int amount,

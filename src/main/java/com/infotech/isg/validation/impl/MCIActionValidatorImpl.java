@@ -7,10 +7,10 @@ import com.infotech.isg.domain.ServiceActions;
 import org.springframework.stereotype.Component;
 
 /**
-* validator for MCI service actions
-*
-* @author Sevak Gharibian
-*/
+ * validator for MCI service actions
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIActionValidator")
 public class MCIActionValidatorImpl implements ActionValidator {
 

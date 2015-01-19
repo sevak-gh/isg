@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
 
 /**
-* represents ISG service response object.
-*
-* @author Sevak Gharibian
-*/
+ * represents ISG service response object.
+ *
+ * @author Sevak Gharibian
+ */
 @XmlRootElement(name = "ISGResponse", namespace = "urn:TopUpWSDL")
 @XmlType(name = "ISGResponse", namespace = "urn:TopUpWSDL")
 @XmlAccessorType(XmlAccessType.FIELD)

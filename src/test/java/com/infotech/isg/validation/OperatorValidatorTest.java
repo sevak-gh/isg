@@ -15,10 +15,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
-* test cases for operator validator
-*
-* @author Sevak Gharibian
-*/
+ * test cases for operator validator
+ *
+ * @author Sevak Gharibian
+ */
 public class OperatorValidatorTest {
 
 

@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
-* generic method entry logger.
-*
-* @author Sevak Gharibian
-*/
+ * generic method entry logger.
+ *
+ * @author Sevak Gharibian
+ */
 @Aspect
 @Component
 public class MethodLogger {

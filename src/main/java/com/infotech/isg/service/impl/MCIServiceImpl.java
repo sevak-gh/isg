@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* MCI service implementation
-*
-* @author Sevak Gharibian
-*/
+ * MCI service implementation
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIService")
 public class MCIServiceImpl extends ISGServiceImpl {
 

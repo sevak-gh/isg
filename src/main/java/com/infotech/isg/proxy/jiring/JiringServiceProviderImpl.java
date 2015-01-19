@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* implementation for Jiring service provider.
-*
-* @author Sevak Gharibian
-*/
+ * implementation for Jiring service provider.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("JiringServiceProvider")
 public class JiringServiceProviderImpl implements ServiceProvider {
 

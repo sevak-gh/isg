@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* MTN service implementation
-*
-* @author Sevak Gharibian
-*/
+ * MTN service implementation
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MTNService")
 public class MTNServiceImpl extends ISGServiceImpl {
 

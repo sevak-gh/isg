@@ -10,10 +10,10 @@ import com.infotech.isg.validation.PaymentChannelValidator;
 import com.infotech.isg.validation.ErrorCodes;
 
 /**
-* generic request validator.
-*
-* @author Sevak Gharibian
-*/
+ * generic request validator.
+ *
+ * @author Sevak Gharibian
+ */
 public abstract class RequestValidatorImpl implements RequestValidator {
 
     protected AmountValidator amountValidator;

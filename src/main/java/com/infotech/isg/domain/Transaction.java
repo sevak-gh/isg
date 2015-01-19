@@ -3,10 +3,10 @@ package com.infotech.isg.domain;
 import java.util.Date;
 
 /**
-* domain object representing topup transaction.
-*
-* @author Sevak Gharibian
-*/
+ * domain object representing topup transaction.
+ *
+ * @author Sevak Gharibian
+ */
 public class Transaction {
     // auto-id
     private long id;

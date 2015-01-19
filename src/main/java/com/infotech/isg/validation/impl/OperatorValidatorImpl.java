@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* validator for service provider opertor.
-*
-* @author Sevak Gharibian
-*/
+ * validator for service provider opertor.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("OperatorValidator")
 public class OperatorValidatorImpl implements OperatorValidator {
 

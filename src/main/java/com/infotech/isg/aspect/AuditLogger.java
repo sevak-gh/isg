@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* audit logger for requests
-*
-* @author Sevak Gharibian
-*/
+ * audit logger for requests
+ *
+ * @author Sevak Gharibian
+ */
 @Aspect
 @Component
 public class AuditLogger {
@@ -73,8 +73,8 @@ public class AuditLogger {
                  remoteIp,                                  // remote Ip
                  channel,                                   // channel
                  (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m", response.getStatus(),
-                 ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc(), 
-                 ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m", response.getOPRDoc(), 
+                 ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc(),
+                 ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m", response.getOPRDoc(),
                  responseTime);
 
         // audit log in DB

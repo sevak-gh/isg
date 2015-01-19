@@ -1,10 +1,10 @@
 package com.infotech.isg.domain;
 
 /**
-* domain object representing payment channel.
-*
-* @author Sevak Gharibian
-*/
+ * domain object representing payment channel.
+ *
+ * @author Sevak Gharibian
+ */
 public class PaymentChannel {
     private String id;
     private boolean isActive;

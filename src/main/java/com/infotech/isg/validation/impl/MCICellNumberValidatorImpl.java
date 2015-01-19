@@ -9,10 +9,10 @@ import java.util.regex.Matcher;
 import org.springframework.stereotype.Component;
 
 /**
-* MCI validator for cell number
-*
-* @author Sevak Gharibian
-*/
+ * MCI validator for cell number
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCICellNumberValidator")
 public class MCICellNumberValidatorImpl implements CellNumberValidator {
 

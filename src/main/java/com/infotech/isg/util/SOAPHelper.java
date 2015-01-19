@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* utility methods for SOAP messages
-*
-* @author Sevak Ghairibian
-*/
+ * utility methods for SOAP messages
+ *
+ * @author Sevak Ghairibian
+ */
 public class SOAPHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(SOAPHelper.class);

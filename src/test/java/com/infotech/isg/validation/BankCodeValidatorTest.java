@@ -10,10 +10,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
-* test cases for bankCode validator
-*
-* @author Sevak Gharibian
-*/
+ * test cases for bankCode validator
+ *
+ * @author Sevak Gharibian
+ */
 public class BankCodeValidatorTest {
 
     @DataProvider(name = "provideBankCodes")

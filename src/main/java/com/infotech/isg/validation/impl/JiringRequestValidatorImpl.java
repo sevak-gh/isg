@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* Jiring request validator.
-*
-* @author Sevak Gharibian
-*/
+ * Jiring request validator.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("JiringRequestValidator")
 public class JiringRequestValidatorImpl extends RequestValidatorImpl {
 

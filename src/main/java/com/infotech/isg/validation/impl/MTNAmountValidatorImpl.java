@@ -6,10 +6,10 @@ import com.infotech.isg.validation.ErrorCodes;
 import org.springframework.stereotype.Component;
 
 /**
-* MTN validator for amount
-*
-* @author Sevak Gharibian
-*/
+ * MTN validator for amount
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MTNAmountValidator")
 public class MTNAmountValidatorImpl implements AmountValidator {
 

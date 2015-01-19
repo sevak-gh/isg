@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* context listener for loading isg.ini as system properties.
-*
-* @author Sevak Gharibian
-*/
+ * context listener for loading isg.ini as system properties.
+ *
+ * @author Sevak Gharibian
+ */
 public class ISGConfigListener implements ServletContextListener {
 
     private static final String INI_FILE_PATH = "/etc/isg/isg.ini";

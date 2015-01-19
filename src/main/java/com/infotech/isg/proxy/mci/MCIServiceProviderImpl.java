@@ -13,10 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* implementation for MCI service provider.
-*
-* @author Sevak Gharibian
-*/
+ * implementation for MCI service provider.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIServiceProvider")
 public class MCIServiceProviderImpl implements ServiceProvider {
 

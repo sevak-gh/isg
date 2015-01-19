@@ -7,10 +7,10 @@ import com.infotech.isg.domain.ServiceActions;
 import org.springframework.stereotype.Component;
 
 /**
-* validator for MTN service actions
-*
-* @author Sevak Gharibian
-*/
+ * validator for MTN service actions
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MTNActionValidator")
 public class MTNActionValidatorImpl implements ActionValidator {
 

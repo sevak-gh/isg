@@ -6,10 +6,10 @@ import com.infotech.isg.validation.ErrorCodes;
 import org.springframework.stereotype.Component;
 
 /**
-* MCI validator for amount
-*
-* @author Sevak Gharibian
-*/
+ * MCI validator for amount
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIAmountValidator")
 public class MCIAmountValidatorImpl implements AmountValidator {
 

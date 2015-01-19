@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* implementation for MTN service provider.
-*
-* @author Sevak Gharibian
-*/
+ * implementation for MTN service provider.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MTNServiceProvider")
 public class MTNServiceProviderImpl implements ServiceProvider {
 

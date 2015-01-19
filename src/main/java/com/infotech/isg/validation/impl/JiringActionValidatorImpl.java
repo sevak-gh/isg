@@ -7,10 +7,10 @@ import com.infotech.isg.domain.ServiceActions;
 import org.springframework.stereotype.Component;
 
 /**
-* validator for Jiring service actions
-*
-* @author Sevak Gharibian
-*/
+ * validator for Jiring service actions
+ *
+ * @author Sevak Gharibian
+ */
 @Component("JiringActionValidator")
 public class JiringActionValidatorImpl implements ActionValidator {
 

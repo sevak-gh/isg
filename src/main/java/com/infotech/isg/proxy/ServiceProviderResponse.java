@@ -1,10 +1,10 @@
 package com.infotech.isg.proxy;
 
 /**
-* generic service provider response.
-*
-* @author Sevak Gharibian
-*/
+ * generic service provider response.
+ *
+ * @author Sevak Gharibian
+ */
 public class ServiceProviderResponse {
 
     private String code;

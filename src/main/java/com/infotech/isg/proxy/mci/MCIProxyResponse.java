@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
-* representing MCI abstract response object.
-*
-* @author Sevak Gharibian
-*/
+ * representing MCI abstract response object.
+ *
+ * @author Sevak Gharibian
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class MCIProxyResponse {
 

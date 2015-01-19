@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
-* jdbc implementation for audit log repository.
-*
-* @author Sevak Gharibian
-*/
+ * jdbc implementation for audit log repository.
+ *
+ * @author Sevak Gharibian
+ */
 @Repository("JdbcAuditLogRepository")
 public class JdbcAuditLogRepositoryImpl implements AuditLogRepository {
 

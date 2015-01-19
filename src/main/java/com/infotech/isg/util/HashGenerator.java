@@ -4,10 +4,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
-* utility class for generating hash
-*
-* @author Sevak Gharibian
-*/
+ * utility class for generating hash
+ *
+ * @author Sevak Gharibian
+ */
 public class HashGenerator {
 
     public static String getSHA512(String input) {

@@ -7,10 +7,10 @@ import com.infotech.isg.validation.ErrorCodes;
 import org.springframework.stereotype.Component;
 
 /**
-* validator for bank codes
-*
-* @author Sevak Gharibian
-*/
+ * validator for bank codes
+ *
+ * @author Sevak Gharibian
+ */
 @Component("BankCodeValidator")
 public class BankCodeValidatorImpl implements BankCodeValidator {
 

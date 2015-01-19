@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* Jiring service implementation
-*
-* @author Sevak Gharibian
-*/
+ * Jiring service implementation
+ *
+ * @author Sevak Gharibian
+ */
 @Component("JiringService")
 public class JiringServiceImpl extends ISGServiceImpl {
 

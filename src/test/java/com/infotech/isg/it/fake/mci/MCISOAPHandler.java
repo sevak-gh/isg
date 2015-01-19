@@ -16,11 +16,11 @@ import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
 
 /**
-* handling specific condition where request soap body is empty
-* in this case, SOAPAction header determines the operation.
-*
-* @author Sevak Gahribian
-*/
+ * handling specific condition where request soap body is empty
+ * in this case, SOAPAction header determines the operation.
+ *
+ * @author Sevak Gahribian
+ */
 public class MCISOAPHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override

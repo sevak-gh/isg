@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
-* web service client for ISG service
-* used for integration test only.
-*
-* @author Sevak Gharibian
-*/
+ * web service client for ISG service
+ * used for integration test only.
+ *
+ * @author Sevak Gharibian
+ */
 @Component
 public class ISGClient {
 

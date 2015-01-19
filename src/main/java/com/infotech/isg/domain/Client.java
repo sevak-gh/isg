@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-* domain object representing ISG service client.
-*
-* @author Sevak Gharibian
-*/
+ * domain object representing ISG service client.
+ *
+ * @author Sevak Gharibian
+ */
 public class Client {
     private int id;
     private String username;

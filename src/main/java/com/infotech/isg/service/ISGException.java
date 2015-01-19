@@ -1,10 +1,10 @@
 package com.infotech.isg.service;
 
 /**
-* represents custom exception.
-*
-* @author Sevak Gharibian
-*/
+ * represents custom exception.
+ *
+ * @author Sevak Gharibian
+ */
 public class ISGException extends RuntimeException {
 
     public ISGException() {

@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
-* generic exception handler for uncaught exceptions.
-*
-* @author Sevak Gharibian
-*/
+ * generic exception handler for uncaught exceptions.
+ *
+ * @author Sevak Gharibian
+ */
 @Aspect
 @Component
 public class ExceptionHandler {

@@ -6,10 +6,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlValue;
 
 /**
-* representing MCI GetToken response object.
-*
-* @author Sevak Gahribian
-*/
+ * representing MCI GetToken response object.
+ *
+ * @author Sevak Gahribian
+ */
 @XmlRootElement(name = "GetTokenResult")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MCIProxyGetTokenResponse {

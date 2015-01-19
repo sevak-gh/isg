@@ -5,10 +5,10 @@ import java.util.Set;
 import java.util.HashMap;
 
 /**
-* domain object containing bank codes.
-*
-* @author Sevak Gharibian
-*/
+ * domain object containing bank codes.
+ *
+ * @author Sevak Gharibian
+ */
 public class BankCodes {
 
     private static Map<String, String> codes = new HashMap<String, String>();

@@ -19,10 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* implementation for MCI proxy.
-*
-* @author Sevak Gharibian
-*/
+ * implementation for MCI proxy.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("MCIProxy")
 public class MCIProxyImpl implements MCIProxy {
 

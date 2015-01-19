@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
-* generic service actions
-*
-* @author Sevak Gharibian
-*/
+ * generic service actions
+ *
+ * @author Sevak Gharibian
+ */
 public class ServiceActions {
     private static Map<String, Integer> actions = new HashMap<String, Integer>();
 

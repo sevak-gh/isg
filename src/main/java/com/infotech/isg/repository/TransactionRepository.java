@@ -5,10 +5,10 @@ import java.util.List;
 import com.infotech.isg.domain.Transaction;
 
 /**
-* repository for Transaction domain object.
-*
-* @author Sevak Gharibian
-*/
+ * repository for Transaction domain object.
+ *
+ * @author Sevak Gharibian
+ */
 public interface TransactionRepository {
     public List<Transaction> findByRefNumBankCodeClientId(String refNum, String bankCode, int clientId);
     public void create(Transaction transaction);

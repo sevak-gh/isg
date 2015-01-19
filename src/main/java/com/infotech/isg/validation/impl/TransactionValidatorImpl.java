@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* validator for request transaction.
-*
-* @author Sevak Gharibian
-*/
+ * validator for request transaction.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("TransactionValidator")
 public class TransactionValidatorImpl implements TransactionValidator {
 

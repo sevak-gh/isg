@@ -21,10 +21,10 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 /**
-* jdbc implementation for Transaction repository.
-*
-* @author Sevak Gharibian
-*/
+ * jdbc implementation for Transaction repository.
+ *
+ * @author Sevak Gharibian
+ */
 @Repository("JdbcTransactionRepository")
 public class JdbcTransactionRepositoryImpl implements TransactionRepository {
     private final JdbcTemplate jdbcTemplate;

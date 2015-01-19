@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* publishes ISG service endpoint through XML Web service.
-*
-* @author Sevak Gharibian
-*/
+ * publishes ISG service endpoint through XML Web service.
+ *
+ * @author Sevak Gharibian
+ */
 @WebService(name = "ISGWS", targetNamespace = "urn:TopUpWSDL")
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL)
 @Service("ISGWS")

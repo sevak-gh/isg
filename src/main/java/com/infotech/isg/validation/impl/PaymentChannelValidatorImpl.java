@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
-* validator for payment channels.
-*
-* @author Sevak Gharibian
-*/
+ * validator for payment channels.
+ *
+ * @author Sevak Gharibian
+ */
 @Component("PaymentChannelValidator")
 public class PaymentChannelValidatorImpl implements PaymentChannelValidator {
 

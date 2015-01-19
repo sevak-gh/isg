@@ -16,10 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* SOAP message handler for ISG Webservice to log input/output messages.
-*
-* @author Sevak Gharibian
-*/
+ * SOAP message handler for ISG Webservice to log input/output messages.
+ *
+ * @author Sevak Gharibian
+ */
 @Service
 public class ISGWSHandler implements SOAPHandler<SOAPMessageContext> {
 

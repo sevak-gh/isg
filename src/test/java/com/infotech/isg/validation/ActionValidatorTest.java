@@ -11,10 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
-* test cases for action validator
-*
-* @author Sevak Gharibian
-*/
+ * test cases for action validator
+ *
+ * @author Sevak Gharibian
+ */
 public class ActionValidatorTest {
 
     @DataProvider(name = "provideMTNActions")

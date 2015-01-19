@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
-* domain object representing Telecom operator.
-*
-* @author Sevak Gharibian
-*/
+ * domain object representing Telecom operator.
+ *
+ * @author Sevak Gharibian
+ */
 public class Operator {
 
     private int id;

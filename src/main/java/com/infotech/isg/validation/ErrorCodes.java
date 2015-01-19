@@ -1,10 +1,10 @@
 package com.infotech.isg.validation;
 
 /**
-* representing service error codes.
-*
-* @author Sevak Garibian
-*/
+ * representing service error codes.
+ *
+ * @author Sevak Garibian
+ */
 public class ErrorCodes {
     public static final int OK = 0;
     public static final int INTERNAL_SYSTEM_ERROR = -1;
