@@ -59,12 +59,14 @@ public class AuditLogger {
         String orderId = joinPoint.getArgs()[7].toString();
         String consumer = joinPoint.getArgs()[8].toString();
         String customerIp = joinPoint.getArgs()[9].toString();
+        String[] tokens = customerIp.split("-");
+        String terminalId = ((tokens != null) && (tokens.length > 0)) ? tokens[0] : null;
         String remoteIp = joinPoint.getArgs()[10].toString();
         String action = joinPoint.getArgs()[11].toString();
         int operatorId = ((com.infotech.isg.service.ISGService)joinPoint.getThis()).getOperatorId();
 
         // audit log in file
-        LOG.info("\u001B[32m{}\u001B[0m {} for [{},{}] from [{},'{}',{}] => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
+        LOG.info("\u001B[32m{}\u001B[0m {} for [{},{}] from [{},'{}',{}({})] => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
                  Operator.getName(operatorId),              // operator name
                  action,                                    // action name
                  consumer,                                  // consumer
@@ -72,6 +74,7 @@ public class AuditLogger {
                  username,                                  // username
                  remoteIp,                                  // remote Ip
                  channel,                                   // channel
+                 terminalId,                                // customer IP, first part
                  (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m", response.getStatus(),
                  ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc(),
                  ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m", response.getOPRDoc(),
