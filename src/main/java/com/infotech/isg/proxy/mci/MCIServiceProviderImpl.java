@@ -2,10 +2,12 @@ package com.infotech.isg.proxy.mci;
 
 import com.infotech.isg.proxy.ServiceProvider;
 import com.infotech.isg.proxy.ServiceProviderResponse;
+import com.infotech.isg.proxy.OperatorNotAvailableException;
+import com.infotech.isg.proxy.OperatorUnknownResponseException;
+import com.infotech.isg.proxy.ProxyAccessException;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
-import com.infotech.isg.service.ISGException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,22 +38,22 @@ public class MCIServiceProviderImpl implements ServiceProvider {
         MCIProxyGetTokenResponse getTokenResponse = null;
         try {
             getTokenResponse = mciProxy.getToken();
-        } catch (ISGException e) {
-            LOG.error("error calling mci get token, error in MCI service", e);
-            return null;
+        } catch (ProxyAccessException e) {
+            throw new OperatorNotAvailableException("error in mci GetToken", e);
         }
-        if (getTokenResponse == null) {
-            return null;
-        }
+
         String token = getTokenResponse.getToken();
         if (token == null) {
-            return null;
+            throw new OperatorNotAvailableException("invalid token from mci");
         }
 
         // request MCI to recharge
-        MCIProxyRechargeResponse rechargeResponse = mciProxy.recharge(token,
-                consumer, amount,
-                transactionId);
+        MCIProxyRechargeResponse rechargeResponse = null;
+        try {
+            rechargeResponse = mciProxy.recharge(token, consumer, amount, transactionId);
+        } catch (ProxyAccessException e) {
+            throw new OperatorUnknownResponseException("error in mci Recharge", e);
+        }
 
         // check recharge response
         if ((rechargeResponse == null)
@@ -59,7 +61,7 @@ public class MCIServiceProviderImpl implements ServiceProvider {
             || (rechargeResponse.getResponse().size() < 2)
             || (rechargeResponse.getCode() == null)) {
             // invalid response, should be set for STF
-            throw new ISGException("recharge response is ambiguous from MCI, should be set for STF");
+            throw new OperatorUnknownResponseException("recharge response is ambiguous from MCI, set for STF");
         }
 
         // set response, status not exist for MCI

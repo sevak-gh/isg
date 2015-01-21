@@ -17,6 +17,7 @@ import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import com.infotech.isg.proxy.ServiceProvider;
+import com.infotech.isg.proxy.OperatorUnknownResponseException;
 import com.infotech.isg.proxy.ServiceProviderResponse;
 import com.infotech.isg.service.impl.MCIServiceImpl;
 
@@ -435,7 +436,7 @@ public class MCIServiceTest {
                                            anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // mci proxy throws ISGException
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
-        .thenThrow(new ISGException("ambiguous response from service provider during charge"));
+        .thenThrow(new OperatorUnknownResponseException("ambiguous response from MCI service provider"));
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,

@@ -214,6 +214,7 @@
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                     <compilerArgument>-deprecation</compilerArgument>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
 

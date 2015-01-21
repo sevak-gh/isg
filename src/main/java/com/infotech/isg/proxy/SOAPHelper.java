@@ -1,7 +1,4 @@
-package com.infotech.isg.util;
-
-import com.infotech.isg.service.ISGException;
-import com.infotech.isg.validation.ErrorCodes;
+package com.infotech.isg.proxy;
 
 import java.util.Iterator;
 import java.io.ByteArrayOutputStream;
@@ -26,6 +23,9 @@ import org.slf4j.LoggerFactory;
 /**
  * utility methods for SOAP messages
  *
+ * throws ProxyAccessException (unchecked) for failure in SOAP connection/send/receive/parse
+ * throws RuntimeException for other failures
+ *
  * @author Sevak Ghairibian
  */
 public class SOAPHelper {
@@ -33,8 +33,8 @@ public class SOAPHelper {
     private static final Logger LOG = LoggerFactory.getLogger(SOAPHelper.class);
 
     /**
-    * creates empty soap request message
-    */
+     * creates empty soap request message
+     */
     public static SOAPMessage createSOAPRequest(String namespace, String soapAction) {
         SOAPMessage request = null;
         try {
@@ -51,8 +51,8 @@ public class SOAPHelper {
     }
 
     /**
-    * sends soap request and returns soap response.
-    */
+     * sends soap request and returns soap response.
+     */
     public static SOAPMessage callSOAP(SOAPMessage request, String url) {
         SOAPMessage response = null;
         SOAPConnection cnn = null;
@@ -67,7 +67,7 @@ public class SOAPHelper {
                 LOG.debug("received from [{}]:{}", url.toString(), SOAPHelper.toString(response));
             }
         } catch (SOAPException e) {
-            throw new ISGException("operator service connection/send/receive error", e);
+            throw new ProxyAccessException("operator service connection/send/receive error", e);
         } catch (MalformedURLException e) {
             throw new RuntimeException("malformed URL for soap connection", e);
         } finally {
@@ -84,27 +84,27 @@ public class SOAPHelper {
     }
 
     /**
-    * parses response and returns T
-    */
+     * parses response and returns T
+     */
     public static <T> T parseResponse(SOAPMessage response, String namespace, String tagName, Class<T> type) {
         T result = null;
         try {
             SOAPBody responseBody = response.getSOAPBody();
             Iterator iterator = responseBody.getChildElements(new QName(namespace, tagName, "ns"));
             if (!iterator.hasNext()) {
-                throw new ISGException("soap response body missing expected item");
+                throw new ProxyAccessException("soap response body missing expected item");
             }
             SOAPBodyElement element = (SOAPBodyElement)iterator.next();
             if (element.getFirstChild() == null) {
-                throw new ISGException("soap response body missing expected item");
+                throw new ProxyAccessException("soap response body missing expected item");
             }
             JAXBContext jaxbContext = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             result = unmarshaller.unmarshal(element.getFirstChild(), type).getValue();
         } catch (SOAPException e) {
-            throw new ISGException("soap response processing error");
+            throw new ProxyAccessException("soap response processing error");
         } catch (JAXBException e) {
-            throw new ISGException("soap response body content unmarshalling error");
+            throw new ProxyAccessException("soap response body content unmarshalling error");
         }
 
         return result;

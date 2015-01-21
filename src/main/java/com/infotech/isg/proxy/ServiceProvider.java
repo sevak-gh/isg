@@ -3,8 +3,8 @@ package com.infotech.isg.proxy;
 /**
  * generic service provider API
  *
- * null response means error in communication with service provider
- * if result is ambiguous it will throw ISGException, should be set for STF
+ * throws OperatorNotAvailableException if error in communication with service provider
+ * throws OperatorUnknownResponseException if result is ambiguous, should be set for STF
  *
  * @author Sevak Gharibian
  */

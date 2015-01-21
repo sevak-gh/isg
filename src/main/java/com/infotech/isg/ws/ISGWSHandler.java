@@ -1,6 +1,6 @@
 package com.infotech.isg.ws;
 
-import com.infotech.isg.util.SOAPHelper;
+import com.infotech.isg.proxy.SOAPHelper;
 
 import java.util.Set;
 import javax.xml.ws.handler.soap.SOAPMessageContext;

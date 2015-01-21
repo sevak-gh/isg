@@ -2,7 +2,9 @@ package com.infotech.isg.proxy.jiring;
 
 import com.infotech.isg.proxy.ServiceProvider;
 import com.infotech.isg.proxy.ServiceProviderResponse;
-import com.infotech.isg.service.ISGException;
+import com.infotech.isg.proxy.OperatorNotAvailableException;
+import com.infotech.isg.proxy.OperatorUnknownResponseException;
+import com.infotech.isg.proxy.ProxyAccessException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,51 @@ public class JiringServiceProviderImpl implements ServiceProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(JiringServiceProviderImpl.class);
 
+    private final JiringProxy jiringProxy;
+
+    @Autowired
+    public JiringServiceProviderImpl(JiringProxy jiringProxy) {
+        this.jiringProxy = jiringProxy;
+    }
+
     @Override
     public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
-        return null;
+
+        // get token from jiring
+        TCSResponse response = null;
+        try {
+            response = jiringProxy.salesRequest(consumer, amount);
+        } catch (ProxyAccessException e) {
+            throw new OperatorNotAvailableException("error in jiring SalesRequest", e);
+        }
+
+        if ((response == null)
+            || (response.getResult() == null)
+            || (!response.getResult().equalsIgnoreCase("0"))
+            || (response.getParam1() == null)) {
+            throw new OperatorNotAvailableException("invalid SalesRequest response from jiring");
+        }
+
+        String token = response.getParam1();
+        response = null;
+        try {
+            response = jiringProxy.salesRequestExec(token);
+        } catch (ProxyAccessException e) {
+            throw new OperatorUnknownResponseException("error in jiring SalesRequestExec, ambiguous result", e);
+        }
+
+        if ((response == null)
+            || (response.getResult() == null)) {
+            // invalid response, should be set for STF
+            throw new OperatorUnknownResponseException("SalesRequestExec response is ambiguous from Jiring, set for STF");
+        }
+
+        // set response, status not exist for Jiring
+        ServiceProviderResponse serviceResponse = new ServiceProviderResponse();
+        serviceResponse.setCode(response.getResult());
+        serviceResponse.setMessage(response.getMessage());
+        serviceResponse.setTransactionId(token);
+
+        return serviceResponse;
     }
 }

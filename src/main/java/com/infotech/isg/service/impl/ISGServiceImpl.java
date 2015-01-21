@@ -8,6 +8,8 @@ import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.proxy.ServiceProvider;
 import com.infotech.isg.proxy.ServiceProviderResponse;
+import com.infotech.isg.proxy.OperatorNotAvailableException;
+import com.infotech.isg.proxy.OperatorUnknownResponseException;
 import com.infotech.isg.service.AccessControl;
 import com.infotech.isg.service.ISGService;
 import com.infotech.isg.service.ISGServiceResponse;
@@ -103,7 +105,9 @@ public abstract class ISGServiceImpl implements ISGService {
         ServiceProviderResponse serviceProviderResponse = null;
         try {
             serviceProviderResponse = serviceProvider.topup(consumer, amount, transaction.getId());
-        } catch (ISGException e) {
+        } catch (OperatorNotAvailableException e) {
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        } catch (OperatorUnknownResponseException e) {
             // ambiguous status, set for STF
             transaction.setStf(1);
             transaction.setStfResult(0);

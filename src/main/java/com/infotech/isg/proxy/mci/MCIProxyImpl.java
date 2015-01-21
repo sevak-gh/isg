@@ -1,7 +1,7 @@
 package com.infotech.isg.proxy.mci;
 
 import com.infotech.isg.util.HashGenerator;
-import com.infotech.isg.util.SOAPHelper;
+import com.infotech.isg.proxy.SOAPHelper;
 
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPBody;

@@ -1,7 +1,7 @@
 package com.infotech.isg.it.wsclient;
 
 import com.infotech.isg.service.ISGServiceResponse;
-import com.infotech.isg.util.SOAPHelper;
+import com.infotech.isg.proxy.SOAPHelper;
 
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPBody;
