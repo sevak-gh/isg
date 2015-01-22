@@ -61,9 +61,9 @@ public class ISGWS {
     }
 
     /**
-    * represents MCI service.
-    *
-    */
+     * represents MCI service.
+     *
+     */
     @WebMethod(operationName = "MCI", action = "urn:TopUpWSDL/MCI")
     @WebResult(name = "MCIResponse")
     public ISGServiceResponse mci(@WebParam(name = "username") String username,
@@ -78,6 +78,30 @@ public class ISGWS {
                                   @WebParam(name = "customerip") String customerIp) {
 
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp(), "top-up");
+
+        return response;
+    }
+
+    /**
+     * represents Jiring service
+     *
+     */
+    @WebMethod(operationName = "Jiring", action = "urn:TopUpWSDL/Jiring")
+    @WebResult(name = "JiringResponse")
+    public ISGServiceResponse jiring(@WebParam(name = "username") String username,
+                                     @WebParam(name = "password") String password,
+                                     @WebParam(name = "bankcode") String bankCode,
+                                     @WebParam(name = "amount") int amount,
+                                     @WebParam(name = "channel") int channel,
+                                     @WebParam(name = "state") String state,
+                                     @WebParam(name = "bankreceipt") String bankReceipt,
+                                     @WebParam(name = "orderid") String orderId,
+                                     @WebParam(name = "consumer") String consumer,
+                                     @WebParam(name = "customerip") String customerIp) {
+
+        ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp(), "top-up");
 

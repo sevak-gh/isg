@@ -133,7 +133,13 @@ public class MCIServiceTest {
         int responseCode = 0;
         String responseDetail = "OK";
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
-        .thenReturn(new ServiceProviderResponse() {{setCode(Integer.toString(responseCode)); setMessage(responseDetail); setTransactionId(token);}});
+        .thenReturn(new ServiceProviderResponse() {{
+                setCode(Integer.toString(responseCode));
+                setMessage(responseDetail);
+                setTransactionId(responseDetail);
+                setToken(token);
+            }
+        });
 
         // act
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount,
@@ -162,7 +168,7 @@ public class MCIServiceTest {
         assertThat(transaction.getToken(), is(token));
         assertThat(transaction.getOperatorResponseCode(), is(responseCode));
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
-        assertThat(transaction.getOperatorTId(), is(token));
+        assertThat(transaction.getOperatorTId(), is(responseDetail));
         assertThat(transaction.getStf(), is(nullValue()));
         verifyNoMoreInteractions(transactionRepository);
         verifyNoMoreInteractions(mciServiceProvider);
@@ -476,7 +482,13 @@ public class MCIServiceTest {
         int responseCode = -1011;
         String responseDetail = "NOK";
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
-        .thenReturn(new ServiceProviderResponse() {{setCode(Integer.toString(responseCode)); setMessage(responseDetail); setTransactionId(token);}});
+        .thenReturn(new ServiceProviderResponse() {{
+                setCode(Integer.toString(responseCode));
+                setMessage(responseDetail);
+                setTransactionId(responseDetail);
+                setToken(token);
+            }
+        });
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
@@ -493,8 +505,8 @@ public class MCIServiceTest {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getOperatorResponseCode(), is(responseCode));
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
+        assertThat(transaction.getOperatorTId(), is(responseDetail));
         assertThat(transaction.getToken(), is(token));
-        assertThat(transaction.getOperatorTId(), is(token));
     }
 
     @Test(expectedExceptions = RuntimeException.class)

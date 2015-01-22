@@ -80,4 +80,50 @@ public class ISGClient {
 
         return isgServiceResponse;
     }
+
+    public ISGServiceResponse jiring(String username, String password,
+                                     String bankCode, int amount,
+                                     int channel, String state,
+                                     String bankReceipt, String orderId,
+                                     String consumer, String customerIp) {
+        // create empty soap request
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + "/Jiring");
+
+        // add request body/header
+        try {
+            SOAPBody body = request.getSOAPBody();
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, "Jiring", "ns"));
+            SOAPElement element = bodyElement.addChildElement(new QName("username"));
+            element.addTextNode(username);
+            element = bodyElement.addChildElement(new QName("password"));
+            element.addTextNode(password);
+            element = bodyElement.addChildElement(new QName("bankcode"));
+            element.addTextNode(bankCode);
+            element = bodyElement.addChildElement(new QName("amount"));
+            element.addTextNode(Integer.toString(amount));
+            element = bodyElement.addChildElement(new QName("channel"));
+            element.addTextNode(Integer.toString(channel));
+            element = bodyElement.addChildElement(new QName("state"));
+            element.addTextNode(state);
+            element = bodyElement.addChildElement(new QName("bankreceipt"));
+            element.addTextNode(bankReceipt);
+            element = bodyElement.addChildElement(new QName("orderid"));
+            element.addTextNode(orderId);
+            element = bodyElement.addChildElement(new QName("consumer"));
+            element.addTextNode(consumer);
+            element = bodyElement.addChildElement(new QName("customerip"));
+            element.addTextNode(customerIp);
+            request.saveChanges();
+        } catch (SOAPException e) {
+            throw new RuntimeException("soap request creation error", e);
+        }
+
+        // send message and get response
+        SOAPMessage response = SOAPHelper.callSOAP(request, url);
+
+        // process response
+        ISGServiceResponse isgServiceResponse = SOAPHelper.parseResponse(response, namespace, "JiringResponse", ISGServiceResponse.class);
+
+        return isgServiceResponse;
+    }
 }

@@ -127,7 +127,7 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setOperatorDateTime(new Date());
             transaction.setOperatorResponseCode(Integer.parseInt(serviceProviderResponse.getCode()));
             transaction.setOperatorResponse(serviceProviderResponse.getMessage());
-            transaction.setToken(serviceProviderResponse.getTransactionId());
+            transaction.setToken(serviceProviderResponse.getToken());
             transaction.setOperatorTId(serviceProviderResponse.getTransactionId());
             transaction.setOperatorCommand(serviceProviderResponse.getStatus());
             transactionRepository.update(transaction);
@@ -139,11 +139,11 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setOperatorDateTime(new Date());
         transaction.setOperatorResponseCode(Integer.parseInt(serviceProviderResponse.getCode()));
         transaction.setOperatorResponse(serviceProviderResponse.getMessage());
-        transaction.setToken(serviceProviderResponse.getTransactionId());
+        transaction.setToken(serviceProviderResponse.getToken());
         transaction.setOperatorTId(serviceProviderResponse.getTransactionId());
         transaction.setOperatorCommand(serviceProviderResponse.getStatus());
         transactionRepository.update(transaction);
-        return new ISGServiceResponse("OK", transaction.getId(), serviceProviderResponse.getMessage());
+        return new ISGServiceResponse("OK", transaction.getId(), serviceProviderResponse.getTransactionId());
     }
 
     @Override

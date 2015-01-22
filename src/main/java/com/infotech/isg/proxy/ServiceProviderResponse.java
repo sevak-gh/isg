@@ -11,6 +11,7 @@ public class ServiceProviderResponse {
     private String message;
     private String transactionId;
     private String status;
+    private String token;
 
     public String getCode() {
         return code;
@@ -42,6 +43,14 @@ public class ServiceProviderResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     @Override

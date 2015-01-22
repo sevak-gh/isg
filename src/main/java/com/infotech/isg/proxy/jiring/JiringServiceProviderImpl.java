@@ -64,7 +64,8 @@ public class JiringServiceProviderImpl implements ServiceProvider {
         ServiceProviderResponse serviceResponse = new ServiceProviderResponse();
         serviceResponse.setCode(response.getResult());
         serviceResponse.setMessage(response.getMessage());
-        serviceResponse.setTransactionId(token);
+        serviceResponse.setTransactionId(response.getParam1());
+        serviceResponse.setToken(token);
 
         return serviceResponse;
     }

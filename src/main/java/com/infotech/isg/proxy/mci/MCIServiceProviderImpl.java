@@ -68,7 +68,8 @@ public class MCIServiceProviderImpl implements ServiceProvider {
         ServiceProviderResponse response = new ServiceProviderResponse();
         response.setCode(rechargeResponse.getCode());
         response.setMessage(rechargeResponse.getDetail());
-        response.setTransactionId(token);
+        response.setTransactionId(rechargeResponse.getDetail());
+        response.setToken(token);
 
         return response;
     }
