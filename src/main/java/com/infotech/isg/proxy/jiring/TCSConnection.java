@@ -46,22 +46,14 @@ public class TCSConnection {
             cnn.setRequestProperty("Content-Type", "text/xml");
             cnn.setRequestProperty("Content-Length", Integer.toString(data.length()));
             cnn.connect();
-            //if (LOG.isDebugEnabled()) {
-            //    StringBuilder sb = new StringBuilder();
-            /*
-            Map<String, List<String>> map = cnn.getHeaderFields();
-            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                sb.append(String.format("%s: %s\n", entry.getKey(), entry.getValue()));
+            if (LOG.isDebugEnabled()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("POST\n");
+                sb.append("Content-Type: text/xml\n");
+                sb.append(String.format("Content-Length: %d\n", data.length()));
+                sb.append(data);
+                LOG.debug("sending to [{}]:{}", url.toString(), sb.toString());
             }
-            */
-            /*
-            sb.append("POST\n");
-            sb.append("Content-Type: text/xml\n");
-            sb.append(String.format("Content-Length: %d\n", data.length()));
-            */
-            //    sb.append(data);
-            //    LOG.debug("sending to [{}]:{}", url.toString(), sb.toString());
-            //}
             writer = new DataOutputStream(cnn.getOutputStream());
             writer.write(data.getBytes(), 0, data.length());
             writer.flush();
@@ -73,7 +65,6 @@ public class TCSConnection {
                 response.append(line);
             }
             reader.close();
-            /*
             if (LOG.isDebugEnabled()) {
                 StringBuilder sb = new StringBuilder();
                 Map<String, List<String>> map = cnn.getHeaderFields();
@@ -83,7 +74,6 @@ public class TCSConnection {
                 sb.append(response.toString());
                 LOG.debug("received from [{}]:{}", url.toString(), sb.toString());
             }
-            */
             return unmarshal(response.toString(), TCSResponse.class);
         } catch (IOException e) {
             throw new ProxyAccessException("TCS operator connection/send/receive error", e);

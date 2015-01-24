@@ -86,7 +86,6 @@ public class JiringFake {
             String line = null;
             sb.setLength(0);
             while ((line = reader.readLine()) != null) {
-                LOG.debug("[jiring fake server] request data chunk: \n{}", line);
                 sb.append(line);
             }
             String data = sb.toString();
