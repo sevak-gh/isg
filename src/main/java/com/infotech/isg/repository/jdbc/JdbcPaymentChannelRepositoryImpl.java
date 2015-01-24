@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -22,6 +24,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
  */
 @Repository("JdbcPaymentChannelRepository")
 public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepository {
+
+    private final Logger LOG = LoggerFactory.getLogger(JdbcPaymentChannelRepositoryImpl.class);
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -36,6 +41,7 @@ public class JdbcPaymentChannelRepositoryImpl implements PaymentChannelRepositor
         try {
             paymentChannel = jdbcTemplate.queryForObject(sql, new Object[] {id}, new PaymentChannelRowMapper());
         } catch (EmptyResultDataAccessException e) {
+            LOG.debug("jdbctemplate empty result set handled", e);
             return null;
         }
 

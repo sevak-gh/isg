@@ -106,6 +106,7 @@ public abstract class ISGServiceImpl implements ISGService {
         try {
             serviceProviderResponse = serviceProvider.topup(consumer, amount, transaction.getId());
         } catch (OperatorNotAvailableException e) {
+            LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         } catch (OperatorUnknownResponseException e) {
             // ambiguous status, set for STF

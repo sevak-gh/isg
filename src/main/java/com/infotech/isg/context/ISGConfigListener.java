@@ -36,7 +36,7 @@ public class ISGConfigListener implements ServletContextListener {
                     input.close();
                 }
             } catch (IOException e) {
-                //TODO: there is nothing to de here!!!
+                //TODO: there is nothing to do here!!!
             }
         }
     }

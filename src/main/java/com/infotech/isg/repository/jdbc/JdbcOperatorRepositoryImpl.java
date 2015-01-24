@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * jdbc implementation for Operator repository.
@@ -22,6 +23,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
  */
 @Repository("JdbcOperatorRepository")
 public class JdbcOperatorRepositoryImpl implements OperatorRepository {
+
+    private final Logger LOG = LoggerFactory.getLogger(JdbcOperatorRepositoryImpl.class);
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -36,6 +40,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
         try {
             operator = jdbcTemplate.queryForObject(sql, new Object[] {id}, new OperatorRowMapper());
         } catch (EmptyResultDataAccessException e) {
+            LOG.debug("jdbctemplate empty result set handled", e);
             return null;
         }
 
