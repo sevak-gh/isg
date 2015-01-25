@@ -70,12 +70,12 @@ public abstract class ISGServiceImpl implements ISGService {
                     // STF has resolved this transaction as successful
                     List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
                     long transactionId = 0;
-                    String operatorResponse = null;
+                    String operatorTId = null;
                     if ((transactions != null) && (transactions.size() > 0)) {
                         transactionId = transactions.get(0).getId();
-                        operatorResponse = transactions.get(0).getOperatorResponse();
+                        operatorTId = transactions.get(0).getOperatorTId();
                     }
-                    return new ISGServiceResponse("OK", transactionId, operatorResponse);
+                    return new ISGServiceResponse("OK", transactionId, operatorTId);
 
                 default:
                     return new ISGServiceResponse("ERROR", errorCode, null);
