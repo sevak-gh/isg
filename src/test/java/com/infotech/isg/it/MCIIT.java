@@ -62,7 +62,6 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void initDB() {
-        LOG.info("init db...");
         jdbcTemplate = new JdbcTemplate(dataSource);
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "info_topup_transactions",
                                        "info_topup_operators",
@@ -143,6 +142,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode().toString(), is(mciResponseCode));
         assertThat(transaction.getOperatorResponse(), is(mciResponseDetail));
+        assertThat(transaction.getOperatorTId(), is(mciResponseDetail));
         assertThat(transaction.getStf(), is(nullValue()));
     }
 

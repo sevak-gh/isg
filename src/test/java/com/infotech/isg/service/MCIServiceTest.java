@@ -85,17 +85,30 @@ public class MCIServiceTest {
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
                                            anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+
         // bypass proxy
-        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong())).thenReturn(new ServiceProviderResponse() {{setCode("0"); setMessage("OK");}});
+        String code = "0";
+        String message = "OK";
+        String trId = "1236549870";
+        String token = "tok";
+        when(mciServiceProvider.topup(anyString(), anyInt(), anyLong())).thenReturn(
+        new ServiceProviderResponse() {{
+                setCode(code);
+                setMessage(message);
+                setTransactionId(trId);
+                setToken(token);
+            }
+        });
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(greaterThanOrEqualTo(0)));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(0L));
+        assertThat(response.getOPRDoc(), is(trId));
     }
 
     @Test
@@ -130,13 +143,14 @@ public class MCIServiceTest {
                                            anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy
         String token = "token";
-        int responseCode = 0;
-        String responseDetail = "OK";
+        int code = 0;
+        String message = "OK";
+        String trId = "1236549870";
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
         .thenReturn(new ServiceProviderResponse() {{
-                setCode(Integer.toString(responseCode));
-                setMessage(responseDetail);
-                setTransactionId(responseDetail);
+                setCode(Integer.toString(code));
+                setMessage(message);
+                setTransactionId(trId);
                 setToken(token);
             }
         });
@@ -145,10 +159,11 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount,
                                       channel, state, bankReceipt, orderId,
                                       consumer, customerIp, remoteIp, action);
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is((int)expectedTransactionId));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(expectedTransactionId));
+        assertThat(response.getOPRDoc(), is(trId));
         verify(requestValidator).validate(username, password, bankCode, amount, channel,
                                           state, bankReceipt, orderId, consumer, customerIp, remoteIp, action, operatorId);
         verify(accessControl).authenticate(username, password, remoteIp);
@@ -166,9 +181,9 @@ public class MCIServiceTest {
         transaction = captor.getValue();
         assertThat(transaction.getStatus(), is(expectedStatus));
         assertThat(transaction.getToken(), is(token));
-        assertThat(transaction.getOperatorResponseCode(), is(responseCode));
-        assertThat(transaction.getOperatorResponse(), is(responseDetail));
-        assertThat(transaction.getOperatorTId(), is(responseDetail));
+        assertThat(transaction.getOperatorResponseCode(), is(code));
+        assertThat(transaction.getOperatorResponse(), is(message));
+        assertThat(transaction.getOperatorTId(), is(trId));
         assertThat(transaction.getStf(), is(nullValue()));
         verifyNoMoreInteractions(transactionRepository);
         verifyNoMoreInteractions(mciServiceProvider);
@@ -187,10 +202,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.INVALID_AMOUNT));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_AMOUNT));
         verifyZeroInteractions(mciServiceProvider);
         verifyZeroInteractions(accessControl);
         verifyZeroInteractions(transactionValidator);
@@ -217,10 +231,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.DOUBLE_SPENDING_TRANSACTION));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.DOUBLE_SPENDING_TRANSACTION));
         verifyZeroInteractions(transactionRepository);
         verifyZeroInteractions(mciServiceProvider);
     }
@@ -245,10 +258,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.REPETITIVE_TRANSACTION));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.REPETITIVE_TRANSACTION));
         verifyZeroInteractions(transactionRepository);
         verifyZeroInteractions(mciServiceProvider);
     }
@@ -273,10 +285,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verifyZeroInteractions(transactionRepository);
         verifyZeroInteractions(mciServiceProvider);
     }
@@ -301,10 +312,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         verifyZeroInteractions(transactionRepository);
         verifyZeroInteractions(mciServiceProvider);
     }
@@ -333,10 +343,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is((int)transactionId));
+        assertThat(response.getISGDoc(), is(transactionId));
         assertThat(response.getStatus(), is("OK"));
         verify(transactionRepository).findByRefNumBankCodeClientId("receipt", "054", clientId);
         verifyNoMoreInteractions(transactionRepository);
@@ -363,10 +372,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verifyZeroInteractions(mciServiceProvider);
     }
 
@@ -385,10 +393,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.INVALID_USERNAME_OR_PASSWORD));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_USERNAME_OR_PASSWORD));
         verifyZeroInteractions(transactionRepository);
         verifyZeroInteractions(transactionValidator);
         verifyZeroInteractions(mciServiceProvider);
@@ -416,10 +423,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).create(captor.capture());
         verifyNoMoreInteractions(transactionRepository);
@@ -448,10 +454,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         verify(mciServiceProvider).topup("consumer", 10000, 0L);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
@@ -494,10 +499,9 @@ public class MCIServiceTest {
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
                                       1, "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
-        int result = (int)response.getISGDoc();
 
         // assert
-        assertThat(result, is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         verify(mciServiceProvider).topup("consumer", 10000, 0L);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
