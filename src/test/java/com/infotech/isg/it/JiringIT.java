@@ -94,6 +94,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             public TCSResponse salesRequest(String consumer, int amount) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
                 response.setParam1(token);
                 return response;
             }
@@ -141,6 +142,236 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode().toString(), is(jiringResponseCode));
+        assertThat(transaction.getOperatorResponse(), is(jiringResponseMessage));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldReturnInvalidUsernamePassword() {
+        // arrange
+        String token = "token";
+        String jiringResponseCode = "0";
+        String jiringResponseTrId = "123234569";
+        String jiringResponseMessage = "request done";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(jiringResponseTrId);
+                return response;
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String username = "root";
+        String password = "root";   // invalid password
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "jirrcpt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.jiring(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_USERNAME_OR_PASSWORD));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
+    public void shouldReturnInvalidCellNumber() {
+        // arrange
+        String token = "token";
+        String jiringResponseCode = "0";
+        String jiringResponseTrId = "123234569";
+        String jiringResponseMessage = "request done";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(jiringResponseTrId);
+                return response;
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "jirrcpt";
+        String orderId = "orderid";
+        String consumer = "077856698";      // invalid cell number
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.jiring(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_CELL_NUMBER));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
+    public void shouldReturnInvalidPaymentChannel() {
+        // arrange
+        String token = "token";
+        String jiringResponseCode = "0";
+        String jiringResponseTrId = "123234569";
+        String jiringResponseMessage = "request done";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(jiringResponseTrId);
+                return response;
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 54;   // invalid channel
+        String state = "state";
+        String bankReceipt = "jirrcpt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.jiring(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.INVALID_PAYMENT_CHANNEL));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(0));
+    }
+
+    @Test
+    public void shouldReturnNOKWhenOperationNotdSucceed() {
+        // arrange
+        String token = "token";
+        String jiringTokenResponseCode = "7";                // any non-zero value means NOK
+        String jiringResponseCode = "0";
+        String jiringResponseTrId = "123234569";
+        String jiringResponseMessage = "requested operation not possible";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringTokenResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(jiringResponseTrId);
+                return response;
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "jirrcpt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.jiring(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("ERROR"));
+        assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
+        assertThat(response.getOPRDoc(), is(jiringTokenResponseCode));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getToken(), is(nullValue()));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(jiringTokenResponseCode));
         assertThat(transaction.getOperatorResponse(), is(jiringResponseMessage));
         assertThat(transaction.getStf(), is(nullValue()));
     }

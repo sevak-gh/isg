@@ -40,10 +40,22 @@ public class JiringServiceProviderImpl implements ServiceProvider {
         }
 
         if ((response == null)
-            || (response.getResult() == null)
-            || (!response.getResult().equalsIgnoreCase("0"))
-            || (response.getParam1() == null)) {
+            || (response.getResult() == null)) {
             throw new OperatorNotAvailableException("invalid SalesRequest response from jiring");
+        }
+
+        if (!response.getResult().equalsIgnoreCase("0")) {
+            // operator responded NOK, token not available
+            // set response, status not exist for Jiring
+            ServiceProviderResponse serviceResponse = new ServiceProviderResponse();
+            serviceResponse.setCode(response.getResult());
+            serviceResponse.setMessage(response.getMessage());
+            serviceResponse.setTransactionId(response.getParam1());
+            return serviceResponse;
+        }
+
+        if (response.getParam1() == null) {
+            throw new OperatorNotAvailableException("invalid token, SalesRequest response from jiring");
         }
 
         String token = response.getParam1();
@@ -66,7 +78,6 @@ public class JiringServiceProviderImpl implements ServiceProvider {
         serviceResponse.setMessage(response.getMessage());
         serviceResponse.setTransactionId(response.getParam1());
         serviceResponse.setToken(token);
-
         return serviceResponse;
     }
 }
