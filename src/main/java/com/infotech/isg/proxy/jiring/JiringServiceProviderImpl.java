@@ -31,6 +31,10 @@ public class JiringServiceProviderImpl implements ServiceProvider {
     @Override
     public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
 
+        // normalize consumer/cell-number for jiring
+        // 091********
+        consumer = "091" + consumer.substring(consumer.length() - 8, consumer.length());
+
         // get token from jiring
         TCSResponse response = null;
         try {
