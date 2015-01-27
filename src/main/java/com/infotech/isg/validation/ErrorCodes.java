@@ -66,6 +66,9 @@ public class ErrorCodes {
             case DISABLED_OPERATOR: return "DISABLED_OPERATOR";
             case INVALID_OPERATOR: return "INVALID_OPERATOR";
             case TRANSACTION_ALREADY_FAILED: return "TRANSACTION_ALREADY_FAILED";
+            case OPERATOR_SERVICE_ERROR: return "OPERATOR_SERVICE_ERROR";
+            case STF_RESOLVED_FAILED: return "STF_RESOLVED_FAILED";
+            case STF_RESOLVED_SUCCESSFUL: return "STF_RESOLVED_SUCCESSFUL";
             default: return "";
         }
     }
