@@ -66,7 +66,7 @@ public class AuditLogger {
         int operatorId = ((com.infotech.isg.service.ISGService)joinPoint.getThis()).getOperatorId();
 
         // audit log in file
-        LOG.info("\u001B[32m{}\u001B[0m {} for [{},{}] from [{},'{}',{}({})] => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
+        LOG.info("\u001B[32m{}\u001B[0m {} for [{},{}] from [{},{},{},T({}),RRN({})] => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
                  Operator.getName(operatorId),              // operator name
                  action,                                    // action name
                  consumer,                                  // consumer
@@ -75,6 +75,7 @@ public class AuditLogger {
                  remoteIp,                                  // remote Ip
                  channel,                                   // channel
                  terminalId,                                // customer IP, first part
+                 bankReceipt,                               // RRN, Refnum, bank receipt => unique code from payment switch
                  (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m", response.getStatus(),
                  ErrorCodes.toString((int)response.getISGDoc()), response.getISGDoc(),
                  ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m", response.getOPRDoc(),
