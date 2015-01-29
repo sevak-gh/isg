@@ -64,6 +64,13 @@ public class MCIServiceProviderImpl implements ServiceProvider {
             throw new OperatorUnknownResponseException("recharge response is ambiguous from MCI, set for STF");
         }
 
+        if ((Integer.parseInt(rechargeResponse.getCode()) > 0)
+            || (Integer.parseInt(rechargeResponse.getCode()) < -1017)
+            || ((Integer.parseInt(rechargeResponse.getCode()) > -1001) && (Integer.parseInt(rechargeResponse.getCode()) < 0))) {
+            // invalid response code, should be set for STF
+            throw new OperatorUnknownResponseException("recharge response code is ambiguous from MCI, set for STF");
+        }
+
         // set response, status not exist for MCI
         ServiceProviderResponse response = new ServiceProviderResponse();
         response.setCode(rechargeResponse.getCode());
