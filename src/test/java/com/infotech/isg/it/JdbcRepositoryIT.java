@@ -65,7 +65,6 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @BeforeClass
     public void initDB() {
-        LOG.info("init db...");
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);;
         jdbcTemplate.update("delete from info_topup_transactions");
         jdbcTemplate.update("delete from info_topup_clients");
@@ -131,7 +130,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         transaction.setRefNum("ref123456");
         transaction.setRemoteIp("10.30.180.38");
         transaction.setAmount(10000);
-        transaction.setChannel(54);
+        transaction.setChannel("54");
         transaction.setConsumer("cnsmr5566");
         transaction.setBankCode(BankCodes.SAMAN);
         transaction.setClientId(3);
@@ -168,7 +167,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         String username = "username";
         String bankCode = "bankCode";
         int amount = 10000;
-        int channel = 59;
+        String channel = "59";
         String state = "state";
         String bankReceipt = "receipt";
         String orderId = "order";

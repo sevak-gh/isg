@@ -32,7 +32,7 @@ public class PaymentChannelValidatorTest {
                 {
                     put("59", new PaymentChannel() {{setId("59"); setIsActive(true);}});
                     put("14", new PaymentChannel() {{setId("14"); setIsActive(true);}});
-                    put("5", new PaymentChannel() {{setId("5"); setIsActive(true);}});
+                    put("05", new PaymentChannel() {{setId("05"); setIsActive(true);}});
                     put("25", new PaymentChannel() {{setId("25"); setIsActive(false);}});
                     put("10", new PaymentChannel() {{setId("10"); setIsActive(true);}});
                 }
@@ -49,18 +49,19 @@ public class PaymentChannelValidatorTest {
     @DataProvider(name = "providePaymentChannels")
     public Object[][] providePaymentChannels() {
         return new Object[][] {
-            { -1, ErrorCodes.INVALID_PAYMENT_CHANNEL},
-            {0, ErrorCodes.INVALID_PAYMENT_CHANNEL},
-            {59, ErrorCodes.OK},
-            {14, ErrorCodes.OK},
-            {5, ErrorCodes.OK},
-            {25, ErrorCodes.DISABLED_PAYMENT_CHANNEL},
-            {10, ErrorCodes.OK}
+            {"-1", ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {"0", ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {"59", ErrorCodes.OK},
+            {"14", ErrorCodes.OK},
+            {"5", ErrorCodes.INVALID_PAYMENT_CHANNEL},
+            {"05", ErrorCodes.OK},
+            {"25", ErrorCodes.DISABLED_PAYMENT_CHANNEL},
+            {"10", ErrorCodes.OK}
         };
     }
 
     @Test(dataProvider = "providePaymentChannels")
-    public void paymentChannelValidatorShouldReturnExpectedErrorCode(int channelId, int errorCode) {
+    public void paymentChannelValidatorShouldReturnExpectedErrorCode(String channelId, int errorCode) {
         // arrange
         // different cases provided by data provider
 

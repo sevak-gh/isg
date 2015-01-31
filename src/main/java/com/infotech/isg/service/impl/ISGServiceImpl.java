@@ -40,7 +40,7 @@ public abstract class ISGServiceImpl implements ISGService {
     @Override
     public ISGServiceResponse topup(String username, String password,
                                     String bankCode, int amount,
-                                    int channel, String state,
+                                    String channel, String state,
                                     String bankReceipt, String orderId,
                                     String consumer, String customerIp,
                                     String remoteIp, String action) {

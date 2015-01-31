@@ -39,7 +39,7 @@ public class Transaction {
     private long amount;
 
     // payment channel ID from request, should be defined active in DB
-    private int channel;
+    private String channel;
 
     // consumer from request, means cell number
     private String consumer;
@@ -174,11 +174,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public int getChannel() {
+    public String getChannel() {
         return channel;
     }
 
-    public void setChannel(int channel) {
+    public void setChannel(String channel) {
         this.channel = channel;
     }
 

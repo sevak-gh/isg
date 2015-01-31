@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public interface AuditLogRepository {
     public void create(String username, String bankCode, int amount,
-                       int channel, String state, String bankReceipt,
+                       String channel, String state, String bankReceipt,
                        String orderId, String consumer, String customerIp,
                        String remoteIp, String action, int operatorId,
                        String status, long isgDoc, String oprDoc,

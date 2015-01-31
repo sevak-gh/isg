@@ -6,5 +6,5 @@ package com.infotech.isg.validation;
  * @author Sevak Gharibian
  */
 public interface PaymentChannelValidator {
-    public int validate(int channelId);
+    public int validate(String channelId);
 }

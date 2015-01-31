@@ -8,5 +8,5 @@ package com.infotech.isg.validation;
 public interface TransactionValidator {
     public int validate(String bankReceipt, String bankCode, int clientId,
                         String orderId, int operatorId, int amount,
-                        int channelId, String consumer, String customerIp);
+                        String channelId, String consumer, String customerIp);
 }

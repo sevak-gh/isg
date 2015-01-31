@@ -76,7 +76,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -84,7 +84,7 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(1);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
 
         // bypass proxy
         String code = "0";
@@ -102,7 +102,7 @@ public class MCIServiceTest {
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -118,7 +118,7 @@ public class MCIServiceTest {
         String password = "password";
         String bankCode = "054";
         int amount = 10000;
-        int channel = 1;
+        String channel = "1";
         String state = "state";
         String bankReceipt = "receipt";
         String orderId = "orderid";
@@ -131,7 +131,7 @@ public class MCIServiceTest {
         int expectedStatus = 1;
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -140,7 +140,7 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy
         String token = "token";
         int code = 0;
@@ -194,13 +194,13 @@ public class MCIServiceTest {
         // arrange
         // set amount validator to error
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.INVALID_AMOUNT);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -216,7 +216,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -225,11 +225,11 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.DOUBLE_SPENDING_TRANSACTION);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.DOUBLE_SPENDING_TRANSACTION);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -243,7 +243,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -252,11 +252,11 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.REPETITIVE_TRANSACTION);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.REPETITIVE_TRANSACTION);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -270,7 +270,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -279,11 +279,11 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -297,7 +297,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -306,11 +306,11 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -324,7 +324,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -333,7 +333,7 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.STF_RESOLVED_SUCCESSFUL);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.STF_RESOLVED_SUCCESSFUL);
         // set transaction repository
         long transactionId = 5L;
         when(transactionRepository.findByRefNumBankCodeClientId(anyString(), anyString(), anyInt()))
@@ -341,7 +341,7 @@ public class MCIServiceTest {
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -357,7 +357,7 @@ public class MCIServiceTest {
         // arrange
         // set transaction validator to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -366,11 +366,11 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -383,7 +383,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to error
@@ -391,7 +391,7 @@ public class MCIServiceTest {
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -406,7 +406,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -415,13 +415,13 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy, null means operation failed in any reason, but not ambiguous
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong())).thenReturn(null);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -436,7 +436,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -445,14 +445,14 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // mci proxy throws ISGException
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
         .thenThrow(new OperatorUnknownResponseException("ambiguous response from MCI service provider"));
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -472,7 +472,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -481,7 +481,7 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // recharge responds NOK
         String token = "token";
         int responseCode = -1011;
@@ -497,7 +497,7 @@ public class MCIServiceTest {
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
 
         // assert
@@ -518,7 +518,7 @@ public class MCIServiceTest {
         // arrange
         // set all validators to OK
         when(requestValidator.validate(anyString(), anyString(), anyString(), anyInt(),
-                                       anyInt(), anyString(), anyString(), anyString(),
+                                       anyString(), anyString(), anyString(), anyString(),
                                        anyString(), anyString(), anyString(), anyString(),
                                        anyInt())).thenReturn(ErrorCodes.OK);
         // set authentication to OK
@@ -527,14 +527,14 @@ public class MCIServiceTest {
         when(accessControl.getClient()).thenReturn(new Client() {{setId(clientId);}});
         // set transaction validation to OK
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
-                                           anyInt(), anyInt(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
+                                           anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // mci proxy throws RuntimeException
         when(mciServiceProvider.topup(anyString(), anyInt(), anyLong()))
         .thenThrow(new RuntimeException("something strange happened during charge"));
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
-                                      1, "state", "receipt", "orderid",
+                                      "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
         // assert
     }

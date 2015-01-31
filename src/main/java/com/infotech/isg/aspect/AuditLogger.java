@@ -53,7 +53,7 @@ public class AuditLogger {
         String username = joinPoint.getArgs()[0].toString();
         String bankCode = joinPoint.getArgs()[2].toString();
         int amount = Integer.parseInt(joinPoint.getArgs()[3].toString());
-        int channel = Integer.parseInt(joinPoint.getArgs()[4].toString());
+        String channel = joinPoint.getArgs()[4].toString();
         String state = joinPoint.getArgs()[5].toString();
         String bankReceipt = joinPoint.getArgs()[6].toString();
         String orderId = joinPoint.getArgs()[7].toString();

@@ -25,8 +25,8 @@ public class PaymentChannelValidatorImpl implements PaymentChannelValidator {
     }
 
     @Override
-    public int validate(int channelId) {
-        PaymentChannel channel = paymentChannelRepository.findById(Integer.toString(channelId));
+    public int validate(String channelId) {
+        PaymentChannel channel = paymentChannelRepository.findById(channelId);
         if (channel == null) {
             return ErrorCodes.INVALID_PAYMENT_CHANNEL;
         }

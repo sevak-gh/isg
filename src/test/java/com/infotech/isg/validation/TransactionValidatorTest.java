@@ -38,7 +38,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(1);
@@ -52,7 +52,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(-1);
@@ -67,7 +67,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(-1);
@@ -83,7 +83,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(-1);
@@ -99,7 +99,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(-1);
@@ -115,7 +115,7 @@ public class TransactionValidatorTest {
                             setResNum("ABC12");
                             setProvider(Operator.MCI_ID);
                             setAmount(20000);
-                            setChannel(1);
+                            setChannel("1");
                             setConsumer("09125067064");
                             setCustomerIp("10.20.1.5");
                             setStatus(-1);
@@ -160,7 +160,7 @@ public class TransactionValidatorTest {
                 "",                 // resnum/order id
                 Operator.MCI_ID,    // operator id
                 0,                  // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.OK
@@ -172,7 +172,7 @@ public class TransactionValidatorTest {
                 null,               // resnum/order id
                 Operator.MCI_ID,    // operator id
                 0,                  // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -184,7 +184,7 @@ public class TransactionValidatorTest {
                 "XY78",             // resnum/order id
                 Operator.MCI_ID,    // operator id
                 0,                  // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -196,7 +196,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MTN_ID,    // operator id, different
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -208,7 +208,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 10000,              // amount, different
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -220,7 +220,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                2,                  // channel id, different
+                "2",                // channel id, different
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -232,7 +232,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09121121245",      // cell number (consumer), different
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -244,7 +244,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "1.2.1.3",          // customer ip, different
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -256,7 +256,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "",                 // cell number (consumer), different
                 "10.20.1.5",        // customer ip
                 ErrorCodes.DOUBLE_SPENDING_TRANSACTION
@@ -268,7 +268,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.REPETITIVE_TRANSACTION
@@ -280,7 +280,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.REPETITIVE_TRANSACTION
@@ -292,7 +292,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE
@@ -304,7 +304,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 ErrorCodes.STF_RESOLVED_SUCCESSFUL
@@ -316,7 +316,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 // STF_RESOLVED_FAILED, operator service was not successful
@@ -329,7 +329,7 @@ public class TransactionValidatorTest {
                 "ABC12",            // resnum/order id
                 Operator.MCI_ID,    // operator id
                 20000,              // amount
-                1,                  // channel id
+                "1",                // channel id
                 "09125067064",      // cell number (consumer)
                 "10.20.1.5",        // customer ip
                 // STF_ERROR, invalid STF value, should bet set for retry
@@ -341,7 +341,7 @@ public class TransactionValidatorTest {
     @Test(dataProvider = "provideTransactions")
     public void transactionValidatorShouldReturnExpectedErrorCode(String bankReceipt, String bankCode, int clientId,
             String orderId, int operatorId, int amount,
-            int channelId, String consumer, String customerIp,
+            String channelId, String consumer, String customerIp,
             int errorCode) {
         // arrange
         // different cases provided by data provider

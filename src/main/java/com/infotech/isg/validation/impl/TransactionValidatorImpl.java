@@ -29,14 +29,14 @@ public class TransactionValidatorImpl implements TransactionValidator {
     @Override
     public int validate(String bankReceipt, String bankCode, int clientId,
                         String orderId, int operatorId, int amount,
-                        int channelId, String consumer, String customerIp) {
+                        String channelId, String consumer, String customerIp) {
 
         List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, clientId);
         for (Transaction transaction : transactions) {
 
             if (!((transaction.getProvider() == operatorId)
                   && (transaction.getAmount() == amount)
-                  && (transaction.getChannel() == channelId)
+                  && ((transaction.getChannel() != null) && transaction.getChannel().equals(channelId))
                   && ((transaction.getResNum() != null)  && transaction.getResNum().equals(orderId))
                   && ((transaction.getConsumer() != null) && transaction.getConsumer().equals(consumer))
                   && ((transaction.getCustomerIp() != null) && transaction.getCustomerIp().equals(customerIp)))) {

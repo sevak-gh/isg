@@ -69,7 +69,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                 }
                 ps.setString(8, transaction.getRemoteIp());
                 ps.setLong(9, transaction.getAmount());
-                ps.setInt(10, transaction.getChannel());
+                ps.setString(10, transaction.getChannel());
                 ps.setString(11, transaction.getConsumer());
                 ps.setString(12, transaction.getBankCode());
                 ps.setInt(13, transaction.getClientId());
@@ -153,7 +153,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
                 }
                 ps.setString(8, transaction.getRemoteIp());
                 ps.setLong(9, transaction.getAmount());
-                ps.setInt(10, transaction.getChannel());
+                ps.setString(10, transaction.getChannel());
                 ps.setString(11, transaction.getConsumer());
                 ps.setString(12, transaction.getBankCode());
                 ps.setInt(13, transaction.getClientId());
@@ -230,7 +230,7 @@ public class JdbcTransactionRepositoryImpl implements TransactionRepository {
             transaction.setRevNum((rs.wasNull()) ? null : new Long(revNum));
             transaction.setRemoteIp(rs.getString("clientip"));
             transaction.setAmount(rs.getLong("amount"));
-            transaction.setChannel(rs.getInt("channel"));
+            transaction.setChannel(rs.getString("channel"));
             transaction.setConsumer(rs.getString("consumer"));
             transaction.setBankCode(rs.getString("bankcode"));
             transaction.setClientId(rs.getInt("client"));
