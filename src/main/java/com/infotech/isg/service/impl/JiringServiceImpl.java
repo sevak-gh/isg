@@ -5,7 +5,7 @@ import com.infotech.isg.service.AccessControl;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.RequestValidator;
-import com.infotech.isg.proxy.ServiceProvider;
+import com.infotech.isg.service.ServiceProvider;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;

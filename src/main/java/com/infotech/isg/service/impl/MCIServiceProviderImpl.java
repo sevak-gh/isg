@@ -1,16 +1,17 @@
-package com.infotech.isg.proxy.mci;
+package com.infotech.isg.service.impl;
 
-import com.infotech.isg.proxy.ServiceProvider;
-import com.infotech.isg.proxy.ServiceProviderResponse;
-import com.infotech.isg.proxy.OperatorNotAvailableException;
-import com.infotech.isg.proxy.OperatorUnknownResponseException;
+import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.ServiceProviderResponse;
+import com.infotech.isg.service.OperatorNotAvailableException;
+import com.infotech.isg.service.OperatorUnknownResponseException;
 import com.infotech.isg.proxy.ProxyAccessException;
 import com.infotech.isg.proxy.mci.MCIProxy;
+import com.infotech.isg.proxy.mci.MCIProxyImpl;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,15 +25,23 @@ public class MCIServiceProviderImpl implements ServiceProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(MCIServiceProviderImpl.class);
 
-    private final MCIProxy mciProxy;
+    @Value("${mci.url}")
+    private String url;
 
-    @Autowired
-    public MCIServiceProviderImpl(MCIProxy mciProxy) {
-        this.mciProxy = mciProxy;
-    }
+    @Value("${mci.username}")
+    private String username;
+
+    @Value("${mci.password}")
+    private String password;
+
+    @Value("${mci.namespace}")
+    private String namespace;
+
 
     @Override
     public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
+
+        MCIProxy mciProxy = new MCIProxyImpl(url, username, password, namespace);
 
         // get token from MCI
         MCIProxyGetTokenResponse getTokenResponse = null;

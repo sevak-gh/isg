@@ -1,13 +1,17 @@
-package com.infotech.isg.proxy.jiring;
+package com.infotech.isg.service.impl;
 
-import com.infotech.isg.proxy.ServiceProvider;
-import com.infotech.isg.proxy.ServiceProviderResponse;
-import com.infotech.isg.proxy.OperatorNotAvailableException;
-import com.infotech.isg.proxy.OperatorUnknownResponseException;
+import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.ServiceProviderResponse;
+import com.infotech.isg.service.OperatorNotAvailableException;
+import com.infotech.isg.service.OperatorUnknownResponseException;
 import com.infotech.isg.proxy.ProxyAccessException;
+import com.infotech.isg.proxy.jiring.JiringProxy;
+import com.infotech.isg.proxy.jiring.JiringProxyImpl;
+import com.infotech.isg.proxy.jiring.TCSRequest;
+import com.infotech.isg.proxy.jiring.TCSResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,15 +25,23 @@ public class JiringServiceProviderImpl implements ServiceProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(JiringServiceProviderImpl.class);
 
-    private final JiringProxy jiringProxy;
+    @Value("${jiring.url}")
+    private String url;
 
-    @Autowired
-    public JiringServiceProviderImpl(JiringProxy jiringProxy) {
-        this.jiringProxy = jiringProxy;
-    }
+    @Value("${jiring.username}")
+    private String username;
+
+    @Value("${jiring.password}")
+    private String password;
+
+    @Value("${jiring.brand}")
+    private String brand;
+
 
     @Override
     public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
+
+        JiringProxy jiringProxy = new JiringProxyImpl(url, username, password, brand);
 
         // normalize consumer/cell-number for jiring
         // 091********

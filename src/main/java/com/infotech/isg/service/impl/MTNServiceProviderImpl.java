@@ -1,10 +1,9 @@
-package com.infotech.isg.proxy.mtn;
+package com.infotech.isg.service.impl;
 
-import com.infotech.isg.proxy.ServiceProvider;
-import com.infotech.isg.proxy.ServiceProviderResponse;
+import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.ServiceProviderResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

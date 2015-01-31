@@ -16,9 +16,9 @@ import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
-import com.infotech.isg.proxy.ServiceProvider;
-import com.infotech.isg.proxy.OperatorUnknownResponseException;
-import com.infotech.isg.proxy.ServiceProviderResponse;
+import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.OperatorUnknownResponseException;
+import com.infotech.isg.service.ServiceProviderResponse;
 import com.infotech.isg.service.impl.MCIServiceImpl;
 
 import org.testng.annotations.Test;

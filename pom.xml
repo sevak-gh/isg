@@ -54,6 +54,9 @@
         <deploy.server.password>tomcat</deploy.server.password>
         <deploy.path>/isg</deploy.path>
 
+        <!-- isgproxy helper -->
+        <isgproxy.version>1.0</isgproxy.version>
+
     </properties>      
 
     <dependencies>
@@ -186,6 +189,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.infotech.isg</groupId>
+            <artifactId>isgproxy</artifactId>
+            <version>${isgproxy.version}</version>
+        </dependency>            
+
     </dependencies>
 
     <build>  

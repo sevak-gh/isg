@@ -1,4 +1,4 @@
-package com.infotech.isg.proxy;
+package com.infotech.isg.service;
 
 /**
  * custom exception for operator service
