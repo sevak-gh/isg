@@ -118,6 +118,47 @@ public class MCIProxyImpl implements MCIProxy {
         return response;
     }
 
+    @Override
+    public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+
+        // create empty soap request
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + SOAPACTION_RECHARGE);
+
+        // add request body/header
+        try {
+            SOAPHeader header = request.getSOAPHeader();
+            SOAPHeaderElement headerElement = header.addHeaderElement(new QName(namespace, "AuthHeader", "ns"));
+            SOAPElement usernameElement = headerElement.addChildElement(new QName(namespace, "UserName", "ns"));
+            usernameElement.setValue(username);
+            SOAPElement passwordElement = headerElement.addChildElement(new QName(namespace, "Password", "ns"));
+            String combination = username.toUpperCase() + "|" + password + "|" + token;
+            passwordElement.setValue(HashGenerator.getMD5(combination));
+            SOAPBody body = request.getSOAPBody();
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, SOAPACTION_RECHARGE, "ns"));
+            SOAPElement element = bodyElement.addChildElement(new QName(namespace, "BrokerID", "ns"));
+            element.addTextNode(username);
+            element = bodyElement.addChildElement(new QName(namespace, "MobileNumber", "ns"));
+            element.addTextNode(consumer);
+            element = bodyElement.addChildElement(new QName(namespace, "TransactionID", "ns"));
+            element.addTextNode("MCI" + Long.toString(trId));
+            request.saveChanges();
+        } catch (SOAPException e) {
+            throw new RuntimeException("soap extended request creation error", e);
+        }
+
+        // send message and get response
+        SOAPMessage soapResponse = SOAPHelper.callSOAP(request, url);
+
+        // process response
+        MCIProxyRechargeVerifyResponse response = SOAPHelper.parseResponse(soapResponse,
+                namespace,
+                "RechargeVerifyResponse",
+                MCIProxyRechargeVerifyResponse.class);
+
+        return response;
+    }
+
+    @Override
     public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
 
         // create empty soap request

@@ -8,6 +8,8 @@ import com.infotech.isg.service.ISGServiceResponse;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
+import com.infotech.isg.proxy.mci.MCIProxyRechargeVerifyResponse;
+import com.infotech.isg.proxy.mci.MCIProxyGetRemainedBrokerRechargeResponse;
 import com.infotech.isg.it.fake.mci.MCIWSFake;
 import com.infotech.isg.it.wsclient.ISGClient;
 
@@ -106,6 +108,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -169,6 +181,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -221,6 +243,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -275,6 +307,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -327,6 +369,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -387,6 +439,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -485,6 +547,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -546,6 +618,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -602,6 +684,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 throw new RuntimeException("something bad happened!!!");
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -657,6 +749,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             @Override
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -718,6 +820,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             @Override
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -782,6 +894,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -845,6 +967,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
             @Override
             public MCIProxyRechargeResponse recharge(String token, String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
@@ -914,6 +1046,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -981,6 +1123,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
             }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
+            }
         };
         mciws.setServiceImpl(mciService);
         mciws.publish();
@@ -1047,6 +1199,16 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
                 MCIProxyRechargeResponse rechargeResponse = new MCIProxyRechargeResponse();
                 rechargeResponse.setResponse(response);
                 return rechargeResponse;
+            }
+
+            @Override
+            public MCIProxyRechargeVerifyResponse rechargeVerify(String token, String consumer, long trId) {
+                throw new UnsupportedOperationException("MCI recharge verify not implemented");
+            }
+
+            @Override
+            public MCIProxyGetRemainedBrokerRechargeResponse getRemainedBrokerRecharge(String token, int amount) {
+                throw new UnsupportedOperationException("MCI get remained recharge not implemented");
             }
         };
         mciws.setServiceImpl(mciService);
