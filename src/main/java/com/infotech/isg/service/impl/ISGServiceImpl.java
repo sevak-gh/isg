@@ -6,8 +6,8 @@ import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.repository.TransactionRepository;
-import com.infotech.isg.service.ServiceProvider;
-import com.infotech.isg.service.ServiceProviderResponse;
+import com.infotech.isg.service.OperatorService;
+import com.infotech.isg.service.OperatorServiceResponse;
 import com.infotech.isg.service.OperatorNotAvailableException;
 import com.infotech.isg.service.OperatorUnknownResponseException;
 import com.infotech.isg.service.AccessControl;
@@ -32,7 +32,7 @@ public abstract class ISGServiceImpl implements ISGService {
 
     protected AccessControl accessControl;
     protected TransactionRepository transactionRepository;
-    protected ServiceProvider serviceProvider;
+    protected OperatorService operatorService;
     protected RequestValidator requestValidator;
     protected TransactionValidator transactionValidator;
     protected int operatorId;
@@ -102,9 +102,9 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setVerifyDateTime(new Date());
         transactionRepository.create(transaction);
 
-        ServiceProviderResponse serviceProviderResponse = null;
+        OperatorServiceResponse operatorServiceResponse = null;
         try {
-            serviceProviderResponse = serviceProvider.topup(consumer, amount, transaction.getId());
+            operatorServiceResponse = operatorService.topup(consumer, amount, transaction.getId());
         } catch (OperatorNotAvailableException e) {
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
@@ -118,33 +118,33 @@ public abstract class ISGServiceImpl implements ISGService {
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
 
-        if (serviceProviderResponse == null) {
+        if (operatorServiceResponse == null) {
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
 
-        if (!serviceProviderResponse.getCode().equalsIgnoreCase("0")) {
+        if (!operatorServiceResponse.getCode().equalsIgnoreCase("0")) {
             // operation not successful
             transaction.setStatus(-1);
             transaction.setOperatorDateTime(new Date());
-            transaction.setOperatorResponseCode(Integer.parseInt(serviceProviderResponse.getCode()));
-            transaction.setOperatorResponse(serviceProviderResponse.getMessage());
-            transaction.setToken(serviceProviderResponse.getToken());
-            transaction.setOperatorTId(serviceProviderResponse.getTransactionId());
-            transaction.setOperatorCommand(serviceProviderResponse.getStatus());
+            transaction.setOperatorResponseCode(Integer.parseInt(operatorServiceResponse.getCode()));
+            transaction.setOperatorResponse(operatorServiceResponse.getMessage());
+            transaction.setToken(operatorServiceResponse.getToken());
+            transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
+            transaction.setOperatorCommand(operatorServiceResponse.getStatus());
             transactionRepository.update(transaction);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, serviceProviderResponse.getCode());
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, operatorServiceResponse.getCode());
         }
 
         // operation successful, OK
         transaction.setStatus(1);
         transaction.setOperatorDateTime(new Date());
-        transaction.setOperatorResponseCode(Integer.parseInt(serviceProviderResponse.getCode()));
-        transaction.setOperatorResponse(serviceProviderResponse.getMessage());
-        transaction.setToken(serviceProviderResponse.getToken());
-        transaction.setOperatorTId(serviceProviderResponse.getTransactionId());
-        transaction.setOperatorCommand(serviceProviderResponse.getStatus());
+        transaction.setOperatorResponseCode(Integer.parseInt(operatorServiceResponse.getCode()));
+        transaction.setOperatorResponse(operatorServiceResponse.getMessage());
+        transaction.setToken(operatorServiceResponse.getToken());
+        transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
+        transaction.setOperatorCommand(operatorServiceResponse.getStatus());
         transactionRepository.update(transaction);
-        return new ISGServiceResponse("OK", transaction.getId(), serviceProviderResponse.getTransactionId());
+        return new ISGServiceResponse("OK", transaction.getId(), operatorServiceResponse.getTransactionId());
     }
 
     @Override

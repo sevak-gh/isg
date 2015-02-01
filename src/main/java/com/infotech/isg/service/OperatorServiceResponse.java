@@ -1,11 +1,11 @@
 package com.infotech.isg.service;
 
 /**
- * generic service provider response.
+ * generic operator service response.
  *
  * @author Sevak Gharibian
  */
-public class ServiceProviderResponse {
+public class OperatorServiceResponse {
 
     private String code;
     private String message;

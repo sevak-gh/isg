@@ -5,7 +5,7 @@ import com.infotech.isg.service.AccessControl;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.RequestValidator;
-import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.OperatorService;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class MCIServiceImpl extends ISGServiceImpl {
     @Autowired
     public MCIServiceImpl(AccessControl accessControl,
                           TransactionRepository transactionRepository,
-                          @Qualifier("MCIServiceProvider") ServiceProvider serviceProvider,
+                          @Qualifier("MCIOperatorService") OperatorService operatorService,
                           @Qualifier("MCIRequestValidator") RequestValidator requestValidator,
                           TransactionValidator transactionValidator) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;
-        this.serviceProvider = serviceProvider;
+        this.operatorService = operatorService;
         this.requestValidator = requestValidator;
         this.transactionValidator = transactionValidator;
         this.operatorId = Operator.MCI_ID;

@@ -1,7 +1,7 @@
 package com.infotech.isg.service.impl;
 
-import com.infotech.isg.service.ServiceProvider;
-import com.infotech.isg.service.ServiceProviderResponse;
+import com.infotech.isg.service.OperatorService;
+import com.infotech.isg.service.OperatorServiceResponse;
 import com.infotech.isg.service.OperatorNotAvailableException;
 import com.infotech.isg.service.OperatorUnknownResponseException;
 import com.infotech.isg.proxy.ProxyAccessException;
@@ -16,14 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * implementation for Jiring service provider.
+ * implementation for Jiring operator service
  *
  * @author Sevak Gharibian
  */
-@Component("JiringServiceProvider")
-public class JiringServiceProviderImpl implements ServiceProvider {
+@Component("JiringOperatorService")
+public class JiringOperatorServiceImpl implements OperatorService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JiringServiceProviderImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JiringOperatorServiceImpl.class);
 
     @Value("${jiring.url}")
     private String url;
@@ -39,7 +39,7 @@ public class JiringServiceProviderImpl implements ServiceProvider {
 
 
     @Override
-    public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId) {
 
         JiringProxy jiringProxy = new JiringProxyImpl(url, username, password, brand);
 
@@ -63,7 +63,7 @@ public class JiringServiceProviderImpl implements ServiceProvider {
         if (!response.getResult().equalsIgnoreCase("0")) {
             // operator responded NOK, token not available
             // set response, status not exist for Jiring
-            ServiceProviderResponse serviceResponse = new ServiceProviderResponse();
+            OperatorServiceResponse serviceResponse = new OperatorServiceResponse();
             serviceResponse.setCode(response.getResult());
             serviceResponse.setMessage(response.getMessage());
             return serviceResponse;
@@ -88,7 +88,7 @@ public class JiringServiceProviderImpl implements ServiceProvider {
         }
 
         // set response, status not exist for Jiring
-        ServiceProviderResponse serviceResponse = new ServiceProviderResponse();
+        OperatorServiceResponse serviceResponse = new OperatorServiceResponse();
         serviceResponse.setCode(response.getResult());
         serviceResponse.setMessage(response.getMessage());
         serviceResponse.setTransactionId(response.getParam1());

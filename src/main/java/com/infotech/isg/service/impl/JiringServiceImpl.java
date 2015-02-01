@@ -5,7 +5,7 @@ import com.infotech.isg.service.AccessControl;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.RequestValidator;
-import com.infotech.isg.service.ServiceProvider;
+import com.infotech.isg.service.OperatorService;
 
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class JiringServiceImpl extends ISGServiceImpl {
     @Autowired
     public JiringServiceImpl(AccessControl accessControl,
                              TransactionRepository transactionRepository,
-                             @Qualifier("JiringServiceProvider") ServiceProvider serviceProvider,
+                             @Qualifier("JiringOperatorService") OperatorService operatorService,
                              @Qualifier("JiringRequestValidator") RequestValidator requestValidator,
                              TransactionValidator transactionValidator) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;
-        this.serviceProvider = serviceProvider;
+        this.operatorService = operatorService;
         this.requestValidator = requestValidator;
         this.transactionValidator = transactionValidator;
         this.operatorId = Operator.JIRING_ID;

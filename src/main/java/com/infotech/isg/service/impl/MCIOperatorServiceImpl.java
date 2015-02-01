@@ -1,7 +1,7 @@
 package com.infotech.isg.service.impl;
 
-import com.infotech.isg.service.ServiceProvider;
-import com.infotech.isg.service.ServiceProviderResponse;
+import com.infotech.isg.service.OperatorService;
+import com.infotech.isg.service.OperatorServiceResponse;
 import com.infotech.isg.service.OperatorNotAvailableException;
 import com.infotech.isg.service.OperatorUnknownResponseException;
 import com.infotech.isg.proxy.ProxyAccessException;
@@ -16,14 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * implementation for MCI service provider.
+ * implementation for MCI operaotr service.
  *
  * @author Sevak Gharibian
  */
-@Component("MCIServiceProvider")
-public class MCIServiceProviderImpl implements ServiceProvider {
+@Component("MCIOperatorService")
+public class MCIOperatorServiceImpl implements OperatorService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MCIServiceProviderImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MCIOperatorServiceImpl.class);
 
     @Value("${mci.url}")
     private String url;
@@ -39,7 +39,7 @@ public class MCIServiceProviderImpl implements ServiceProvider {
 
 
     @Override
-    public ServiceProviderResponse topup(String consumer, int amount, long transactionId) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId) {
 
         MCIProxy mciProxy = new MCIProxyImpl(url, username, password, namespace);
 
@@ -81,7 +81,7 @@ public class MCIServiceProviderImpl implements ServiceProvider {
         }
 
         // set response, status not exist for MCI
-        ServiceProviderResponse response = new ServiceProviderResponse();
+        OperatorServiceResponse response = new OperatorServiceResponse();
         response.setCode(rechargeResponse.getCode());
         response.setMessage(rechargeResponse.getDetail());
         response.setTransactionId(rechargeResponse.getDetail());

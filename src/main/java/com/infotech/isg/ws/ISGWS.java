@@ -61,7 +61,7 @@ public class ISGWS {
     }
 
     /**
-     * represents MCI service.
+     * MCI topup service
      *
      */
     @WebMethod(operationName = "MCI", action = "urn:TopUpWSDL/MCI")
@@ -82,6 +82,15 @@ public class ISGWS {
                                       getClientIp(), "top-up");
 
         return response;
+    }
+
+    /**
+     * returns true/false for MCI service availability
+     *
+     */
+    @WebMethod(operationName = "isMCIAvailable", action = "urn:TopUpWSDL/isMCIAvailable")
+    public boolean isMCIAvailable() {
+        return true;
     }
 
     /**
