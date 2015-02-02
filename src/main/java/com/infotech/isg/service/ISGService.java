@@ -13,5 +13,6 @@ public interface ISGService {
                                     String consumer, String customerIp,
                                     String remoteIp, String action);
 
+    public ISGServiceResponse isOperatorAvailable();
     public int getOperatorId();
 }

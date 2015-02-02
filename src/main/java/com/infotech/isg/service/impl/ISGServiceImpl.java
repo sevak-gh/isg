@@ -2,10 +2,12 @@ package com.infotech.isg.service.impl;
 
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
+import com.infotech.isg.domain.OperatorStatus;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.repository.TransactionRepository;
+import com.infotech.isg.repository.OperatorStatusRepository;
 import com.infotech.isg.service.OperatorService;
 import com.infotech.isg.service.OperatorServiceResponse;
 import com.infotech.isg.service.OperatorNotAvailableException;
@@ -32,6 +34,7 @@ public abstract class ISGServiceImpl implements ISGService {
 
     protected AccessControl accessControl;
     protected TransactionRepository transactionRepository;
+    protected OperatorStatusRepository operatorStatusRepository;
     protected OperatorService operatorService;
     protected RequestValidator requestValidator;
     protected TransactionValidator transactionValidator;
@@ -145,6 +148,17 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setOperatorCommand(operatorServiceResponse.getStatus());
         transactionRepository.update(transaction);
         return new ISGServiceResponse("OK", transaction.getId(), operatorServiceResponse.getTransactionId());
+    }
+
+    @Override
+    public ISGServiceResponse isOperatorAvailable() {
+        OperatorStatus operatorStatus = operatorStatusRepository.findById(operatorId);
+
+        if (operatorStatus == null) {
+            throw new ISGException("operator status not available");
+        }
+
+        return new ISGServiceResponse("OK", (operatorStatus.getIsAvailable()) ? 1L : 0L, null);
     }
 
     @Override

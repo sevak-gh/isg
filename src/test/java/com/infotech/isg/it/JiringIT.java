@@ -63,6 +63,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
     public void initDB() {
         jdbcTemplate = new JdbcTemplate(dataSource);
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "info_topup_transactions",
+                                       "info_topup_operator_last_status",
                                        "info_topup_operators",
                                        "info_topup_payment_channel",
                                        "info_topup_clients",

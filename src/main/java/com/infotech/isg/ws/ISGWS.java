@@ -89,8 +89,32 @@ public class ISGWS {
      *
      */
     @WebMethod(operationName = "isMCIAvailable", action = "urn:TopUpWSDL/isMCIAvailable")
-    public boolean isMCIAvailable() {
-        return true;
+    @WebResult(name = "isMCIAvailableResponse")
+    public ISGServiceResponse isMCIAvailable() {
+        ISGServiceResponse response =  mciService.isOperatorAvailable();
+        return response;
+    }
+
+    /**
+     * returns true/false for MTN service availability
+     *
+     */
+    @WebMethod(operationName = "isMTNAvailable", action = "urn:TopUpWSDL/isMTNAvailable")
+    @WebResult(name = "isMTNAvailableResponse")
+    public ISGServiceResponse isMTNAvailable() {
+        ISGServiceResponse response = mtnService.isOperatorAvailable();
+        return response;
+    }
+
+    /**
+     * returns true/false for Jiring service availability
+     *
+     */
+    @WebMethod(operationName = "isJiringAvailable", action = "urn:TopUpWSDL/isJiringAvailable")
+    @WebResult(name = "isJiringAvailableResponse")
+    public ISGServiceResponse isJiringAvailable() {
+        ISGServiceResponse response = jiringService.isOperatorAvailable();
+        return response;
     }
 
     /**

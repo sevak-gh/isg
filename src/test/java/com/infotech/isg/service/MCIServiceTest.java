@@ -13,6 +13,7 @@ import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
+import com.infotech.isg.repository.OperatorStatusRepository;
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
@@ -64,11 +65,14 @@ public class MCIServiceTest {
     @Mock
     private TransactionValidator transactionValidator;
 
+    @Mock
+    private OperatorStatusRepository operatorStatusRepository;
+
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         MockitoAnnotations.initMocks(this);
         mciService = new MCIServiceImpl(accessControl, transactionRepository, mciOperatorService,
-                                        requestValidator, transactionValidator);
+                                        requestValidator, transactionValidator, operatorStatusRepository);
     }
 
     @Test
