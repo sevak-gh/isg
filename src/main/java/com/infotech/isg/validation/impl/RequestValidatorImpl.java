@@ -52,6 +52,12 @@ public abstract class RequestValidatorImpl implements RequestValidator {
             return ErrorCodes.INSUFFICIENT_PARAMETERS;
         }
 
+        // validate action
+        errorCode = actionValidator.validate(action);
+        if (errorCode != ErrorCodes.OK) {
+            return errorCode;
+        }
+
         // validate amount
         errorCode = amountValidator.validate(amount);
         if (errorCode != ErrorCodes.OK) {

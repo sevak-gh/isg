@@ -107,7 +107,7 @@ public abstract class ISGServiceImpl implements ISGService {
 
         OperatorServiceResponse operatorServiceResponse = null;
         try {
-            operatorServiceResponse = operatorService.topup(consumer, amount, transaction.getId());
+            operatorServiceResponse = operatorService.topup(consumer, amount, transaction.getId(), action);
         } catch (OperatorNotAvailableException e) {
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
@@ -115,7 +115,7 @@ public abstract class ISGServiceImpl implements ISGService {
             // ambiguous status, set for STF
             transaction.setStf(1);
             transaction.setStfResult(0);
-            transaction.setOperatorResponseCode(2);
+            transaction.setOperatorResponseCode(-1);
             transactionRepository.update(transaction);
             LOG.error("error in calling service provider, STF set and operator_service_error_donot_reverse code returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);

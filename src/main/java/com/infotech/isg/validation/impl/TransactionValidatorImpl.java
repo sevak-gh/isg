@@ -68,7 +68,7 @@ public class TransactionValidatorImpl implements TransactionValidator {
             // set for STF to try again
             transaction.setStf(1);
             transaction.setStfResult(0);
-            transaction.setOperatorResponseCode(2);
+            transaction.setOperatorResponseCode(-1);
             transactionRepository.update(transaction);
             return ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE;
         }

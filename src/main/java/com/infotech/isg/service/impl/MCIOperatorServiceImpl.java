@@ -37,9 +37,8 @@ public class MCIOperatorServiceImpl implements OperatorService {
     @Value("${mci.namespace}")
     private String namespace;
 
-
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action) {
 
         MCIProxy mciProxy = new MCIProxyImpl(url, username, password, namespace);
 
@@ -75,7 +74,7 @@ public class MCIOperatorServiceImpl implements OperatorService {
 
         if ((Integer.parseInt(rechargeResponse.getCode()) > 0)
             || (Integer.parseInt(rechargeResponse.getCode()) < -1017)
-            || ((Integer.parseInt(rechargeResponse.getCode()) > -1001) && (Integer.parseInt(rechargeResponse.getCode()) < 0))) {
+            || ((Integer.parseInt(rechargeResponse.getCode()) > -1001) && (Integer.parseInt(rechargeResponse.getCode()) < -1))) {
             // invalid response code, should be set for STF
             throw new OperatorUnknownResponseException("recharge response code is ambiguous from MCI, set for STF");
         }

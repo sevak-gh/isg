@@ -28,6 +28,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -535,7 +536,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -594,7 +595,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -658,7 +659,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -725,7 +726,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(3));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -791,7 +792,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));            // this is because first attempt that failed
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getOperatorResponse(), is("done"));
         assertThat(transaction.getOperatorTId(), is("123654"));
         assertThat(transaction.getStf(), is(2));
@@ -859,7 +860,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }

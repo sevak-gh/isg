@@ -85,6 +85,55 @@ public class ISGWS {
     }
 
     /**
+     * MTN topup service
+     *
+     */
+    @WebMethod(operationName = "MTN", action = "urn:TopUpWSDL/MTN")
+    @WebResult(name = "MTNResponse")
+    public ISGServiceResponse mtn(@WebParam(name = "username") String username,
+                                  @WebParam(name = "password") String password,
+                                  @WebParam(name = "action") String action,
+                                  @WebParam(name = "bankcode") String bankCode,
+                                  @WebParam(name = "amount") int amount,
+                                  @WebParam(name = "channel") String channel,
+                                  @WebParam(name = "state") String state,
+                                  @WebParam(name = "bankreceipt") String bankReceipt,
+                                  @WebParam(name = "orderid") String orderId,
+                                  @WebParam(name = "consumer") String consumer,
+                                  @WebParam(name = "customerip") String customerIp) {
+
+        ISGServiceResponse response = mtnService.topup(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp(), action);
+
+        return response;
+    }
+
+    /**
+     * represents Jiring service
+     *
+     */
+    @WebMethod(operationName = "Jiring", action = "urn:TopUpWSDL/Jiring")
+    @WebResult(name = "JiringResponse")
+    public ISGServiceResponse jiring(@WebParam(name = "username") String username,
+                                     @WebParam(name = "password") String password,
+                                     @WebParam(name = "bankcode") String bankCode,
+                                     @WebParam(name = "amount") int amount,
+                                     @WebParam(name = "channel") String channel,
+                                     @WebParam(name = "state") String state,
+                                     @WebParam(name = "bankreceipt") String bankReceipt,
+                                     @WebParam(name = "orderid") String orderId,
+                                     @WebParam(name = "consumer") String consumer,
+                                     @WebParam(name = "customerip") String customerIp) {
+
+        ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp(), "top-up");
+
+        return response;
+    }
+
+    /**
      * returns true/false for MCI service availability
      *
      */
@@ -117,27 +166,28 @@ public class ISGWS {
         return response;
     }
 
+
     /**
-     * represents Jiring service
+     * verifies MCI transaction
      *
      */
-    @WebMethod(operationName = "Jiring", action = "urn:TopUpWSDL/Jiring")
-    @WebResult(name = "JiringResponse")
-    public ISGServiceResponse jiring(@WebParam(name = "username") String username,
-                                     @WebParam(name = "password") String password,
-                                     @WebParam(name = "bankcode") String bankCode,
-                                     @WebParam(name = "amount") int amount,
-                                     @WebParam(name = "channel") String channel,
-                                     @WebParam(name = "state") String state,
-                                     @WebParam(name = "bankreceipt") String bankReceipt,
-                                     @WebParam(name = "orderid") String orderId,
-                                     @WebParam(name = "consumer") String consumer,
-                                     @WebParam(name = "customerip") String customerIp) {
+    @WebMethod(operationName = "verifyMCI", action = "urn:TopUpWSDL/verifyMCI")
+    @WebResult(name = "verifyMCIResponse")
+    public ISGServiceResponse verifyMCI(@WebParam(name = "consumer") String consumer,
+                                        @WebParam(name = "transactionId") String transactionId) {
+        //TODO
+        throw new UnsupportedOperationException("MCI verify not supported");
+    }
 
-        ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
-                                      state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), "top-up");
-
-        return response;
+    /**
+     * verifies MTN transaction
+     *
+     */
+    @WebMethod(operationName = "verifyMTN", action = "urn:TopUpWSDL/verifyMTN")
+    @WebResult(name = "verifyMTNResponse")
+    public ISGServiceResponse verifyMTN(@WebParam(name = "consumer") String consumer,
+                                        @WebParam(name = "transactionId") String transactionId) {
+        //TODO
+        throw new UnsupportedOperationException("MTN verify not supported");
     }
 }

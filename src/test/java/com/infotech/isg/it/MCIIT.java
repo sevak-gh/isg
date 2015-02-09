@@ -28,6 +28,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
@@ -591,7 +592,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -662,7 +663,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -728,7 +729,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -799,7 +800,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -872,7 +873,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(3));
         assertThat(transaction.getStfResult(), is(0));
     }
@@ -945,7 +946,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));            // this is because first attempt that failed
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getOperatorResponse(), is("123654"));
         assertThat(transaction.getStf(), is(2));
         assertThat(transaction.getStfResult(), is(0));
@@ -1019,7 +1020,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode(), is(greaterThan(0)));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
     }

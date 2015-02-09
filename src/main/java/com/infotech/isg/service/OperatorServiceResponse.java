@@ -55,6 +55,6 @@ public class OperatorServiceResponse {
 
     @Override
     public String toString() {
-        return String.format("[code:%s, message:%s, trId:%s, status:%s]", code, message, transactionId, status);
+        return String.format("OperatorResponse[code:%s, message:%s, trId:%s, status:%s]", code, message, transactionId, status);
     }
 }

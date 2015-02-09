@@ -38,6 +38,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.ArgumentCaptor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -95,7 +96,7 @@ public class MCIServiceTest {
         String message = "OK";
         String trId = "1236549870";
         String token = "tok";
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong())).thenReturn(
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString())).thenReturn(
         new OperatorServiceResponse() {{
                 setCode(code);
                 setMessage(message);
@@ -150,7 +151,7 @@ public class MCIServiceTest {
         int code = 0;
         String message = "OK";
         String trId = "1236549870";
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong()))
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString()))
         .thenReturn(new OperatorServiceResponse() {{
                 setCode(Integer.toString(code));
                 setMessage(message);
@@ -173,7 +174,7 @@ public class MCIServiceTest {
         verify(accessControl).authenticate(username, password, remoteIp);
         verify(transactionValidator).validate(bankReceipt, bankCode, clientId, orderId,
                                               operatorId, amount, channel, consumer, customerIp);
-        verify(mciOperatorService).topup(consumer, amount, expectedTransactionId);
+        verify(mciOperatorService).topup(consumer, amount, expectedTransactionId, action);
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).create(captor.capture());
         Transaction transaction = captor.getValue();
@@ -421,7 +422,7 @@ public class MCIServiceTest {
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
                                            anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // bypass proxy, null means operation failed in any reason, but not ambiguous
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong())).thenReturn(null);
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString())).thenReturn(null);
 
         // act
         ISGServiceResponse response = mciService.topup("username", "password", "054", 10000,
@@ -451,7 +452,7 @@ public class MCIServiceTest {
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
                                            anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // mci proxy throws ISGException
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong()))
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString()))
         .thenThrow(new OperatorUnknownResponseException("ambiguous response from MCI service provider"));
 
         // act
@@ -461,14 +462,14 @@ public class MCIServiceTest {
 
         // assert
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        verify(mciOperatorService).topup("consumer", 10000, 0L);
+        verify(mciOperatorService).topup("consumer", 10000, 0L, "top-up");
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
         assertThat(transaction.getStatus(), is(-1));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
-        assertThat(transaction.getOperatorResponseCode(), is(2));
+        assertThat(transaction.getOperatorResponseCode(), is(not(0)));
     }
 
     @Test
@@ -490,7 +491,7 @@ public class MCIServiceTest {
         String token = "token";
         int responseCode = -1011;
         String responseDetail = "NOK";
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong()))
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString()))
         .thenReturn(new OperatorServiceResponse() {{
                 setCode(Integer.toString(responseCode));
                 setMessage(responseDetail);
@@ -506,7 +507,7 @@ public class MCIServiceTest {
 
         // assert
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
-        verify(mciOperatorService).topup("consumer", 10000, 0L);
+        verify(mciOperatorService).topup("consumer", 10000, 0L, "top-up");
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
@@ -533,7 +534,7 @@ public class MCIServiceTest {
         when(transactionValidator.validate(anyString(), anyString(), anyInt(), anyString(), anyInt(),
                                            anyInt(), anyString(), anyString(), anyString())).thenReturn(ErrorCodes.OK);
         // mci proxy throws RuntimeException
-        when(mciOperatorService.topup(anyString(), anyInt(), anyLong()))
+        when(mciOperatorService.topup(anyString(), anyInt(), anyLong(), anyString()))
         .thenThrow(new RuntimeException("something strange happened during charge"));
 
         // act
