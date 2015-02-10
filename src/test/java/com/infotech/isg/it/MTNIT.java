@@ -161,6 +161,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -279,6 +289,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setCommandStatus(mtnCommandStatus);
                 response.setResultCode(mtnResultCode);
                 return response;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -399,6 +419,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -517,6 +547,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setCommandStatus(mtnCommandStatus);
                 response.setResultCode(mtnResultCode);
                 return response;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -637,6 +677,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -755,6 +805,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setCommandStatus(mtnCommandStatus);
                 response.setResultCode(mtnResultCode);
                 return response;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -875,6 +935,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -959,6 +1029,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -1033,6 +1113,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -1106,6 +1196,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1216,6 +1316,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -1297,6 +1407,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -1375,6 +1495,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -1452,6 +1582,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1536,6 +1676,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1622,6 +1772,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1710,6 +1870,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 return null;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1835,6 +2005,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setCommandStatus(mtnCommandStatus);
                 response.setResultCode(mtnResultCode);
                 return response;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
@@ -1963,6 +2143,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
+            }
         };
         mtnws.setServiceImpl(mtnService);
         mtnws.publish();
@@ -2089,6 +2279,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setCommandStatus(mtnCommandStatus);
                 response.setResultCode(mtnResultCode);
                 return response;
+            }
+
+            @Override
+            public MTNProxyResponse verify(long trId) {
+                throw new UnsupportedOperationException("verify not supported"); 
+            }
+
+            @Override
+            public MTNProxyResponse getBalance() {
+                throw new UnsupportedOperationException("balance not supported"); 
             }
         };
         mtnws.setServiceImpl(mtnService);
