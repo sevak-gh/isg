@@ -32,8 +32,10 @@ public class ActionValidatorTest {
             {"GPRS", ErrorCodes.INVALID_OPERATOR_ACTION},
             {"gprs", ErrorCodes.OK},
             {"wow", ErrorCodes.OK},
-            {"post_wimax", ErrorCodes.OK},
-            {"pre_wimax", ErrorCodes.OK},
+            {"post-wimax", ErrorCodes.OK},
+            {"post_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"pre_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"pre-wimax", ErrorCodes.OK},
             {"pay-bill", ErrorCodes.OK}
         };
     }

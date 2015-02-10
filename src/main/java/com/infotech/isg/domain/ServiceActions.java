@@ -24,8 +24,8 @@ public class ServiceActions {
         actions.put("bulk", BULK);
         actions.put("pay-bill", PAY_BILL);
         actions.put("wow", WOW);
-        actions.put("post_wimax", POST_WIMAX);
-        actions.put("pre_wimax", PRE_WIMAX);
+        actions.put("post-wimax", POST_WIMAX);
+        actions.put("pre-wimax", PRE_WIMAX);
         actions.put("gprs", GPRS);
     }
 

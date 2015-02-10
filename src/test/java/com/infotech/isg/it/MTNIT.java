@@ -323,6 +323,601 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void HappyPathShouldSucceedForPayBill() {
+        // arrange
+        String mtnTransactionId = "1111";
+        String mtnOrigResponseMessage = "recharge done";
+        String mtnCommandStatus = "OK";
+        String mtnResultCode = "0";
+        MTNProxy mtnService = new MTNProxy() {
+            @Override
+            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+        };
+        mtnws.setServiceImpl(mtnService);
+        mtnws.publish();
+        String username = "root";
+        String password = "123456";
+        String action = "pay-bill";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "mtnrcpt";
+        String orderId = "orderid";
+        String consumer = "09385067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mtn(username, password, action,
+                                      bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(mtnTransactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
+        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
+        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void HappyPathShouldSucceedForBulk() {
+        // arrange
+        String mtnTransactionId = "1111";
+        String mtnOrigResponseMessage = "recharge done";
+        String mtnCommandStatus = "OK";
+        String mtnResultCode = "0";
+        MTNProxy mtnService = new MTNProxy() {
+            @Override
+            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+        };
+        mtnws.setServiceImpl(mtnService);
+        mtnws.publish();
+        String username = "root";
+        String password = "123456";
+        String action = "bulk";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "mtnrcpt";
+        String orderId = "orderid";
+        String consumer = "09385067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mtn(username, password, action,
+                                      bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(mtnTransactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
+        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
+        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void HappyPathShouldSucceedForPreWimax() {
+        // arrange
+        String mtnTransactionId = "1111";
+        String mtnOrigResponseMessage = "recharge done";
+        String mtnCommandStatus = "OK";
+        String mtnResultCode = "0";
+        MTNProxy mtnService = new MTNProxy() {
+            @Override
+            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+        };
+        mtnws.setServiceImpl(mtnService);
+        mtnws.publish();
+        String username = "root";
+        String password = "123456";
+        String action = "pre-wimax";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "mtnrcpt";
+        String orderId = "orderid";
+        String consumer = "09385067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mtn(username, password, action,
+                                      bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(mtnTransactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
+        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
+        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void HappyPathShouldSucceedForPostWimax() {
+        // arrange
+        String mtnTransactionId = "1111";
+        String mtnOrigResponseMessage = "recharge done";
+        String mtnCommandStatus = "OK";
+        String mtnResultCode = "0";
+        MTNProxy mtnService = new MTNProxy() {
+            @Override
+            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+        };
+        mtnws.setServiceImpl(mtnService);
+        mtnws.publish();
+        String username = "root";
+        String password = "123456";
+        String action = "post-wimax";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "mtnrcpt";
+        String orderId = "orderid";
+        String consumer = "09385067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mtn(username, password, action,
+                                      bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(mtnTransactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
+        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
+        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void HappyPathShouldSucceedForGPRS() {
+        // arrange
+        String mtnTransactionId = "1111";
+        String mtnOrigResponseMessage = "recharge done";
+        String mtnCommandStatus = "OK";
+        String mtnResultCode = "0";
+        MTNProxy mtnService = new MTNProxy() {
+            @Override
+            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+
+            @Override
+            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+        };
+        mtnws.setServiceImpl(mtnService);
+        mtnws.publish();
+        String username = "root";
+        String password = "123456";
+        String action = "gprs";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "mtnrcpt";
+        String orderId = "orderid";
+        String consumer = "09385067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+
+        // act
+        ISGServiceResponse response = wsclient.mtn(username, password, action,
+                                      bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(mtnTransactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
+        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
+        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
     public void shouldReturnInvalidUsernamePassword() {
         // arrange
         String mtnTransactionId = "1111";
