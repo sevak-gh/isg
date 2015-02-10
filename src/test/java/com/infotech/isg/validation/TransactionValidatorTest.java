@@ -146,6 +146,8 @@ public class TransactionValidatorTest {
             @Override
             public void update(Transaction transaction) {}
 
+            @Override
+            public List<Transaction> findBySTFProvider(int stf, int provider) { return null;}
         };
         transactionValidator = new TransactionValidatorImpl(transactionRepository);
     }

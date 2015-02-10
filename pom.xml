@@ -54,8 +54,8 @@
         <deploy.server.password>tomcat</deploy.server.password>
         <deploy.path>/isg</deploy.path>
 
-        <!-- isgproxy helper -->
-        <isgproxy.version>1.0</isgproxy.version>
+        <!-- isgcommon -->
+        <isgcommon.version>1.0</isgcommon.version>
 
     </properties>      
 
@@ -192,8 +192,8 @@
 
         <dependency>
             <groupId>com.infotech.isg</groupId>
-            <artifactId>isgproxy</artifactId>
-            <version>${isgproxy.version}</version>
+            <artifactId>isgcommon</artifactId>
+            <version>${isgcommon.version}</version>
         </dependency>            
 
     </dependencies>
