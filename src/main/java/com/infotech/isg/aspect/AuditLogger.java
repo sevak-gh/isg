@@ -124,4 +124,43 @@ public class AuditLogger {
 
         return result;
     }
+
+    @Around("execution(public * com.infotech.isg.service.ISGService.verifyTransaction(..))")
+    public Object auditVerifyLog(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        // get start time
+        Date start = new Date();
+
+        // invoke the operation
+        Object result = joinPoint.proceed();
+
+        long responseTime = System.currentTimeMillis() - start.getTime();
+
+        // get request/response
+        ISGServiceResponse response = (com.infotech.isg.service.ISGServiceResponse) result;
+        String consumer = joinPoint.getArgs()[0].toString();
+        String transactionId = joinPoint.getArgs()[1].toString();
+        int operatorId = ((com.infotech.isg.service.ISGService)joinPoint.getThis()).getOperatorId();
+
+        // audit log in file
+        LOG.info("\u001B[32m{}\u001B[0m verify({},{}) => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
+                 Operator.getName(operatorId),              // operator name
+                 consumer,
+                 transactionId,
+                 (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m",
+                 response.getStatus(),
+                 ((int)response.getISGDoc() < 0) ? ErrorCodes.toString((int)response.getISGDoc()) : "",
+                 response.getISGDoc(),
+                 ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m",
+                 response.getOPRDoc(),
+                 responseTime);
+
+        // audit log in DB
+        auditLogRepository.create(null, null, null, null, null, null, null,
+                                  consumer, null, null, "verify:" + transactionId, operatorId,
+                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                                  start, responseTime);
+
+        return result;
+    }
 }
