@@ -6,11 +6,13 @@ import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.BankCodes;
 import com.infotech.isg.domain.ServiceActions;
+import com.infotech.isg.domain.OperatorStatus;
 import com.infotech.isg.repository.OperatorRepository;
 import com.infotech.isg.repository.TransactionRepository;
 import com.infotech.isg.repository.ClientRepository;
 import com.infotech.isg.repository.PaymentChannelRepository;
 import com.infotech.isg.repository.AuditLogRepository;
+import com.infotech.isg.repository.OperatorStatusRepository;
 
 import javax.sql.DataSource;
 import java.util.Date;
@@ -61,6 +63,10 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
     private AuditLogRepository auditLogRepository;
 
     @Autowired
+    @Qualifier("JdbcOperatorStatusRepository")
+    private OperatorStatusRepository operatorStatusRepository;
+
+    @Autowired
     private DataSource dataSource;
 
     @BeforeClass
@@ -77,6 +83,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         jdbcTemplate.update("insert into info_topup_client_ips values(1,'1.1.1.1')");
         jdbcTemplate.update("insert into info_topup_client_ips values(1,'2.2.2.2')");
         jdbcTemplate.update("delete from info_topup_audit");
+        jdbcTemplate.update("update info_topup_operator_last_status set status='READY', timestamp=now() where id=2");
     }
 
     @Test
@@ -151,7 +158,7 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         transaction.setOperatorResponseCode(0);
         transaction.setOperatorResponse("sim card charged");
         transaction.setToken("MCI-TOKEN:ABC12356");
-        transaction.setOperatorTId("sim card charged");
+        transaction.setOperatorTId("T123456789");
         transactionRepo.update(transaction);
 
         transactions = transactionRepo.findByRefNumBankCodeClientId("ref123456", BankCodes.SAMAN, 3);
@@ -160,13 +167,26 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.get(0).getRefNum(), is("ref123456"));
         assertThat(transactions.get(0).getStatus(), is(1));
         assertThat(transactions.get(0).getOperatorResponseCode(), is(0));
+
+        transaction  = transactionRepo.findByProviderTransactionId(Operator.MCI_ID, "T123456789");
+        assertThat(transaction, is(notNullValue()));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getStf(), is(nullValue()));
+        assertThat(transaction.getOperatorResponseCode(), is(0));
+        assertThat(transaction.getOperatorTId(), is("T123456789"));
+
+        transaction  = transactionRepo.findByProviderTransactionId(Operator.MTN_ID, "T123456789");
+        assertThat(transaction, is(nullValue()));
+
+        transaction  = transactionRepo.findByProviderTransactionId(Operator.MCI_ID, "12340062");
+        assertThat(transaction, is(nullValue()));
     }
 
     @Test
     public void shouldInsertAuditLog() {
         String username = "username";
         String bankCode = "bankCode";
-        int amount = 10000;
+        String amount = "10000";
         String channel = "59";
         String state = "state";
         String bankReceipt = "receipt";
@@ -184,5 +204,27 @@ public class JdbcRepositoryIT extends AbstractTestNGSpringContextTests {
         auditLogRepository.create(username, bankCode, amount, channel, state, bankReceipt,
                                   orderId, consumer, customerIp, remoteIp, action, operatorId,
                                   status, isgDoc, oprDoc, timestamp, responseTime);
+    }
+
+    @Test
+    public void shouldFindUpdateOperatorStatus() {
+        OperatorStatus status = operatorStatusRepository.findById(Operator.MCI_ID);
+        assertThat(status, is(notNullValue()));
+        assertThat(status.getId(), is(Operator.MCI_ID));
+        assertThat(status.getIsAvailable(), is(true));
+
+        status.setIsAvailable(false);
+        status.setTimestamp(new Date());
+        operatorStatusRepository.update(status);
+
+        status = operatorStatusRepository.findById(Operator.MCI_ID);
+        assertThat(status, is(notNullValue()));
+        assertThat(status.getId(), is(Operator.MCI_ID));
+        assertThat(status.getIsAvailable(), is(false));
+
+        status = operatorStatusRepository.findById(Operator.JIRING_ID);
+        assertThat(status, is(notNullValue()));
+        status = operatorStatusRepository.findById(Operator.MTN_ID);
+        assertThat(status, is(notNullValue()));
     }
 }

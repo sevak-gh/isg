@@ -38,7 +38,7 @@ public class AuditLogger {
 
     // around execution ISGService API
     @Around("execution(public * com.infotech.isg.service.ISGService.topup(..))")
-    public Object auditLog(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object auditTopupLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
         // get start time
         Date start = new Date();
@@ -52,7 +52,7 @@ public class AuditLogger {
         ISGServiceResponse response = (com.infotech.isg.service.ISGServiceResponse) result;
         String username = joinPoint.getArgs()[0].toString();
         String bankCode = joinPoint.getArgs()[2].toString();
-        int amount = Integer.parseInt(joinPoint.getArgs()[3].toString());
+        String amount = joinPoint.getArgs()[3].toString();
         String channel = joinPoint.getArgs()[4].toString();
         String state = joinPoint.getArgs()[5].toString();
         String bankReceipt = joinPoint.getArgs()[6].toString();
@@ -84,6 +84,41 @@ public class AuditLogger {
         // audit log in DB
         auditLogRepository.create(username, bankCode, amount, channel, state, bankReceipt, orderId,
                                   consumer, customerIp, remoteIp, action, operatorId,
+                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                                  start, responseTime);
+
+        return result;
+    }
+
+    @Around("execution(public * com.infotech.isg.service.ISGService.isOperatorAvailable(..))")
+    public Object auditIsAvailableLog(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        // get start time
+        Date start = new Date();
+
+        // invoke the operation
+        Object result = joinPoint.proceed();
+
+        long responseTime = System.currentTimeMillis() - start.getTime();
+
+        // get request/response
+        ISGServiceResponse response = (com.infotech.isg.service.ISGServiceResponse) result;
+        int operatorId = ((com.infotech.isg.service.ISGService)joinPoint.getThis()).getOperatorId();
+
+        // audit log in file
+        LOG.info("\u001B[32m{}\u001B[0m is vailable => [{}{}\u001B[0m,{}({}),{}{}\u001B[0m] in {} msec",
+                 Operator.getName(operatorId),              // operator name
+                 (response.getStatus().equals("OK")) ? "\u001B[32m" : "\u001B[31m",
+                 response.getStatus(),
+                 ((int)response.getISGDoc() < 0) ? ErrorCodes.toString((int)response.getISGDoc()) : "",
+                 response.getISGDoc(),
+                 ((response.getOPRDoc() != null) && (response.getOPRDoc().startsWith("-"))) ? "\u001B[31m" : "\u001B[0m",
+                 response.getOPRDoc(),
+                 responseTime);
+
+        // audit log in DB
+        auditLogRepository.create(null, null, null, null, null, null, null,
+                                  null, null, null, "isAvailable", operatorId,
                                   response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
                                   start, responseTime);
 

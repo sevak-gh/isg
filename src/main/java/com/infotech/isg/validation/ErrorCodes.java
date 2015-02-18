@@ -3,7 +3,7 @@ package com.infotech.isg.validation;
 /**
  * representing service error codes.
  *
- * @author Sevak Garibian
+ * @author Sevak Gharibian
  */
 public class ErrorCodes {
     public static final int OK = 0;
@@ -36,6 +36,7 @@ public class ErrorCodes {
     public static final int OPERATOR_SERVICE_ERROR = -27;
     public static final int STF_RESOLVED_FAILED = -28;
     public static final int STF_RESOLVED_SUCCESSFUL = -29;
+    public static final int INVALID_TRANSACTION_ID = -30;
 
     public static String toString(int errorCode) {
         switch (errorCode) {

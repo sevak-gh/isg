@@ -64,7 +64,6 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
     public void initDB() {
         jdbcTemplate = new JdbcTemplate(dataSource);
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "info_topup_transactions",
-                                       "info_topup_operator_last_status",
                                        "info_topup_operators",
                                        "info_topup_payment_channel",
                                        "info_topup_clients",
@@ -1358,7 +1357,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         assertThat(transaction.getToken(), is(nullValue()));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
@@ -1449,7 +1448,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -1537,7 +1536,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -1631,7 +1630,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -1727,7 +1726,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -1823,7 +1822,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));            // this is because first attempt that failed
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));            // this is because first attempt that failed
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -1921,7 +1920,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -2192,7 +2191,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         assertThat(transactions.size(), is(1));
         Transaction transaction = transactions.get(0);
         assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         assertThat(transaction.getToken(), is(nullValue()));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));

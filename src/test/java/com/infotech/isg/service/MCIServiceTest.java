@@ -2,11 +2,13 @@ package com.infotech.isg.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import com.infotech.isg.domain.Client;
 import com.infotech.isg.domain.Operator;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
+import com.infotech.isg.domain.OperatorStatus;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
@@ -431,9 +433,6 @@ public class MCIServiceTest {
 
         // assert
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
-        ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
-        verify(transactionRepository).create(captor.capture());
-        verifyNoMoreInteractions(transactionRepository);
     }
 
     @Test
@@ -466,7 +465,7 @@ public class MCIServiceTest {
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
         assertThat(transaction.getStf(), is(1));
         assertThat(transaction.getStfResult(), is(0));
         assertThat(transaction.getOperatorResponseCode(), is(not(0)));
@@ -511,7 +510,7 @@ public class MCIServiceTest {
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).update(captor.capture());
         Transaction transaction = captor.getValue();
-        assertThat(transaction.getStatus(), is(-1));
+        assertThat(transaction.getStatus(), is(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
         assertThat(transaction.getOperatorResponseCode(), is(responseCode));
         assertThat(transaction.getOperatorResponse(), is(responseDetail));
         assertThat(transaction.getOperatorTId(), is(responseDetail));
@@ -542,5 +541,35 @@ public class MCIServiceTest {
                                       "1", "state", "receipt", "orderid",
                                       "consumer", "customer", "ip", "top-up");
         // assert
+    }
+
+    @Test
+    public void shouldReturnOperatorStatus() {
+        // arrange
+        when(operatorStatusRepository.findById(Operator.MCI_ID))
+        .thenReturn(new OperatorStatus() {{ setId(Operator.MCI_ID); setIsAvailable(true); setTimestamp(new Date()); }});
+
+        // act
+        ISGServiceResponse response = mciService.isOperatorAvailable();
+
+        // assert
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(1L));
+        assertThat(response.getOPRDoc(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldVerifyTransaction() {
+        // arrange
+        when(transactionRepository.findByProviderTransactionId(anyInt(), anyString()))
+        .thenReturn(new Transaction() {{ setId(1); setStatus(1); setOperatorTId("T123456"); }});
+
+        // act
+        ISGServiceResponse response = mciService.verifyTransaction("09125067064", "T123456");
+
+        // assert
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(1L));
+        assertThat(response.getOPRDoc(), is("T123456"));
     }
 }

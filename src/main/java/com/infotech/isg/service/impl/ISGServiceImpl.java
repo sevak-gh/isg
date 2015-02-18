@@ -109,10 +109,13 @@ public abstract class ISGServiceImpl implements ISGService {
         try {
             operatorServiceResponse = operatorService.topup(consumer, amount, transaction.getId(), action);
         } catch (OperatorNotAvailableException e) {
+            transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
+            transactionRepository.update(transaction);
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         } catch (OperatorUnknownResponseException e) {
             // ambiguous status, set for STF
+            transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
             transaction.setStf(1);
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(-1);
@@ -122,12 +125,14 @@ public abstract class ISGServiceImpl implements ISGService {
         }
 
         if (operatorServiceResponse == null) {
+            transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
+            transactionRepository.update(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
 
         if (!operatorServiceResponse.getCode().equalsIgnoreCase("0")) {
             // operation not successful
-            transaction.setStatus(-1);
+            transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK);
             transaction.setOperatorDateTime(new Date());
             transaction.setOperatorResponseCode(Integer.parseInt(operatorServiceResponse.getCode()));
             transaction.setOperatorResponse(operatorServiceResponse.getMessage());
@@ -159,6 +164,22 @@ public abstract class ISGServiceImpl implements ISGService {
         }
 
         return new ISGServiceResponse("OK", (operatorStatus.getIsAvailable()) ? 1L : 0L, null);
+    }
+
+    @Override
+    public ISGServiceResponse verifyTransaction(String consumer, String transactionId) {
+        Transaction transaction = transactionRepository.findByProviderTransactionId(operatorId, transactionId);
+
+        if (transaction == null) {
+            return new ISGServiceResponse("ERROR", ErrorCodes.INVALID_TRANSACTION_ID, null);
+        }
+
+        if ((transaction.getStatus() == 1) || (transaction.getStf() == 2)) {
+            return new ISGServiceResponse("OK", transaction.getId(), transaction.getOperatorTId());
+        } else {
+            return new ISGServiceResponse("ERROR", transaction.getStatus(),
+                                          (transaction.getOperatorResponseCode() == null) ? null : Integer.toString(transaction.getOperatorResponseCode()));
+        }
     }
 
     @Override

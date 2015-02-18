@@ -14,5 +14,6 @@ public interface ISGService {
                                     String remoteIp, String action);
 
     public ISGServiceResponse isOperatorAvailable();
+    public ISGServiceResponse verifyTransaction(String consumer, String transactionId);
     public int getOperatorId();
 }

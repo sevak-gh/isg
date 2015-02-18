@@ -166,7 +166,6 @@ public class ISGWS {
         return response;
     }
 
-
     /**
      * verifies MCI transaction
      *
@@ -175,8 +174,7 @@ public class ISGWS {
     @WebResult(name = "verifyMCIResponse")
     public ISGServiceResponse verifyMCI(@WebParam(name = "consumer") String consumer,
                                         @WebParam(name = "transactionId") String transactionId) {
-        //TODO
-        throw new UnsupportedOperationException("MCI verify not supported");
+        return mciService.verifyTransaction(consumer, transactionId);
     }
 
     /**
@@ -187,7 +185,17 @@ public class ISGWS {
     @WebResult(name = "verifyMTNResponse")
     public ISGServiceResponse verifyMTN(@WebParam(name = "consumer") String consumer,
                                         @WebParam(name = "transactionId") String transactionId) {
-        //TODO
-        throw new UnsupportedOperationException("MTN verify not supported");
+        return mtnService.verifyTransaction(consumer, transactionId);
+    }
+
+    /**
+     * verifies Jiring transaction
+     *
+     */
+    @WebMethod(operationName = "verifyJiring", action = "urn:TopUpWSDL/verifyJiring")
+    @WebResult(name = "verifyJiringResponse")
+    public ISGServiceResponse verifyJiring(@WebParam(name = "consumer") String consumer,
+                                           @WebParam(name = "transactionId") String transactionId) {
+        return jiringService.verifyTransaction(consumer, transactionId);
     }
 }
