@@ -108,6 +108,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setParam1(jiringResponseTrId);
                 return response;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -173,6 +178,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setParam1(jiringResponseTrId);
                 return response;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -227,6 +237,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setMessage(jiringResponseMessage);
                 response.setParam1(jiringResponseTrId);
                 return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -283,6 +298,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setParam1(jiringResponseTrId);
                 return response;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -338,6 +358,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setMessage(jiringResponseMessage);
                 response.setParam1(jiringResponseTrId);
                 return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -399,6 +424,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setMessage(jiringResponseMessage);
                 response.setParam1(jiringResponseTrId);
                 return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -502,6 +532,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             public TCSResponse salesRequestExec(String param) {
                 return null;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -561,6 +596,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             public TCSResponse salesRequestExec(String param) {
                 throw new RuntimeException("something bad happened!!!");
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -619,6 +659,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             @Override
             public TCSResponse salesRequestExec(String param) {
                 return null;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -683,6 +728,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             @Override
             public TCSResponse salesRequestExec(String param) {
                 return null;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -751,6 +801,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             public TCSResponse salesRequestExec(String param) {
                 return null;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -818,6 +873,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             @Override
             public TCSResponse salesRequestExec(String param) {
                 return null;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -888,6 +948,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setMessage(jiringResponseMessage);
                 response.setParam1(jiringResponseTrId);
                 return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
@@ -961,6 +1026,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setParam1(jiringResponseTrId);
                 return response;
             }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
         jiringFake.start();
@@ -1029,6 +1099,11 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
                 response.setMessage(jiringResponseMessage);
                 response.setParam1(jiringResponseTrId);
                 return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
             }
         };
         jiringFake.setJiringProxyImpl(jiringProxy);
