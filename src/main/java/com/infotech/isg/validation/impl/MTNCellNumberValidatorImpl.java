@@ -18,7 +18,7 @@ public class MTNCellNumberValidatorImpl implements CellNumberValidator {
 
     @Override
     public int validate(String cellNumber) {
-        Pattern pattern = Pattern.compile("^(0|98|\\+98|0098)?9[34][0-9]{8}$");
+        Pattern pattern = Pattern.compile("^(0|98|\\+98|0098)?(((93|94)[0-9])|901|902)[0-9]{7}$");
         if (!pattern.matcher(cellNumber).matches()) {
             return ErrorCodes.INVALID_CELL_NUMBER;
         }
