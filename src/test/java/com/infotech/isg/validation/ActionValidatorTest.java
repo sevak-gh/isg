@@ -78,7 +78,7 @@ public class ActionValidatorTest {
             {"wow", ErrorCodes.INVALID_OPERATOR_ACTION},
             {"post_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
             {"pre_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
-            {"pay-bill", ErrorCodes.INVALID_OPERATOR_ACTION}
+            {"pay-bill", ErrorCodes.OK}
         };
     }
 

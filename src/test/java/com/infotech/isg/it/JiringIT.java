@@ -92,7 +92,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -101,7 +101,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -162,7 +162,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -171,7 +171,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -222,7 +222,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -231,7 +231,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -282,7 +282,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -291,7 +291,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -343,7 +343,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "requested operation not possible";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringTokenResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -352,7 +352,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -413,12 +413,12 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 throw new RuntimeException("something bad happened!!!");
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -520,7 +520,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -529,7 +529,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 return null;
             }
 
@@ -584,7 +584,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -593,7 +593,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 throw new RuntimeException("something bad happened!!!");
             }
 
@@ -648,7 +648,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -657,7 +657,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 return null;
             }
 
@@ -717,7 +717,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -726,7 +726,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 return null;
             }
 
@@ -789,7 +789,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -798,7 +798,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 return null;
             }
 
@@ -862,7 +862,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -871,7 +871,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 return null;
             }
 
@@ -933,7 +933,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -942,7 +942,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -1010,7 +1010,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "requested operation failed";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringTokenResponseCode);
                 response.setMessage(jiringTokenResponseMessage);
@@ -1019,7 +1019,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -1084,7 +1084,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         String jiringResponseMessage = "request done";
         JiringProxy jiringProxy = new JiringProxy() {
             @Override
-            public TCSResponse salesRequest(String consumer, int amount) {
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -1093,7 +1093,7 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public TCSResponse salesRequestExec(String param) {
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
                 TCSResponse response = new TCSResponse();
                 response.setResult(jiringResponseCode);
                 response.setMessage(jiringResponseMessage);
@@ -1137,6 +1137,77 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.DOUBLE_SPENDING_TRANSACTION));
         assertThat(response.getOPRDoc(), is(nullValue()));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getToken(), is(token));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getOperatorResponseCode().toString(), is(jiringResponseCode));
+        assertThat(transaction.getOperatorResponse(), is(jiringResponseMessage));
+        assertThat(transaction.getOperatorTId(), is(jiringResponseTrId));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
+    @Test
+    public void HappyPathShouldSucceedForBillPayment() {
+        // arrange
+        String token = "token";
+        String jiringResponseCode = "0";
+        String jiringResponseTrId = "123234569";
+        String jiringResponseMessage = "request done";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(jiringResponseTrId);
+                return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 10000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "jirrcpt";
+        String orderId = "orderid";
+        String consumer = "09125067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+        String action = "pay-bill";
+
+        // act
+        ISGServiceResponse response = wsclient.jiring(username, password, bankCode, amount,
+                                      channel, state, bankReceipt, orderId,
+                                      consumer, customerIp, action);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(jiringResponseTrId));
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));

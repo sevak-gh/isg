@@ -1,9 +1,11 @@
 package com.infotech.isg.service.impl;
 
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.service.OperatorService;
 import com.infotech.isg.service.OperatorServiceResponse;
 import com.infotech.isg.service.OperatorNotAvailableException;
 import com.infotech.isg.service.OperatorUnknownResponseException;
+import com.infotech.isg.service.ISGException;
 import com.infotech.isg.proxy.ProxyAccessException;
 import com.infotech.isg.proxy.jiring.JiringProxy;
 import com.infotech.isg.proxy.jiring.JiringProxyImpl;
@@ -24,6 +26,8 @@ import org.slf4j.LoggerFactory;
 public class JiringOperatorServiceImpl implements OperatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(JiringOperatorServiceImpl.class);
+    private static final String RECHARGE_BRAND_ID = "52";
+    private static final String PAYBILL_BRAND_ID = "47";
 
     @Value("${jiring.url}")
     private String url;
@@ -41,16 +45,24 @@ public class JiringOperatorServiceImpl implements OperatorService {
     @Override
     public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action) {
 
-        JiringProxy jiringProxy = new JiringProxyImpl(url, username, password, brand);
+        JiringProxy jiringProxy = new JiringProxyImpl(url, username, password);
 
         // normalize consumer/cell-number for jiring
         // 091********
         consumer = "091" + consumer.substring(consumer.length() - 8, consumer.length());
 
+        // convert action into jiring brand ID
+        String brandId = "";
+        switch (ServiceActions.getActionCode(action)) {
+            case ServiceActions.TOP_UP:brandId = RECHARGE_BRAND_ID;break;
+            case ServiceActions.PAY_BILL:brandId = PAYBILL_BRAND_ID;break;
+            default:throw new ISGException(String.format("jiring brandId not found for: %s", action));
+        }
+
         // get token from jiring
         TCSResponse response = null;
         try {
-            response = jiringProxy.salesRequest(consumer, amount);
+            response = jiringProxy.salesRequest(consumer, amount, brandId);
         } catch (ProxyAccessException e) {
             throw new OperatorNotAvailableException("error in jiring SalesRequest", e);
         }
@@ -76,7 +88,7 @@ public class JiringOperatorServiceImpl implements OperatorService {
         String token = response.getParam1();
         response = null;
         try {
-            response = jiringProxy.salesRequestExec(token);
+            response = jiringProxy.salesRequestExec(token, false);
         } catch (ProxyAccessException e) {
             throw new OperatorUnknownResponseException("error in jiring SalesRequestExec, ambiguous result", e);
         }
