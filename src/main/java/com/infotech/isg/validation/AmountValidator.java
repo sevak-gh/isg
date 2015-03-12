@@ -6,5 +6,5 @@ package com.infotech.isg.validation;
  * @author Sevak Gharibian
  */
 public interface AmountValidator {
-    public int validate(int amount);
+    public int validate(int amount, int action);
 }

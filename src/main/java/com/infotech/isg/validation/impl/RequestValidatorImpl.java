@@ -1,5 +1,6 @@
 package com.infotech.isg.validation.impl;
 
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.AmountValidator;
 import com.infotech.isg.validation.CellNumberValidator;
@@ -59,7 +60,7 @@ public abstract class RequestValidatorImpl implements RequestValidator {
         }
 
         // validate amount
-        errorCode = amountValidator.validate(amount);
+        errorCode = amountValidator.validate(amount, ServiceActions.getActionCode(action));
         if (errorCode != ErrorCodes.OK) {
             return errorCode;
         }

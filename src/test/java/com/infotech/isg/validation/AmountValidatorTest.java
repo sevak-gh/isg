@@ -1,5 +1,6 @@
 package com.infotech.isg.validation;
 
+import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.AmountValidator;;
 import com.infotech.isg.validation.impl.MCIAmountValidatorImpl;
 import com.infotech.isg.validation.impl.MTNAmountValidatorImpl;
@@ -65,7 +66,7 @@ public class AmountValidatorTest {
         // different cases provided by data provider
 
         // act
-        int result = amountValidator.validate(amount);
+        int result = amountValidator.validate(amount, ServiceActions.TOP_UP);
 
         // assert
         assertThat(result, is(errorCode));
@@ -78,7 +79,7 @@ public class AmountValidatorTest {
         // different cases provided by data provider
 
         // act
-        int result = amountValidator.validate(amount);
+        int result = amountValidator.validate(amount, ServiceActions.TOP_UP);
 
         // assert
         assertThat(result, is(errorCode));

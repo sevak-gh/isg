@@ -129,7 +129,7 @@ public class ISGWS {
 
         ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), 
+                                      getClientIp(),
                                       ((action == null) || action.isEmpty()) ? "top-up" : action);    // top-up default action
 
         return response;

@@ -54,9 +54,9 @@ public class JiringOperatorServiceImpl implements OperatorService {
         // convert action into jiring brand ID
         String brandId = "";
         switch (ServiceActions.getActionCode(action)) {
-            case ServiceActions.TOP_UP:brandId = RECHARGE_BRAND_ID;break;
-            case ServiceActions.PAY_BILL:brandId = PAYBILL_BRAND_ID;break;
-            default:throw new ISGException(String.format("jiring brandId not found for: %s", action));
+            case ServiceActions.TOP_UP: brandId = RECHARGE_BRAND_ID; break;
+            case ServiceActions.PAY_BILL: brandId = PAYBILL_BRAND_ID; break;
+            default: throw new ISGException(String.format("jiring brandId not found for: %s", action));
         }
 
         // get token from jiring

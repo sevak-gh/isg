@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class MTNAmountValidatorImpl implements AmountValidator {
 
     @Override
-    public int validate(int amount) {
+    public int validate(int amount, int action) {
         return (amount >= 10000) ? ErrorCodes.OK : ErrorCodes.INVALID_AMOUNT;
     }
 }
