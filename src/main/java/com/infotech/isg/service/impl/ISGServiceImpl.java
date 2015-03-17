@@ -186,4 +186,35 @@ public abstract class ISGServiceImpl implements ISGService {
     public int getOperatorId() {
         return operatorId;
     }
+
+    @Override
+    public ISGServiceResponse getBill(String consumer) {
+        OperatorServiceResponse operatorServiceResponse = null;
+        try {
+            operatorServiceResponse = operatorService.getBill(consumer);
+        } catch (OperatorNotAvailableException e) {
+            LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        } catch (OperatorUnknownResponseException e) {
+            LOG.error("error in calling service provider, OPERATOR_SERVICE_ERROR returned", e);
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        }
+
+        if (operatorServiceResponse == null) {
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+        }
+
+        if (!operatorServiceResponse.getCode().equalsIgnoreCase("0")) {
+            // operation not successful
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, operatorServiceResponse.getCode());
+        }
+
+        // operation successful, OK
+        return new ISGServiceResponse("OK", 0L, "0",
+                                      operatorServiceResponse.getMessage(),
+                                      operatorServiceResponse.getParam1(),
+                                      operatorServiceResponse.getParam2(),
+                                      operatorServiceResponse.getParam3(),
+                                      operatorServiceResponse.getParam4());
+    }
 }

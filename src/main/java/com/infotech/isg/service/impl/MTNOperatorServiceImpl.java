@@ -100,4 +100,9 @@ public class MTNOperatorServiceImpl implements OperatorService {
 
         return response;
     }
+
+    @Override
+    public OperatorServiceResponse getBill(String consumer) {
+        throw new UnsupportedOperationException("get bill amount not defined in MTN");
+    }
 }

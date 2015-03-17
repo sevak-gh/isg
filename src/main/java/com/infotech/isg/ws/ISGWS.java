@@ -136,6 +136,19 @@ public class ISGWS {
     }
 
     /**
+     * MCI get bill amount
+     *
+     */
+    @WebMethod(operationName = "getMCIBill", action = "urn:TopUpWSDL/getMCIBill")
+    @WebResult(name = "getMCIBillResponse")
+    public ISGServiceResponse getMCIBill(@WebParam(name = "consumer") String consumer) {
+
+        ISGServiceResponse response = jiringService.getBill(consumer);
+
+        return response;
+    }
+
+    /**
      * returns true/false for MCI service availability
      *
      */

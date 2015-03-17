@@ -88,4 +88,9 @@ public class MCIOperatorServiceImpl implements OperatorService {
 
         return response;
     }
+
+    @Override
+    public OperatorServiceResponse getBill(String consumer) {
+        throw new UnsupportedOperationException("pay-bill not defined in MCI, try jiring");
+    }
 }

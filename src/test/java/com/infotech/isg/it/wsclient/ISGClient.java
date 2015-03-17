@@ -175,6 +175,30 @@ public class ISGClient {
         return isgServiceResponse;
     }
 
+    public ISGServiceResponse getMCIBill(String consumer) {
+        // create empty soap request
+        SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + "/getMCIBill");
+
+        // add request body/header
+        try {
+            SOAPBody body = request.getSOAPBody();
+            SOAPBodyElement bodyElement = body.addBodyElement(new QName(namespace, "getMCIBill", "ns"));
+            SOAPElement element = bodyElement.addChildElement(new QName("consumer"));
+            element.addTextNode(consumer);
+            request.saveChanges();
+        } catch (SOAPException e) {
+            throw new RuntimeException("soap request creation error", e);
+        }
+
+        // send message and get response
+        SOAPMessage response = SOAPHelper.callSOAP(request, url);
+
+        // process response
+        ISGServiceResponse isgServiceResponse = SOAPHelper.parseResponse(response, namespace, "getMCIBillResponse", ISGServiceResponse.class);
+
+        return isgServiceResponse;
+    }
+
     public ISGServiceResponse mtn(String username, String password,
                                   String action,
                                   String bankCode, int amount,

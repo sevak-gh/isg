@@ -107,4 +107,66 @@ public class JiringOperatorServiceImpl implements OperatorService {
         serviceResponse.setToken(token);
         return serviceResponse;
     }
+
+    @Override
+    public OperatorServiceResponse getBill(String consumer) {
+        JiringProxy jiringProxy = new JiringProxyImpl(url, username, password);
+
+        // normalize consumer/cell-number for jiring
+        // 091********
+        consumer = "091" + consumer.substring(consumer.length() - 8, consumer.length());
+
+        // get token from jiring
+        TCSResponse response = null;
+        try {
+            // dummy amount for pay-bill check-only action
+            response = jiringProxy.salesRequest(consumer, 100, PAYBILL_BRAND_ID);
+        } catch (ProxyAccessException e) {
+            throw new OperatorNotAvailableException("error in jiring SalesRequest", e);
+        }
+
+        if ((response == null)
+            || (response.getResult() == null)) {
+            throw new OperatorNotAvailableException("invalid SalesRequest response from jiring");
+        }
+
+        if (!response.getResult().equalsIgnoreCase("0")) {
+            // operator responded NOK, token not available
+            // set response, status not exist for Jiring
+            OperatorServiceResponse serviceResponse = new OperatorServiceResponse();
+            serviceResponse.setCode(response.getResult());
+            serviceResponse.setMessage(response.getMessage());
+            return serviceResponse;
+        }
+
+        if (response.getParam1() == null) {
+            throw new OperatorNotAvailableException("invalid token, SalesRequest response from jiring");
+        }
+
+        String token = response.getParam1();
+        response = null;
+        try {
+            response = jiringProxy.salesRequestExec(token, true);
+        } catch (ProxyAccessException e) {
+            throw new OperatorUnknownResponseException("error in jiring SalesRequestExec, ambiguous result", e);
+        }
+
+        if ((response == null)
+            || (response.getResult() == null)) {
+            // invalid response, should be set for STF
+            throw new OperatorUnknownResponseException("SalesRequestExec response is ambiguous from Jiring, set for STF");
+        }
+
+        // set response, status not exist for Jiring
+        OperatorServiceResponse serviceResponse = new OperatorServiceResponse();
+        serviceResponse.setCode(response.getResult());
+        serviceResponse.setMessage(response.getMessage());
+        serviceResponse.setTransactionId(response.getParam1());
+        serviceResponse.setToken(token);
+        serviceResponse.setParam1(response.getParam1());
+        serviceResponse.setParam2(response.getParam2());
+        serviceResponse.setParam3(response.getParam3());
+        serviceResponse.setParam4(response.getParam4());
+        return serviceResponse;
+    }
 }

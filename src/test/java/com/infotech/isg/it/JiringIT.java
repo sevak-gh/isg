@@ -1222,4 +1222,61 @@ public class JiringIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getOperatorTId(), is(jiringResponseTrId));
         assertThat(transaction.getStf(), is(nullValue()));
     }
+
+    @Test
+    public void HappyPathShouldSucceedForBillAmountInquiery() {
+        // arrange
+        String token = "token";
+        String jiringResponseCode = "0";
+        String jiringResponseMessage = "request done";
+        String jiringBillMessage = "30000 from 1393/11/01 to 1393/12/01.";
+        String jiringBillAmount = "30000";
+        String jiringBillDateFrom = "1393/11/01";
+        String jiringBillDateTo = "1393/12/01";
+        JiringProxy jiringProxy = new JiringProxy() {
+            @Override
+            public TCSResponse salesRequest(String consumer, int amount, String brandId) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringResponseMessage);
+                response.setParam1(token);
+                return response;
+            }
+
+            @Override
+            public TCSResponse salesRequestExec(String param, boolean checkOnly) {
+                TCSResponse response = new TCSResponse();
+                response.setResult(jiringResponseCode);
+                response.setMessage(jiringBillMessage);
+                response.setParam1(jiringBillAmount);
+                response.setParam2(jiringBillDateFrom);
+                response.setParam3(jiringBillDateTo);
+                response.setParam4("09125067064");
+                return response;
+            }
+
+            @Override
+            public TCSResponse balance() {
+                throw new UnsupportedOperationException("jiring balance not implemented");
+            }
+        };
+        jiringFake.setJiringProxyImpl(jiringProxy);
+        jiringFake.start();
+        String consumer = "09125067064";
+
+        // act
+        ISGServiceResponse response = wsclient.getMCIBill(consumer);
+
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(0L));
+        assertThat(response.getOPRDoc(), is("0"));
+        assertThat(response.getMessage(), is(jiringBillMessage));
+        assertThat(response.getParam1(), is(jiringBillAmount));
+        assertThat(response.getParam2(), is(jiringBillDateFrom));
+        assertThat(response.getParam3(), is(jiringBillDateTo));
+        assertThat(response.getParam4(), is(consumer));
+    }
+
 }

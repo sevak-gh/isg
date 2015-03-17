@@ -13,6 +13,7 @@ public interface ISGService {
                                     String consumer, String customerIp,
                                     String remoteIp, String action);
 
+    public ISGServiceResponse getBill(String consumer);
     public ISGServiceResponse isOperatorAvailable();
     public ISGServiceResponse verifyTransaction(String consumer, String transactionId);
     public int getOperatorId();
