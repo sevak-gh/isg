@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * validator for request transaction.
@@ -22,11 +23,12 @@ public class TransactionValidatorImpl implements TransactionValidator {
     private final TransactionRepository transactionRepository;
 
     @Autowired
-    public TransactionValidatorImpl(@Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository) {
+    public TransactionValidatorImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int validate(String bankReceipt, String bankCode, int clientId,
                         String orderId, int operatorId, int amount,
                         String channelId, String consumer, String customerIp) {
@@ -69,7 +71,7 @@ public class TransactionValidatorImpl implements TransactionValidator {
             transaction.setStf(1);
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(-1);
-            transactionRepository.update(transaction);
+            transactionRepository.save(transaction);
             return ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE;
         }
 

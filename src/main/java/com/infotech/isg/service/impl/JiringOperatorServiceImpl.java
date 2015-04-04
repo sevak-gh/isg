@@ -12,7 +12,7 @@ import com.infotech.isg.proxy.jiring.JiringProxyImpl;
 import com.infotech.isg.proxy.jiring.TCSRequest;
 import com.infotech.isg.proxy.jiring.TCSResponse;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Component("JiringOperatorService")
+@Service("JiringOperatorService")
 public class JiringOperatorServiceImpl implements OperatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(JiringOperatorServiceImpl.class);

@@ -4,7 +4,7 @@ import com.infotech.isg.domain.Operator;
 import com.infotech.isg.validation.ErrorCodes;
 import com.infotech.isg.service.ISGService;
 import com.infotech.isg.service.ISGServiceResponse;
-import com.infotech.isg.repository.AuditLogRepository;
+import com.infotech.isg.service.AuditService;
 
 import java.util.Date;
 
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * audit logger for requests
@@ -28,12 +27,12 @@ public class AuditLogger {
 
     private static final Logger LOG = LoggerFactory.getLogger("isg.audit");
 
-    private final AuditLogRepository auditLogRepository;
+    private final AuditService auditService;
 
 
     @Autowired
-    public AuditLogger(@Qualifier("JdbcAuditLogRepository") AuditLogRepository auditLogRepository) {
-        this.auditLogRepository = auditLogRepository;
+    public AuditLogger(AuditService auditService ) {
+        this.auditService = auditService;
     }
 
     // around execution ISGService API
@@ -82,10 +81,10 @@ public class AuditLogger {
                  responseTime);
 
         // audit log in DB
-        auditLogRepository.create(username, bankCode, amount, channel, state, bankReceipt, orderId,
-                                  consumer, customerIp, remoteIp, action, operatorId,
-                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
-                                  start, responseTime);
+        auditService.log(username, bankCode, amount, channel, state, bankReceipt, orderId,
+                         consumer, customerIp, remoteIp, action, operatorId,
+                         response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                         start, responseTime);
 
         return result;
     }
@@ -117,10 +116,10 @@ public class AuditLogger {
                  responseTime);
 
         // audit log in DB
-        auditLogRepository.create(null, null, null, null, null, null, null,
-                                  null, null, null, "isAvailable", operatorId,
-                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
-                                  start, responseTime);
+        auditService.log(null, null, null, null, null, null, null,
+                         null, null, null, "isAvailable", operatorId,
+                         response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                         start, responseTime);
 
         return result;
     }
@@ -156,10 +155,10 @@ public class AuditLogger {
                  responseTime);
 
         // audit log in DB
-        auditLogRepository.create(null, null, null, null, null, null, null,
-                                  consumer, null, null, "verify:" + transactionId, operatorId,
-                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
-                                  start, responseTime);
+        auditService.log(null, null, null, null, null, null, null,
+                         consumer, null, null, "verify:" + transactionId, operatorId,
+                         response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                         start, responseTime);
 
         return result;
     }
@@ -192,10 +191,10 @@ public class AuditLogger {
                  responseTime);
 
         // audit log in DB
-        auditLogRepository.create(null, null, null, null, null, null, null,
-                                  null, null, null, "getBill", operatorId,
-                                  response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
-                                  start, responseTime);
+        auditService.log(null, null, null, null, null, null, null,
+                         null, null, null, "getBill", operatorId,
+                         response.getStatus(), response.getISGDoc(), response.getOPRDoc(),
+                         start, responseTime);
 
         return result;
     }

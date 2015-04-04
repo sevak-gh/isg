@@ -7,29 +7,28 @@ import com.infotech.isg.util.HashGenerator;
 import com.infotech.isg.repository.ClientRepository;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * performing access control logic for clients
  *
  * @author Sevak Gharibian
  */
-@Service("AccessControl")
+@Service
 public class AccessControlImpl implements AccessControl {
 
     private final ClientRepository clientRepository;
-    private Client client;
-    private boolean isAuthenticated;
 
     @Autowired
-    public AccessControlImpl(@Qualifier("JdbcClientRepository") ClientRepository clientRepository) {
+    public AccessControlImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int authenticate(String username, String password, String remoteIp) {
-        client = clientRepository.findByUsername(username);
+        Client client = clientRepository.findByUsername(username);
         if (client == null) {
             return ErrorCodes.INVALID_USERNAME_OR_PASSWORD;
         }
@@ -42,17 +41,13 @@ public class AccessControlImpl implements AccessControl {
         if (!client.getIps().contains(remoteIp)) {
             return ErrorCodes.INVALID_CLIENT_IP;
         }
-        isAuthenticated = true;
         return ErrorCodes.OK;
     }
 
     @Override
-    public boolean isAuthenticated() {
-        return isAuthenticated;
-    }
-
-    @Override
-    public Client getClient() {
+    @Transactional(readOnly = true)
+    public Client getClient(String username) {
+        Client client = clientRepository.findByUsername(username);
         return client;
     }
 }

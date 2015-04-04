@@ -8,7 +8,7 @@ import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.service.OperatorService;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -17,16 +17,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author Sevak Gharibian
  */
-@Component("JiringService")
+@Service("JiringService")
 public class JiringServiceImpl extends ISGServiceImpl {
 
     @Autowired
     public JiringServiceImpl(AccessControl accessControl,
-                             @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
+                             TransactionRepository transactionRepository,
                              @Qualifier("JiringOperatorService") OperatorService operatorService,
                              @Qualifier("JiringRequestValidator") RequestValidator requestValidator,
                              TransactionValidator transactionValidator,
-                             @Qualifier("JdbcOperatorStatusRepository") OperatorStatusRepository operatorStatusRepository) {
+                             OperatorStatusRepository operatorStatusRepository) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;
         this.operatorService = operatorService;

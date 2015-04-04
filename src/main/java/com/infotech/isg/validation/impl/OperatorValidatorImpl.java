@@ -8,6 +8,7 @@ import com.infotech.isg.validation.ErrorCodes;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * validator for service provider opertor.
@@ -20,11 +21,12 @@ public class OperatorValidatorImpl implements OperatorValidator {
     private final OperatorRepository operatorRepository;
 
     @Autowired
-    public OperatorValidatorImpl(@Qualifier("JdbcOperatorRepository") OperatorRepository operatorRepository) {
+    public OperatorValidatorImpl(OperatorRepository operatorRepository) {
         this.operatorRepository = operatorRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int validate(int operatorId) {
         Operator operator = operatorRepository.findById(operatorId);
         if (operator == null) {

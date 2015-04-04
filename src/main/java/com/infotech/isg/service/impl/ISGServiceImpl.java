@@ -3,6 +3,7 @@ package com.infotech.isg.service.impl;
 import com.infotech.isg.domain.Transaction;
 import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.domain.OperatorStatus;
+import com.infotech.isg.domain.Client;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.ErrorCodes;
@@ -20,6 +21,7 @@ import com.infotech.isg.service.ISGException;
 import java.util.List;
 import java.util.Date;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ public abstract class ISGServiceImpl implements ISGService {
     protected int operatorId;
 
     @Override
+    @Transactional
     public ISGServiceResponse topup(String username, String password,
                                     String bankCode, int amount,
                                     String channel, String state,
@@ -62,16 +65,17 @@ public abstract class ISGServiceImpl implements ISGService {
         if (errorCode != ErrorCodes.OK) {
             return new ISGServiceResponse("ERROR", errorCode, null);
         }
+        Client client = accessControl.getClient(username);
 
         // validate if transaction is duplicate
-        errorCode = transactionValidator.validate(bankReceipt, bankCode, accessControl.getClient().getId(),
+        errorCode = transactionValidator.validate(bankReceipt, bankCode, client.getId(),
                     orderId, operatorId, amount, channel, consumer, customerIp);
         if (errorCode != ErrorCodes.OK) {
             // TODO: may need more review
             switch (errorCode) {
                 case ErrorCodes.STF_RESOLVED_SUCCESSFUL:
                     // STF has resolved this transaction as successful
-                    List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, accessControl.getClient().getId());
+                    List<Transaction> transactions = transactionRepository.findByRefNumBankCodeClientId(bankReceipt, bankCode, client.getId());
                     long transactionId = 0;
                     String operatorTId = null;
                     if ((transactions != null) && (transactions.size() > 0)) {
@@ -98,19 +102,20 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setChannel(channel);
         transaction.setConsumer(consumer);
         transaction.setBankCode(bankCode);
-        transaction.setClientId(accessControl.getClient().getId());
+        transaction.setClientId(client.getId());
         transaction.setCustomerIp(customerIp);
         transaction.setStatus(-1);
         transaction.setBankVerify(amount);
         transaction.setVerifyDateTime(new Date());
-        transactionRepository.create(transaction);
+        transactionRepository.save(transaction);
 
         OperatorServiceResponse operatorServiceResponse = null;
         try {
-            operatorServiceResponse = operatorService.topup(consumer, amount, transaction.getId(), action);
+            operatorServiceResponse = operatorService.topup(consumer, amount, 
+                                                            transaction.getId(), action);
         } catch (OperatorNotAvailableException e) {
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
-            transactionRepository.update(transaction);
+            transactionRepository.save(transaction);
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         } catch (OperatorUnknownResponseException e) {
@@ -119,14 +124,14 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setStf(1);
             transaction.setStfResult(0);
             transaction.setOperatorResponseCode(-1);
-            transactionRepository.update(transaction);
+            transactionRepository.save(transaction);
             LOG.error("error in calling service provider, STF set and operator_service_error_donot_reverse code returned", e);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
         }
 
         if (operatorServiceResponse == null) {
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
-            transactionRepository.update(transaction);
+            transactionRepository.save(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
         }
 
@@ -139,7 +144,7 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setToken(operatorServiceResponse.getToken());
             transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
             transaction.setOperatorCommand(operatorServiceResponse.getStatus());
-            transactionRepository.update(transaction);
+            transactionRepository.save(transaction);
             return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, operatorServiceResponse.getCode());
         }
 
@@ -151,11 +156,12 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setToken(operatorServiceResponse.getToken());
         transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
         transaction.setOperatorCommand(operatorServiceResponse.getStatus());
-        transactionRepository.update(transaction);
+        transactionRepository.save(transaction);
         return new ISGServiceResponse("OK", transaction.getId(), operatorServiceResponse.getTransactionId());
     }
 
     @Override
+    @Transactional
     public ISGServiceResponse isOperatorAvailable() {
         OperatorStatus operatorStatus = operatorStatusRepository.findById(operatorId);
 
@@ -167,8 +173,9 @@ public abstract class ISGServiceImpl implements ISGService {
     }
 
     @Override
+    @Transactional
     public ISGServiceResponse verifyTransaction(String consumer, String transactionId) {
-        Transaction transaction = transactionRepository.findByProviderTransactionId(operatorId, transactionId);
+        Transaction transaction = transactionRepository.findByProviderOperatorTId(operatorId, transactionId);
 
         if (transaction == null) {
             return new ISGServiceResponse("ERROR", ErrorCodes.INVALID_TRANSACTION_ID, null);

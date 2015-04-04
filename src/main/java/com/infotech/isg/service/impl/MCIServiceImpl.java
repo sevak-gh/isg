@@ -8,7 +8,7 @@ import com.infotech.isg.validation.TransactionValidator;
 import com.infotech.isg.validation.RequestValidator;
 import com.infotech.isg.service.OperatorService;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -17,16 +17,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author Sevak Gharibian
  */
-@Component("MCIService")
+@Service("MCIService")
 public class MCIServiceImpl extends ISGServiceImpl {
 
     @Autowired
     public MCIServiceImpl(AccessControl accessControl,
-                          @Qualifier("JdbcTransactionRepository") TransactionRepository transactionRepository,
+                          TransactionRepository transactionRepository,
                           @Qualifier("MCIOperatorService") OperatorService operatorService,
                           @Qualifier("MCIRequestValidator") RequestValidator requestValidator,
                           TransactionValidator transactionValidator,
-                          @Qualifier("JdbcOperatorStatusRepository") OperatorStatusRepository operatorStatusRepository) {
+                          OperatorStatusRepository operatorStatusRepository) {
         this.accessControl = accessControl;
         this.transactionRepository = transactionRepository;
         this.operatorService = operatorService;

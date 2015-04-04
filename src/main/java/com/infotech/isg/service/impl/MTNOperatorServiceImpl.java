@@ -10,7 +10,7 @@ import com.infotech.isg.proxy.mtn.MTNProxyImpl;
 import com.infotech.isg.proxy.mtn.MTNProxyResponse;
 import com.infotech.isg.domain.ServiceActions;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sevak Gharibian
  */
-@Component("MTNOperatorService")
+@Service("MTNOperatorService")
 public class MTNOperatorServiceImpl implements OperatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MTNOperatorServiceImpl.class);

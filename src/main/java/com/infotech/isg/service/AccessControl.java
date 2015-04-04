@@ -8,10 +8,6 @@ import com.infotech.isg.domain.Client;
  * @author Sevak Gharibian
  */
 public interface AccessControl {
-
     public int authenticate(String username, String password, String remoteIp);
-
-    public boolean isAuthenticated();
-
-    public Client getClient();
+    public Client getClient(String username);
 }

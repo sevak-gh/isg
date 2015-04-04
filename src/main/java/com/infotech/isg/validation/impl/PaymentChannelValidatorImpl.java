@@ -8,6 +8,7 @@ import com.infotech.isg.validation.ErrorCodes;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * validator for payment channels.
@@ -20,11 +21,12 @@ public class PaymentChannelValidatorImpl implements PaymentChannelValidator {
     private final PaymentChannelRepository paymentChannelRepository;
 
     @Autowired
-    public PaymentChannelValidatorImpl(@Qualifier("JdbcPaymentChannelRepository") PaymentChannelRepository paymentChannelRepository) {
+    public PaymentChannelValidatorImpl(PaymentChannelRepository paymentChannelRepository) {
         this.paymentChannelRepository = paymentChannelRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int validate(String channelId) {
         PaymentChannel channel = paymentChannelRepository.findById(channelId);
         if (channel == null) {
