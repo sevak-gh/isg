@@ -65,7 +65,16 @@ public class MTNWSFake {
                 } else if (items[3].startsWith("43")) {
                     // gprs
                     return mtnService.gprs(items[0], Integer.parseInt(items[1]), Long.parseLong(trId.substring(4, trId.length())));
-                } else {
+                } else if (items[3].startsWith("46")) {
+                    // gprs
+                    return mtnService.gprsDaily(items[0], Integer.parseInt(items[1]), Long.parseLong(trId.substring(4, trId.length())));
+               } else if (items[3].startsWith("47")) {
+                    // gprs
+                    return mtnService.gprsWeekly(items[0], Integer.parseInt(items[1]), Long.parseLong(trId.substring(4, trId.length())));
+               } else if (items[3].startsWith("48")) {
+                    // gprs
+                    return mtnService.gprsMonthly(items[0], Integer.parseInt(items[1]), Long.parseLong(trId.substring(4, trId.length())));
+               } else {
                     throw new UnsupportedOperationException("requested operation not supported");
                 }
             } else {

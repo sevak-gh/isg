@@ -26,7 +26,10 @@ public class MTNActionValidatorImpl implements ActionValidator {
             && (ServiceActions.getActionCode(action) != ServiceActions.WOW)
             && (ServiceActions.getActionCode(action) != ServiceActions.POST_WIMAX)
             && (ServiceActions.getActionCode(action) != ServiceActions.PRE_WIMAX)
-            && (ServiceActions.getActionCode(action) != ServiceActions.GPRS)) {
+            && (ServiceActions.getActionCode(action) != ServiceActions.GPRS)
+            && (ServiceActions.getActionCode(action) != ServiceActions.GPRS_DAILY)
+            && (ServiceActions.getActionCode(action) != ServiceActions.GPRS_WEEKLY)
+            && (ServiceActions.getActionCode(action) != ServiceActions.GPRS_MONTHLY)) {
             return ErrorCodes.INVALID_OPERATOR_ACTION;
         }
 
