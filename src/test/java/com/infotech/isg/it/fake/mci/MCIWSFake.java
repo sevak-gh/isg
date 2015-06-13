@@ -2,6 +2,7 @@ package com.infotech.isg.it.fake.mci;
 
 import com.infotech.isg.proxy.mci.MCIProxy;
 import com.infotech.isg.proxy.mci.MCIProxyRechargeResponse;
+import com.infotech.isg.proxy.mci.MCIProxyRechargeCapabilityResponse;
 import com.infotech.isg.proxy.mci.MCIProxyGetTokenResponse;
 
 import java.util.List;
@@ -33,9 +34,13 @@ public class MCIWSFake {
 
     private MCIProxy mciService;
     private Endpoint ep;
+    private Endpoint ep2;
 
     @Value("${mci.url}")
     private String url;
+
+    @Value("${mci2.url}")
+    private String url2;
 
     @WebMethod(exclude = true)
     public void setServiceImpl(MCIProxy mciService) {
@@ -57,6 +62,15 @@ public class MCIWSFake {
         return mciService.recharge(token, consumer, amount, trId);
     }
 
+    @WebMethod(operationName = "RechargeCapability", action = "http://mci.service/RechargeCapability")
+    @WebResult(name = "RechargeCapabilityResult")
+    public MCIProxyRechargeCapabilityResponse rechargeCapability(@WebParam(name = "BrokerID") String token,
+            @WebParam(name = "MobileNumber") String consumer,
+            @WebParam(name = "CardAmount") int amount,
+            @WebParam(name = "TransactionID") long trId) {
+        return mciService.rechargeCapability(token, consumer, amount, trId);
+    }
+
     @WebMethod(exclude = true)
     public void publish() {
         if ((ep != null) && (ep.isPublished())) {
@@ -64,12 +78,22 @@ public class MCIWSFake {
         }
 
         ep = Endpoint.publish(url, this);
-    }
+
+        if ((ep2 != null) && (ep2.isPublished())) {
+            throw new RuntimeException("EP already published");
+        }
+
+        ep2 = Endpoint.publish(url2, this);
+   }
 
     @WebMethod(exclude = true)
     public void stop() {
         if (ep != null) {
             ep.stop();
         }
-    }
+
+        if (ep2 != null) {
+            ep2.stop();
+        }
+   }
 }

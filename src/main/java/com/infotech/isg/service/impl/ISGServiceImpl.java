@@ -49,7 +49,7 @@ public abstract class ISGServiceImpl implements ISGService {
                                     String channel, String state,
                                     String bankReceipt, String orderId,
                                     String consumer, String customerIp,
-                                    String remoteIp, String action) {
+                                    String remoteIp, String action, String customerName) {
 
         int errorCode = ErrorCodes.OK;
         errorCode = requestValidator.validate(username, password, bankCode,
@@ -112,7 +112,7 @@ public abstract class ISGServiceImpl implements ISGService {
         OperatorServiceResponse operatorServiceResponse = null;
         try {
             operatorServiceResponse = operatorService.topup(consumer, amount, 
-                                                            transaction.getId(), action);
+                                                            transaction.getId(), action, customerName);
         } catch (OperatorNotAvailableException e) {
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
             transactionRepository.save(transaction);

@@ -41,8 +41,8 @@ public class MTNOperatorServiceImpl implements OperatorService {
     private String vendor;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action) {
-        MTNProxy mtnProxy = new MTNProxyImpl(url, username, password, vendor, namespace);
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName) {
+        MTNProxy mtnProxy = new MTNProxyImpl(url, username, password, (customerName != null) ? customerName : vendor, namespace);
 
         MTNProxyResponse mtnResponse = null;
         try {

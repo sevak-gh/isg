@@ -79,7 +79,7 @@ public class ISGWS {
 
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), "top-up");
+                                      getClientIp(), "top-up", "noname");
 
         return response;
     }
@@ -100,11 +100,12 @@ public class ISGWS {
                                   @WebParam(name = "bankreceipt") String bankReceipt,
                                   @WebParam(name = "orderid") String orderId,
                                   @WebParam(name = "consumer") String consumer,
-                                  @WebParam(name = "customerip") String customerIp) {
+                                  @WebParam(name = "customerip") String customerIp,
+                                  @WebParam(name = "customerName") String customerName) {
 
         ISGServiceResponse response = mtnService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), action);
+                                      getClientIp(), action, customerName);
 
         return response;
     }
@@ -130,7 +131,7 @@ public class ISGWS {
         ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp(),
-                                      ((action == null) || action.isEmpty()) ? "top-up" : action);    // top-up default action
+                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname");    // top-up default action
 
         return response;
     }
