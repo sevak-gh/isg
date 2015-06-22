@@ -68,6 +68,7 @@ public class MCIOperatorServiceImpl implements OperatorService {
             throw new OperatorNotAvailableException("invalid token from mci");
         }
 
+        /*
         MCIProxy mciProxy2 = new MCIProxyImpl(url2, username2, password2, namespace2);
 
         // check MCI recharge capability
@@ -105,6 +106,7 @@ public class MCIOperatorServiceImpl implements OperatorService {
             response.setToken(token);
             return response;
         }
+        */
 
         // request MCI to recharge
         MCIProxyRechargeResponse rechargeResponse = null;
