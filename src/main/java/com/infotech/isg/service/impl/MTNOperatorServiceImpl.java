@@ -75,16 +75,8 @@ public class MTNOperatorServiceImpl implements OperatorService {
                     mtnResponse = mtnProxy.gprs(consumer, amount, transactionId);
                     break;
 
-                case ServiceActions.GPRS_DAILY:
-                    mtnResponse = mtnProxy.gprsDaily(consumer, amount, transactionId);
-                    break;
-
-                case ServiceActions.GPRS_WEEKLY:
-                    mtnResponse = mtnProxy.gprsWeekly(consumer, amount, transactionId);
-                    break;
-
-                case ServiceActions.GPRS_MONTHLY:
-                    mtnResponse = mtnProxy.gprsMonthly(consumer, amount, transactionId);
+                case ServiceActions.GPRS_COMBO:
+                    mtnResponse = mtnProxy.gprsCombo(consumer, amount, transactionId, ServiceActions.getGprsProfileId(action));
                     break;
 
                 default: break;

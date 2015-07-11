@@ -162,27 +162,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -321,27 +301,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -480,27 +440,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -629,36 +569,6 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
             public MTNProxyResponse gprs(String consumer, int amount, long trId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
@@ -668,6 +578,16 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 return response;
             }
 
+            @Override
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+                MTNProxyResponse response = new MTNProxyResponse();
+                response.setTransactionId(mtnTransactionId);
+                response.setOrigResponseMessage(mtnOrigResponseMessage);
+                response.setCommandStatus(mtnCommandStatus);
+                response.setResultCode(mtnResultCode);
+                return response;
+            }
+            
             @Override
             public MTNProxyResponse verify(long trId) {
                 throw new UnsupportedOperationException("verify not supported");
@@ -798,27 +718,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -957,7 +857,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -965,27 +865,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
+            
             @Override
             public MTNProxyResponse verify(long trId) {
                 throw new UnsupportedOperationException("verify not supported");
@@ -1116,27 +996,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1197,7 +1057,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void HappyPathShouldSucceedForGPRSDaily() {
+    public void HappyPathShouldSucceedForGPRSCombo() {
         // arrange
         String mtnTransactionId = "1111";
         String mtnOrigResponseMessage = "recharge done";
@@ -1275,7 +1135,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1283,27 +1143,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 response.setResultCode(mtnResultCode);
                 return response;
             }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
+            
             @Override
             public MTNProxyResponse verify(long trId) {
                 throw new UnsupportedOperationException("verify not supported");
@@ -1318,325 +1158,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         mtnws.publish();
         String username = "root";
         String password = "123456";
-        String action = "gprs-daily";
-        int clientId = 1;
-        String bankCode = BankCodes.SAMAN;
-        int amount = 10000;
-        int channel = 59;
-        String state = "state";
-        String bankReceipt = "mtnrcpt";
-        String orderId = "orderid";
-        String consumer = "09385067064";
-        String customerIp = "10.20.120.30";
-        String remoteIp = "1.1.1.1";
-
-        // act
-        ISGServiceResponse response = wsclient.mtn(username, password, action,
-                                      bankCode, amount,
-                                      channel, state, bankReceipt, orderId,
-                                      consumer, customerIp);
-        // assert
-        assertThat(response, is(notNullValue()));
-        assertThat(response.getStatus(), is("OK"));
-        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
-        assertThat(response.getOPRDoc(), is(mtnTransactionId));
-        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
-        assertThat(transactions, is(notNullValue()));
-        assertThat(transactions.size(), is(1));
-        Transaction transaction = transactions.get(0);
-        assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(1));
-        assertThat(transaction.getAmount(), is((long)amount));
-        assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
-        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
-        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
-        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
-        assertThat(transaction.getStf(), is(nullValue()));
-    }
-
-    @Test
-    public void HappyPathShouldSucceedForGPRSWeekly() {
-        // arrange
-        String mtnTransactionId = "1111";
-        String mtnOrigResponseMessage = "recharge done";
-        String mtnCommandStatus = "OK";
-        String mtnResultCode = "0";
-        MTNProxy mtnService = new MTNProxy() {
-            @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse verify(long trId) {
-                throw new UnsupportedOperationException("verify not supported");
-            }
-
-            @Override
-            public MTNProxyResponse getBalance() {
-                throw new UnsupportedOperationException("balance not supported");
-            }
-        };
-        mtnws.setServiceImpl(mtnService);
-        mtnws.publish();
-        String username = "root";
-        String password = "123456";
-        String action = "gprs-weekly";
-        int clientId = 1;
-        String bankCode = BankCodes.SAMAN;
-        int amount = 10000;
-        int channel = 59;
-        String state = "state";
-        String bankReceipt = "mtnrcpt";
-        String orderId = "orderid";
-        String consumer = "09385067064";
-        String customerIp = "10.20.120.30";
-        String remoteIp = "1.1.1.1";
-
-        // act
-        ISGServiceResponse response = wsclient.mtn(username, password, action,
-                                      bankCode, amount,
-                                      channel, state, bankReceipt, orderId,
-                                      consumer, customerIp);
-        // assert
-        assertThat(response, is(notNullValue()));
-        assertThat(response.getStatus(), is("OK"));
-        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
-        assertThat(response.getOPRDoc(), is(mtnTransactionId));
-        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
-        assertThat(transactions, is(notNullValue()));
-        assertThat(transactions.size(), is(1));
-        Transaction transaction = transactions.get(0);
-        assertThat(transaction.getRefNum(), is(bankReceipt));
-        assertThat(transaction.getStatus(), is(1));
-        assertThat(transaction.getAmount(), is((long)amount));
-        assertThat(transaction.getConsumer(), is(consumer));
-        assertThat(transaction.getOperatorResponseCode().toString(), is(mtnResultCode));
-        assertThat(transaction.getOperatorResponse(), is(mtnOrigResponseMessage));
-        assertThat(transaction.getOperatorTId(), is(mtnTransactionId));
-        assertThat(transaction.getOperatorCommand(), is(mtnCommandStatus));
-        assertThat(transaction.getStf(), is(nullValue()));
-    }
-
-    @Test
-    public void HappyPathShouldSucceedForGPRSMonthly() {
-        // arrange
-        String mtnTransactionId = "1111";
-        String mtnOrigResponseMessage = "recharge done";
-        String mtnCommandStatus = "OK";
-        String mtnResultCode = "0";
-        MTNProxy mtnService = new MTNProxy() {
-            @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse verify(long trId) {
-                throw new UnsupportedOperationException("verify not supported");
-            }
-
-            @Override
-            public MTNProxyResponse getBalance() {
-                throw new UnsupportedOperationException("balance not supported");
-            }
-        };
-        mtnws.setServiceImpl(mtnService);
-        mtnws.publish();
-        String username = "root";
-        String password = "123456";
-        String action = "gprs-monthly";
+        String action = "gprs-47";
         int clientId = 1;
         String bankCode = BankCodes.SAMAN;
         int amount = 10000;
@@ -1717,17 +1239,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -1816,17 +1328,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -1915,17 +1417,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2049,7 +1541,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2058,26 +1550,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
                 return response;
             }
 
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-            @Override
+           @Override
             public MTNProxyResponse verify(long trId) {
                 throw new UnsupportedOperationException("verify not supported");
             }
@@ -2169,17 +1642,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2272,17 +1735,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2375,17 +1828,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2484,17 +1927,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2595,17 +2028,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2708,17 +2131,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                return null;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 return null;
             }
 
@@ -2858,27 +2271,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -3025,27 +2418,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -3192,27 +2565,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsDaily(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsWeekly(String consumer, int amount, long trId) {
-                MTNProxyResponse response = new MTNProxyResponse();
-                response.setTransactionId(mtnTransactionId);
-                response.setOrigResponseMessage(mtnOrigResponseMessage);
-                response.setCommandStatus(mtnCommandStatus);
-                response.setResultCode(mtnResultCode);
-                return response;
-            }
-
-            @Override
-            public MTNProxyResponse gprsMonthly(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
