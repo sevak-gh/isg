@@ -41,6 +41,7 @@ public class ISGWS {
     private final ISGService mtnService;
     private final ISGService mciService;
     private final ISGService jiringService;
+    private final ISGService rightelService;
 
     /**
     * gets client remote IP through web service context
@@ -54,10 +55,12 @@ public class ISGWS {
     @Autowired
     public ISGWS(@Qualifier("MTNService") ISGService mtnService,
                  @Qualifier("MCIService") ISGService mciService,
-                 @Qualifier("JiringService") ISGService jiringService) {
+                 @Qualifier("JiringService") ISGService jiringService,
+                 @Qualifier("RightelService") ISGService rightelService) {
         this.mtnService = mtnService;
         this.mciService = mciService;
         this.jiringService = jiringService;
+        this.rightelService = rightelService;
     }
 
     /**
@@ -135,6 +138,32 @@ public class ISGWS {
 
         return response;
     }
+
+    /**
+     * Rightel topup service
+     *
+     */
+    @WebMethod(operationName = "Rightel", action = "urn:TopUpWSDL/Rightel")
+    @WebResult(name = "RightelResponse")
+    public ISGServiceResponse rightel(@WebParam(name = "username") String username,
+                                      @WebParam(name = "password") String password,
+                                      @WebParam(name = "action") String action,
+                                      @WebParam(name = "bankcode") String bankCode,
+                                      @WebParam(name = "amount") int amount,
+                                      @WebParam(name = "channel") String channel,
+                                      @WebParam(name = "state") String state,
+                                      @WebParam(name = "bankreceipt") String bankReceipt,
+                                      @WebParam(name = "orderid") String orderId,
+                                      @WebParam(name = "consumer") String consumer,
+                                      @WebParam(name = "customerip") String customerIp) {
+
+        ISGServiceResponse response = rightelService.topup(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp(), action, "noname");
+
+        return response;
+    }
+
 
     /**
      * MCI get bill amount
