@@ -145,7 +145,9 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
             transaction.setOperatorCommand(operatorServiceResponse.getStatus());
             transactionRepository.save(transaction);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, operatorServiceResponse.getCode());
+            ISGServiceResponse response = new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK, operatorServiceResponse.getCode());
+            response.setMessage(operatorServiceResponse.getMessage());
+            return response;
         }
 
         // operation successful, OK
@@ -157,7 +159,9 @@ public abstract class ISGServiceImpl implements ISGService {
         transaction.setOperatorTId(operatorServiceResponse.getTransactionId());
         transaction.setOperatorCommand(operatorServiceResponse.getStatus());
         transactionRepository.save(transaction);
-        return new ISGServiceResponse("OK", transaction.getId(), operatorServiceResponse.getTransactionId());
+        ISGServiceResponse response = new ISGServiceResponse("OK", transaction.getId(), operatorServiceResponse.getTransactionId());
+        response.setMessage(operatorServiceResponse.getMessage());
+        return response;
     }
 
     @Override

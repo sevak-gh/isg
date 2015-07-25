@@ -78,7 +78,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         jdbcTemplate.update("insert into info_topup_clients(id,client,pin,name,contact,tel,vendor,created,active) values(1, 'root', "
                             + "'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346"
                             + "ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413'"
-                            + ", 'name', 'contact', 'tel', 'vendor', '2014-01-01 13:05:23','Y')");
+                            + ", 'name', 'تماس', 'tel', 'vendor', '2014-01-01 13:05:23','Y')");
         jdbcTemplate.update("insert into info_topup_client_ips values(1,'127.0.0.1'), (1, '172.16.10.15')");
     }
 
@@ -92,7 +92,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         // arrange
         String token = "token";
         String mciResponseCode = "0";
-        String mciResponseDetail = "12345679797";
+        String mciResponseDetail = "operation was sucessful, شارژ انجام شد";
         MCIProxy mciService = new MCIProxy() {
             @Override
             public MCIProxyGetTokenResponse getToken() {

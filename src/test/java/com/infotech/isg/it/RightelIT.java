@@ -139,7 +139,7 @@ public class RightelIT extends AbstractTestNGSpringContextTests {
                 response.setVoucherSerial(voucherSerial);
                 response.setChargeResponse(chargeResponse);
                 response.setChargeResponseDesc(chargeResponseDesc);
-                response.setTransactionId(Long.toString(trId));
+                response.setTransactionId(String.format("Info%d", trId));
                 response.setStatus(status);
                 response.setStatusTime(statusTime);
                 return response;
