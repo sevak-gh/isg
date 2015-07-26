@@ -125,12 +125,15 @@ public class MCIOperatorServiceImpl implements OperatorService {
             throw new OperatorUnknownResponseException("recharge response is ambiguous from MCI, set for STF");
         }
 
+        // MCI error codes list changing all the time, error code validation seems useless
+        /*
         if ((Integer.parseInt(rechargeResponse.getCode()) > 0)
             || (Integer.parseInt(rechargeResponse.getCode()) < -1017)
             || ((Integer.parseInt(rechargeResponse.getCode()) > -1001) && (Integer.parseInt(rechargeResponse.getCode()) < -1))) {
             // invalid response code, should be set for STF
             throw new OperatorUnknownResponseException("recharge response code is ambiguous from MCI, set for STF");
         }
+        */
 
         // set response, status not exist for MCI
         OperatorServiceResponse response = new OperatorServiceResponse();
