@@ -158,8 +158,8 @@ public class ISGWS {
                                       @WebParam(name = "customerip") String customerIp) {
 
         ISGServiceResponse response = rightelService.topup(username, password, bankCode, amount, channel,
-                                      state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), action, "noname");
+                                      state, bankReceipt, orderId, consumer, customerIp, getClientIp(), 
+                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname");
 
         return response;
     }
