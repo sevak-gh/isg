@@ -71,7 +71,9 @@ public class CellNumberValidatorTest {
             {"+9809425067064", ErrorCodes.INVALID_CELL_NUMBER},
             {"9809425067064", ErrorCodes.INVALID_CELL_NUMBER},
             {"9015575752", ErrorCodes.OK},
-            {"9025575752", ErrorCodes.OK}
+            {"9025575752", ErrorCodes.OK},
+            {"9035575752", ErrorCodes.OK},
+            {"09035575752", ErrorCodes.OK}
         };
     }
 
