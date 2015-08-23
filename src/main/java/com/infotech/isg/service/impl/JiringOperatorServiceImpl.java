@@ -43,7 +43,7 @@ public class JiringOperatorServiceImpl implements OperatorService {
 
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor) {
 
         JiringProxy jiringProxy = new JiringProxyImpl(url, username, password);
 

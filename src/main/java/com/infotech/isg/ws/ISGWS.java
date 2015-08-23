@@ -82,7 +82,7 @@ public class ISGWS {
 
         ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), "top-up", "noname");
+                                      getClientIp(), "top-up", "noname", "infotech");
 
         return response;
     }
@@ -104,11 +104,13 @@ public class ISGWS {
                                   @WebParam(name = "orderid") String orderId,
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp,
-                                  @WebParam(name = "customerName") String customerName) {
+                                  @WebParam(name = "customerName") String customerName,
+                                  @WebParam(name = "vendor") String vendor) {
 
         ISGServiceResponse response = mtnService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), action, customerName);
+                                      getClientIp(), action, customerName, 
+                                      ((vendor == null) || vendor.isEmpty()) ? "infotech" : vendor);
 
         return response;
     }
@@ -134,7 +136,7 @@ public class ISGWS {
         ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp(),
-                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname");    // top-up default action
+                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname", "infotech");    // top-up default action
 
         return response;
     }
@@ -159,7 +161,7 @@ public class ISGWS {
 
         ISGServiceResponse response = rightelService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp, getClientIp(), 
-                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname");
+                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname", "infotech");
 
         return response;
     }

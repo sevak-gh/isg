@@ -32,7 +32,7 @@ public class MTNWSFake {
     private MTNProxy mtnService;
     private Endpoint ep;
 
-    @Value("${mtn.url}")
+    @Value("${mtn.infotech.url}")
     private String url;
 
     @WebMethod(exclude = true)

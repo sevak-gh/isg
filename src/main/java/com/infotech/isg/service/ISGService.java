@@ -11,7 +11,8 @@ public interface ISGService {
                                     String channel, String state,
                                     String bankReceipt, String orderId,
                                     String consumer, String customerIp,
-                                    String remoteIp, String action, String customerName);
+                                    String remoteIp, String action, 
+                                    String customerName, String vendor);
 
     public ISGServiceResponse getBill(String consumer);
     public ISGServiceResponse isOperatorAvailable();

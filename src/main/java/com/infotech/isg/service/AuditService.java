@@ -13,5 +13,5 @@ public interface AuditService {
                     String orderId, String consumer, String customerIp,
                     String remoteIp, String action, int operatorId,
                     String status, long isgDoc, String oprDoc,
-                    Date timestamp, long responseTime);
+                    Date timestamp, long responseTime, String vendor);
 }

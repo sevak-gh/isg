@@ -12,6 +12,8 @@ import com.infotech.isg.domain.ServiceActions;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,24 +27,45 @@ public class MTNOperatorServiceImpl implements OperatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MTNOperatorServiceImpl.class);
 
-    @Value("${mtn.url}")
+    @Autowired
+    private Environment env;
+
+    //@Value("${mtn.url}")
     private String url;
 
-    @Value("${mtn.username}")
+    //@Value("${mtn.username}")
     private String username;
 
-    @Value("${mtn.password}")
+    //@Value("${mtn.password}")
     private String password;
 
-    @Value("${mtn.namespace}")
+    //@Value("${mtn.namespace}")
     private String namespace;
 
-    @Value("${mtn.vendor}")
-    private String vendor;
+    //@Value("${mtn.vendor}")
+    private String vendorName;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName) {
-        MTNProxy mtnProxy = new MTNProxyImpl(url, username, password, (customerName != null) ? customerName : vendor, namespace);
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor) {
+        
+        if (vendor.equalsIgnoreCase("infotech")) {
+            url = env.getProperty("mtn.infotech.url");
+            username = env.getProperty("mtn.infotech.username");
+            password = env.getProperty("mtn.infotech.password");
+            namespace = env.getProperty("mtn.infotech.namespace");
+            vendorName = env.getProperty("mtn.infotech.vendor");
+        } else if (vendor.equalsIgnoreCase("mtn")) {
+            url = env.getProperty("mtn.mtn.url");
+            username = env.getProperty("mtn.mtn.username");
+            password = env.getProperty("mtn.mtn.password");
+            namespace = env.getProperty("mtn.mtn.namespace");
+            vendorName = env.getProperty("mtn.mtn.vendor");
+        } else {
+            // unknown vendor
+            throw new OperatorNotAvailableException("unknown vendor for MTN");
+        }
+
+        MTNProxy mtnProxy = new MTNProxyImpl(url, username, password, (customerName != null) ? customerName : vendorName, namespace);
 
         MTNProxyResponse mtnResponse = null;
         try {

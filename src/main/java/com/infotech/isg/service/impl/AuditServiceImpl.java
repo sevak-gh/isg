@@ -32,7 +32,7 @@ public class AuditServiceImpl implements AuditService {
                     String orderId, String consumer, String customerIp,
                     String remoteIp, String action, int operatorId,
                     String status, long isgDoc, String oprDoc,
-                    Date timestamp, long responseTime) {
+                    Date timestamp, long responseTime, String vendor) {
 
         Audit audit = new Audit();
         audit.setUsername(username);
@@ -52,6 +52,7 @@ public class AuditServiceImpl implements AuditService {
         audit.setOprDoc(oprDoc);
         audit.setTimestamp(timestamp);
         audit.setResponseTime(responseTime);
+        audit.setVendor(vendor);
         auditLogRepository.save(audit);
    }
 }

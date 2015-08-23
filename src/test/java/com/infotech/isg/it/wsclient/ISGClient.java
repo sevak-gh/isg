@@ -67,7 +67,7 @@ public class ISGClient {
             element.addTextNode(consumer);
             element = bodyElement.addChildElement(new QName("customerip"));
             element.addTextNode(customerIp);
-            request.saveChanges();
+           request.saveChanges();
         } catch (SOAPException e) {
             throw new RuntimeException("soap request creation error", e);
         }
@@ -204,7 +204,8 @@ public class ISGClient {
                                   String bankCode, int amount,
                                   int channel, String state,
                                   String bankReceipt, String orderId,
-                                  String consumer, String customerIp) {
+                                  String consumer, String customerIp,
+                                  String customerName, String vendor) {
         // create empty soap request
         SOAPMessage request = SOAPHelper.createSOAPRequest(namespace, namespace + "/MTN");
 
@@ -234,7 +235,15 @@ public class ISGClient {
             element.addTextNode(consumer);
             element = bodyElement.addChildElement(new QName("customerip"));
             element.addTextNode(customerIp);
-            request.saveChanges();
+            if (customerName != null) {
+                element = bodyElement.addChildElement(new QName("customerName"));
+                element.addTextNode(customerName);
+            }
+            if (vendor != null) {
+                element = bodyElement.addChildElement(new QName("vendor"));
+                element.addTextNode(vendor);
+            }
+           request.saveChanges();
         } catch (SOAPException e) {
             throw new RuntimeException("soap request creation error", e);
         }
@@ -246,6 +255,15 @@ public class ISGClient {
         ISGServiceResponse isgServiceResponse = SOAPHelper.parseResponse(response, namespace, "MTNResponse", ISGServiceResponse.class);
 
         return isgServiceResponse;
+    }
+
+    public ISGServiceResponse mtn(String username, String password,
+                                  String action,
+                                  String bankCode, int amount,
+                                  int channel, String state,
+                                  String bankReceipt, String orderId,
+                                  String consumer, String customerIp) {
+        return mtn(username, password, action, bankCode, amount, channel, state, bankReceipt, orderId, consumer, customerIp, null, null);
     }
 
     public ISGServiceResponse rightel(String username, String password,

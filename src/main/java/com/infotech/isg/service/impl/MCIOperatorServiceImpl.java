@@ -51,7 +51,7 @@ public class MCIOperatorServiceImpl implements OperatorService {
     private String namespace2;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor) {
 
         MCIProxy mciProxy = new MCIProxyImpl(url, username, password, namespace);
 
