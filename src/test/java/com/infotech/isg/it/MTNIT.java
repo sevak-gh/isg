@@ -92,7 +92,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -102,7 +102,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -112,7 +112,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -122,7 +122,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -132,7 +132,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -142,7 +142,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -152,7 +152,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -162,7 +162,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -231,7 +231,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -241,7 +241,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -251,7 +251,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -261,7 +261,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -271,7 +271,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -281,7 +281,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -291,7 +291,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -301,7 +301,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -373,7 +373,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -383,7 +383,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -393,7 +393,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -403,7 +403,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -413,7 +413,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -423,7 +423,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -433,7 +433,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -443,7 +443,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileID, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -515,7 +515,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -525,7 +525,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -535,7 +535,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -545,7 +545,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -555,7 +555,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -565,7 +565,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -575,7 +575,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -585,7 +585,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -654,7 +654,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -664,7 +664,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -674,7 +674,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -684,7 +684,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -694,7 +694,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -704,7 +704,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -714,7 +714,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -724,7 +724,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -793,7 +793,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -803,7 +803,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -813,7 +813,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -823,7 +823,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -833,7 +833,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -843,7 +843,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -853,7 +853,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -863,7 +863,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -932,7 +932,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -942,7 +942,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -952,7 +952,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -962,7 +962,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -972,7 +972,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -982,7 +982,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -992,7 +992,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1002,7 +1002,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1071,7 +1071,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1081,7 +1081,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1091,7 +1091,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1101,7 +1101,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1111,7 +1111,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1121,7 +1121,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1131,7 +1131,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1141,7 +1141,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1210,7 +1210,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1220,7 +1220,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1230,7 +1230,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1240,7 +1240,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1250,7 +1250,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1260,7 +1260,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1270,7 +1270,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1280,7 +1280,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1349,7 +1349,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1359,7 +1359,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1369,7 +1369,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1379,7 +1379,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1389,7 +1389,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1399,7 +1399,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1409,7 +1409,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1419,7 +1419,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1488,42 +1488,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -1577,42 +1577,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -1666,42 +1666,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -1755,7 +1755,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "2";                 // any non-zero positive number means NOK
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1765,7 +1765,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1775,7 +1775,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1785,7 +1785,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1795,7 +1795,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1805,7 +1805,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1815,7 +1815,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1825,7 +1825,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -1891,42 +1891,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 throw new RuntimeException("something unpredictable happened!!!");
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -1984,42 +1984,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -2077,42 +2077,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -2176,42 +2176,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -2277,42 +2277,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -2380,42 +2380,42 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         // arrange
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 return null;
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 return null;
             }
 
@@ -2485,7 +2485,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2495,7 +2495,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2505,7 +2505,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2515,7 +2515,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2525,7 +2525,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2535,7 +2535,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2545,7 +2545,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2555,7 +2555,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2632,7 +2632,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "2";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2642,7 +2642,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2652,7 +2652,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2662,7 +2662,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2672,7 +2672,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2682,7 +2682,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2692,7 +2692,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2702,7 +2702,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2779,7 +2779,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
         String mtnResultCode = "0";
         MTNProxy mtnService = new MTNProxy() {
             @Override
-            public MTNProxyResponse recharge(String consumer, int amount, long trId) {
+            public MTNProxyResponse recharge(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2789,7 +2789,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse billPayment(String consumer, int amount, long trId) {
+            public MTNProxyResponse billPayment(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2799,7 +2799,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId) {
+            public MTNProxyResponse bulkTransfer(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2809,7 +2809,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse wow(String consumer, int amount, long trId) {
+            public MTNProxyResponse wow(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2819,7 +2819,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse postPaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2829,7 +2829,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId) {
+            public MTNProxyResponse prePaidWimax(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2839,7 +2839,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprs(String consumer, int amount, long trId) {
+            public MTNProxyResponse gprs(String consumer, int amount, long trId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);
@@ -2849,7 +2849,7 @@ public class MTNIT extends AbstractTestNGSpringContextTests {
             }
 
             @Override
-            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId) {
+            public MTNProxyResponse gprsCombo(String consumer, int amount, long trId, int profileId, String channel) {
                 MTNProxyResponse response = new MTNProxyResponse();
                 response.setTransactionId(mtnTransactionId);
                 response.setOrigResponseMessage(mtnOrigResponseMessage);

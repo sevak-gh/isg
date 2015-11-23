@@ -46,7 +46,7 @@ public class MTNOperatorServiceImpl implements OperatorService {
     private String vendorName;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor, String channel) {
         
         if (vendor.equalsIgnoreCase("infotech")) {
             url = env.getProperty("mtn.infotech.url");
@@ -71,35 +71,35 @@ public class MTNOperatorServiceImpl implements OperatorService {
         try {
             switch (ServiceActions.getActionCode(action)) {
                 case ServiceActions.TOP_UP:
-                    mtnResponse = mtnProxy.recharge(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.recharge(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.BULK:
-                    mtnResponse = mtnProxy.bulkTransfer(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.bulkTransfer(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.PAY_BILL:
-                    mtnResponse = mtnProxy.billPayment(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.billPayment(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.WOW:
-                    mtnResponse = mtnProxy.wow(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.wow(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.POST_WIMAX:
-                    mtnResponse = mtnProxy.postPaidWimax(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.postPaidWimax(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.PRE_WIMAX:
-                    mtnResponse = mtnProxy.prePaidWimax(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.prePaidWimax(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.GPRS:
-                    mtnResponse = mtnProxy.gprs(consumer, amount, transactionId);
+                    mtnResponse = mtnProxy.gprs(consumer, amount, transactionId, channel);
                     break;
 
                 case ServiceActions.GPRS_COMBO:
-                    mtnResponse = mtnProxy.gprsCombo(consumer, amount, transactionId, ServiceActions.getGprsProfileId(action));
+                    mtnResponse = mtnProxy.gprsCombo(consumer, amount, transactionId, ServiceActions.getGprsProfileId(action), channel);
                     break;
 
                 default: break;

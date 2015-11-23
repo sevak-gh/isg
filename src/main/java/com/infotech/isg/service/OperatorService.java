@@ -9,6 +9,6 @@ package com.infotech.isg.service;
  * @author Sevak Gharibian
  */
 public interface OperatorService {
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor);
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor, String channel);
     public OperatorServiceResponse getBill(String consumer);
 }
