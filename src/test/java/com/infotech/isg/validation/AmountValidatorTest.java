@@ -4,6 +4,7 @@ import com.infotech.isg.domain.ServiceActions;
 import com.infotech.isg.validation.AmountValidator;;
 import com.infotech.isg.validation.impl.MCIAmountValidatorImpl;
 import com.infotech.isg.validation.impl.MTNAmountValidatorImpl;
+import com.infotech.isg.validation.impl.RightelAmountValidatorImpl;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;
@@ -59,6 +60,41 @@ public class AmountValidatorTest {
         };
     }
 
+    @DataProvider(name = "provideRightelTopupAmounts")
+    public Object[][] provideRightelTopupAmounts() {
+        return new Object[][] {
+            { -1, ErrorCodes.INVALID_AMOUNT},
+            {0, ErrorCodes.INVALID_AMOUNT},
+            {25, ErrorCodes.INVALID_AMOUNT},
+            {2000, ErrorCodes.OK},
+            {1000, ErrorCodes.OK},
+            {10000, ErrorCodes.OK},
+            {11500, ErrorCodes.OK},
+            {50000, ErrorCodes.OK},
+            {200000, ErrorCodes.OK},
+            {300000, ErrorCodes.OK},
+            {500000, ErrorCodes.OK}
+        };
+    }
+
+    @DataProvider(name = "provideRightelWowAmounts")
+    public Object[][] provideRightelWowAmounts() {
+        return new Object[][] {
+            { -1, ErrorCodes.INVALID_AMOUNT},
+            {0, ErrorCodes.INVALID_AMOUNT},
+            {25, ErrorCodes.INVALID_AMOUNT},
+            {2000, ErrorCodes.INVALID_AMOUNT},
+            {1000, ErrorCodes.INVALID_AMOUNT},
+            {10000, ErrorCodes.INVALID_AMOUNT},
+            {20000, ErrorCodes.OK},
+            {50000, ErrorCodes.OK},
+            {100000, ErrorCodes.OK},
+            {200000, ErrorCodes.OK},
+            {500000, ErrorCodes.OK},
+            {1000000, ErrorCodes.OK}
+        };
+    }
+
     @Test(dataProvider = "provideMCIAmounts")
     public void mciAmountValidatorShouldReturnExpectedErrorCode(int amount, int errorCode) {
         // arrange
@@ -84,5 +120,32 @@ public class AmountValidatorTest {
         // assert
         assertThat(result, is(errorCode));
     }
+
+    @Test(dataProvider = "provideRightelTopupAmounts")
+    public void rightelTopupAmountValidatorShouldReturnExpectedErrorCode(int amount, int errorCode) {
+        // arrange
+        AmountValidator amountValidator = new RightelAmountValidatorImpl();
+        // different cases provided by data provider
+
+        // act
+        int result = amountValidator.validate(amount, ServiceActions.TOP_UP);
+
+        // assert
+        assertThat(result, is(errorCode));
+    }
+
+    @Test(dataProvider = "provideRightelWowAmounts")
+    public void rightelWowAmountValidatorShouldReturnExpectedErrorCode(int amount, int errorCode) {
+        // arrange
+        AmountValidator amountValidator = new RightelAmountValidatorImpl();
+        // different cases provided by data provider
+
+        // act
+        int result = amountValidator.validate(amount, ServiceActions.WOW);
+
+        // assert
+        assertThat(result, is(errorCode));
+    }
+
 }
 

@@ -12,6 +12,7 @@ import com.infotech.isg.proxy.rightel.RightelProxyInquiryChargeResponse;
 import com.infotech.isg.proxy.rightel.RightelProxyGetAccountBalanceResponse;
 import com.infotech.isg.it.fake.rightel.RightelWSFake;
 import com.infotech.isg.it.wsclient.ISGClient;
+import com.infotech.isg.domain.ServiceActions;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -88,7 +89,7 @@ public class RightelIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void HappyPathShouldSucceed() {
+    public void HappyPathShouldSucceedForTopup() {
         // arrange
         int errorCode = 0;
         String errorDesc = "Success";
@@ -109,7 +110,7 @@ public class RightelIT extends AbstractTestNGSpringContextTests {
             String telNo = null;
            
             @Override
-            public RightelProxySubmitChargeRequestResponse submitChargeRequest(String consumer, int amount) {
+            public RightelProxySubmitChargeRequestResponse submitChargeRequest(String consumer, int amount, int channel) {
                 RightelProxySubmitChargeRequestResponse response = new RightelProxySubmitChargeRequestResponse();
                 response.setErrorCode(errorCode);
                 response.setErrorDesc(errorDesc);
@@ -189,9 +190,120 @@ public class RightelIT extends AbstractTestNGSpringContextTests {
         assertThat(transaction.getToken(), is(requestId));
         assertThat(transaction.getAmount(), is((long)amount));
         assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getAction(), is(ServiceActions.getActionCode(action)));
         assertThat(transaction.getOperatorResponseCode(), is(errorCode));
         assertThat(transaction.getOperatorResponse(), is(chargeResponseDesc));
         assertThat(transaction.getOperatorTId(), is(transactionId));
         assertThat(transaction.getStf(), is(nullValue()));
     }
+
+    @Test
+    public void HappyPathShouldSucceedForWow() {
+        // arrange
+        int errorCode = 0;
+        String errorDesc = "Success";
+        String requestId = "11";
+        BigDecimal vat = new BigDecimal(0);
+        BigDecimal discount = new BigDecimal(3000);
+        BigDecimal billAmount = new BigDecimal(47000);
+        int billState = 1;
+        String voucherSerial = "";
+        String chargeResponse = "40500000";
+        String chargeResponseDesc = "The operation done successfully";
+        int status = 4;
+        String statusTime = "3/27/2015 3:22:41 PM";
+        String transactionId = "TRX123";
+
+        RightelProxy rightelService = new RightelProxy() {
+            BigDecimal decimalAmount = null;
+            String telNo = null;
+           
+            @Override
+            public RightelProxySubmitChargeRequestResponse submitChargeRequest(String consumer, int amount, int channel) {
+                RightelProxySubmitChargeRequestResponse response = new RightelProxySubmitChargeRequestResponse();
+                response.setErrorCode(errorCode);
+                response.setErrorDesc(errorDesc);
+                response.setRequestId(requestId); 
+                telNo = consumer;
+                response.setTelNo(telNo); 
+                decimalAmount = new BigDecimal(amount);
+                response.setAmount(decimalAmount); 
+                response.setVat(vat); 
+                response.setDiscount(discount); 
+                response.setBillAmount(billAmount);
+                return response;
+            }
+
+            @Override
+            public RightelProxyConfirmChargeRequestResponse confirmChargeRequest(String requestId, long trId) {
+                RightelProxyConfirmChargeRequestResponse response = new RightelProxyConfirmChargeRequestResponse();
+                response.setErrorCode(errorCode);
+                response.setErrorDesc(errorDesc);
+                response.setRequestId(transactionId); 
+                response.setTelNo(telNo); 
+                response.setAmount(decimalAmount); 
+                response.setVat(vat); 
+                response.setDiscount(discount); 
+                response.setBillAmount(billAmount);
+                response.setBillState(billState);
+                response.setVoucherSerial(voucherSerial);
+                response.setChargeResponse(chargeResponse);
+                response.setChargeResponseDesc(chargeResponseDesc);
+                response.setTransactionId(String.format("Info%d", trId));
+                response.setStatus(status);
+                response.setStatusTime(statusTime);
+                return response;
+               
+            }
+    
+            @Override
+            public RightelProxyInquiryChargeResponse inquiryCharge(long trId) {
+                throw new UnsupportedOperationException("charge inquiery not supported");
+            }
+
+            @Override
+            public RightelProxyGetAccountBalanceResponse getAccountBalance() {
+                throw new UnsupportedOperationException("get balance not supported");
+            }
+        };
+        rightelws.setServiceImpl(rightelService);
+        rightelws.publish();
+        String username = "root";
+        String password = "123456";
+        int clientId = 1;
+        String bankCode = BankCodes.SAMAN;
+        int amount = 20000;
+        int channel = 59;
+        String state = "state";
+        String bankReceipt = "receipt";
+        String orderId = "orderid";
+        String consumer = "09215067064";
+        String customerIp = "10.20.120.30";
+        String remoteIp = "1.1.1.1";
+        String action = "wow";
+
+        // act
+        ISGServiceResponse response = wsclient.rightel(username, password, action, bankCode, amount,
+                                      channel, state, bankReceipt, orderId, consumer, customerIp);
+        // assert
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is("OK"));
+        assertThat(response.getISGDoc(), is(greaterThan(0L)));      // TR ID, any positive number
+        assertThat(response.getOPRDoc(), is(transactionId));
+        List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
+        assertThat(transactions, is(notNullValue()));
+        assertThat(transactions.size(), is(1));
+        Transaction transaction = transactions.get(0);
+        assertThat(transaction.getRefNum(), is(bankReceipt));
+        assertThat(transaction.getStatus(), is(1));
+        assertThat(transaction.getToken(), is(requestId));
+        assertThat(transaction.getAmount(), is((long)amount));
+        assertThat(transaction.getConsumer(), is(consumer));
+        assertThat(transaction.getAction(), is(ServiceActions.getActionCode(action)));
+        assertThat(transaction.getOperatorResponseCode(), is(errorCode));
+        assertThat(transaction.getOperatorResponse(), is(chargeResponseDesc));
+        assertThat(transaction.getOperatorTId(), is(transactionId));
+        assertThat(transaction.getStf(), is(nullValue()));
+    }
+
 }

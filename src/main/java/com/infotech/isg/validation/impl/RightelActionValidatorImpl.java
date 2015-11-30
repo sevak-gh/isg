@@ -21,7 +21,8 @@ public class RightelActionValidatorImpl implements ActionValidator {
             return ErrorCodes.INVALID_OPERATOR_ACTION;
         }
 
-        if (ServiceActions.getActionCode(action) != ServiceActions.TOP_UP) {
+        if ((ServiceActions.getActionCode(action) != ServiceActions.TOP_UP)
+            && (ServiceActions.getActionCode(action) != ServiceActions.WOW)) {
             return ErrorCodes.INVALID_OPERATOR_ACTION;
         }
 

@@ -42,6 +42,7 @@ public class ISGWS {
     private final ISGService mciService;
     private final ISGService jiringService;
     private final ISGService rightelService;
+    private final ISGService vopayService;
 
     /**
     * gets client remote IP through web service context
@@ -56,11 +57,13 @@ public class ISGWS {
     public ISGWS(@Qualifier("MTNService") ISGService mtnService,
                  @Qualifier("MCIService") ISGService mciService,
                  @Qualifier("JiringService") ISGService jiringService,
-                 @Qualifier("RightelService") ISGService rightelService) {
+                 @Qualifier("RightelService") ISGService rightelService,
+                 @Qualifier("VopayService") ISGService vopayService) {
         this.mtnService = mtnService;
         this.mciService = mciService;
         this.jiringService = jiringService;
         this.rightelService = rightelService;
+        this.vopayService = vopayService;
     }
 
     /**
@@ -166,6 +169,30 @@ public class ISGWS {
         return response;
     }
 
+    /**
+     * Vopay topup service
+     *
+     */
+    @WebMethod(operationName = "Vopay", action = "urn:TopUpWSDL/Vopay")
+    @WebResult(name = "VopayResponse")
+    public ISGServiceResponse vopay(@WebParam(name = "username") String username,
+                                      @WebParam(name = "password") String password,
+                                      @WebParam(name = "action") String action,
+                                      @WebParam(name = "bankcode") String bankCode,
+                                      @WebParam(name = "amount") int amount,
+                                      @WebParam(name = "channel") String channel,
+                                      @WebParam(name = "state") String state,
+                                      @WebParam(name = "bankreceipt") String bankReceipt,
+                                      @WebParam(name = "orderid") String orderId,
+                                      @WebParam(name = "consumer") String consumer,
+                                      @WebParam(name = "customerip") String customerIp) {
+
+        ISGServiceResponse response = vopayService.topup(username, password, bankCode, amount, channel,
+                                      state, bankReceipt, orderId, consumer, customerIp,
+                                      getClientIp(), action, "noname", "infotech");
+
+        return response;
+    }
 
     /**
      * MCI get bill amount

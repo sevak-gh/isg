@@ -4,6 +4,7 @@ import com.infotech.isg.validation.ActionValidator;;
 import com.infotech.isg.validation.impl.MCIActionValidatorImpl;
 import com.infotech.isg.validation.impl.MTNActionValidatorImpl;
 import com.infotech.isg.validation.impl.JiringActionValidatorImpl;
+import com.infotech.isg.validation.impl.RightelActionValidatorImpl;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;
@@ -82,6 +83,26 @@ public class ActionValidatorTest {
         };
     }
 
+    @DataProvider(name = "provideRightelActions")
+    public Object[][] provideRightelActions() {
+        return new Object[][] {
+            {"", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"1", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"charge", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"TOPUP", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"topup", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"top_up", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"top-up", ErrorCodes.OK},
+            {"BULK", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"bulk", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"GPRS", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"gprs", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"wow", ErrorCodes.OK},
+            {"post_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"pre_wimax", ErrorCodes.INVALID_OPERATOR_ACTION},
+            {"pay-bill", ErrorCodes.INVALID_OPERATOR_ACTION}
+        };
+    }
 
     @Test(dataProvider = "provideMTNActions")
     public void mtnActionValidatorShouldReturnExpectedErrorCode(String action, int errorCode) {
@@ -113,6 +134,19 @@ public class ActionValidatorTest {
     public void jiringActionValidatorShouldReturnExpectedErrorCode(String action, int errorCode) {
         // arrange
         ActionValidator actionValidator = new JiringActionValidatorImpl();
+        // different cases provided by data provider
+
+        // act
+        int result = actionValidator.validate(action);
+
+        // assert
+        assertThat(result, is(errorCode));
+    }
+
+    @Test(dataProvider = "provideRightelActions")
+    public void rightelActionValidatorShouldReturnExpectedErrorCode(String action, int errorCode) {
+        // arrange
+        ActionValidator actionValidator = new RightelActionValidatorImpl();
         // different cases provided by data provider
 
         // act

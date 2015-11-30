@@ -9,6 +9,8 @@ import com.infotech.isg.proxy.rightel.RightelProxy;
 import com.infotech.isg.proxy.rightel.RightelProxyImpl;
 import com.infotech.isg.proxy.rightel.RightelProxySubmitChargeRequestResponse;
 import com.infotech.isg.proxy.rightel.RightelProxyConfirmChargeRequestResponse;
+import com.infotech.isg.domain.ServiceActions;
+
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
@@ -42,9 +44,15 @@ public class RightelOperatorServiceImpl implements OperatorService {
         RightelProxy rightelProxy = new RightelProxyImpl(url, username, password, namespace);
 
         // submit charge request
+        int actionCode = 0;
+        switch (ServiceActions.getActionCode(action)) {
+            case ServiceActions.TOP_UP:actionCode=2;break;
+            case ServiceActions.WOW:actionCode=3;break;
+            default:break;
+        }
         RightelProxySubmitChargeRequestResponse submitChargeRequestResponse = null;
         try {
-            submitChargeRequestResponse = rightelProxy.submitChargeRequest(consumer, amount);
+            submitChargeRequestResponse = rightelProxy.submitChargeRequest(consumer, amount, actionCode);
         } catch (ProxyAccessException e) {
             throw new OperatorNotAvailableException("error in rightel SubmitChargeRequestResponse", e);
         }
