@@ -120,7 +120,8 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
             transactionRepository.save(transaction);
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            String message = e.getMessage() + ((e.getCause() != null) ? ": " + e.getCause().getMessage() : "");
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, message);
         } catch (OperatorUnknownResponseException e) {
             // ambiguous status, set for STF
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE);
@@ -129,7 +130,8 @@ public abstract class ISGServiceImpl implements ISGService {
             transaction.setOperatorResponseCode(-1);
             transactionRepository.save(transaction);
             LOG.error("error in calling service provider, STF set and operator_service_error_donot_reverse code returned", e);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, null);
+            String message = e.getMessage() + ((e.getCause() != null) ? ": " + e.getCause().getMessage() : "");
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE, message);
         }
 
         if (operatorServiceResponse == null) {
@@ -208,10 +210,12 @@ public abstract class ISGServiceImpl implements ISGService {
             operatorServiceResponse = operatorService.getBill(consumer);
         } catch (OperatorNotAvailableException e) {
             LOG.error("operator service not available, OPERATOR_SERVICE_ERROR returned", e);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            String message = e.getMessage() + ((e.getCause() != null) ? ": " + e.getCause().getMessage() : "");
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, message);
         } catch (OperatorUnknownResponseException e) {
             LOG.error("error in calling service provider, OPERATOR_SERVICE_ERROR returned", e);
-            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, null);
+            String message = e.getMessage() + ((e.getCause() != null) ? ": " + e.getCause().getMessage() : "");
+            return new ISGServiceResponse("ERROR", ErrorCodes.OPERATOR_SERVICE_ERROR, message);
         }
 
         if (operatorServiceResponse == null) {

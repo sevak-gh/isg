@@ -29,6 +29,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.notNullValue;
@@ -536,7 +538,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -576,7 +578,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -653,7 +655,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -729,7 +731,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -810,7 +812,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -893,7 +895,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_RESPONSE_NOK));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
@@ -1060,7 +1062,7 @@ public class MCIIT extends AbstractTestNGSpringContextTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is("ERROR"));
         assertThat(response.getISGDoc(), is((long)ErrorCodes.OPERATOR_SERVICE_ERROR_DONOT_REVERSE));
-        assertThat(response.getOPRDoc(), is(nullValue()));
+        assertThat(response.getOPRDoc(), anything());
         List<Transaction> transactions = transactionRepo.findByRefNumBankCodeClientId(bankReceipt, BankCodes.SAMAN, clientId);
         assertThat(transactions, is(notNullValue()));
         assertThat(transactions.size(), is(1));
