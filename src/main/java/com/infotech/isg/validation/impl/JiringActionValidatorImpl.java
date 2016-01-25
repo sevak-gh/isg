@@ -21,7 +21,8 @@ public class JiringActionValidatorImpl implements ActionValidator {
         }
 
         if (!((ServiceActions.getActionCode(action) == ServiceActions.TOP_UP)
-              || (ServiceActions.getActionCode(action) == ServiceActions.PAY_BILL))) {
+              || (ServiceActions.getActionCode(action) == ServiceActions.PAY_BILL)
+              || (ServiceActions.getActionCode(action) == ServiceActions.WALLET))) {
             return ErrorCodes.INVALID_OPERATOR_ACTION;
         }
 

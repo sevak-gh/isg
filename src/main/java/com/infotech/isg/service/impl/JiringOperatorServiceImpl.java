@@ -28,6 +28,7 @@ public class JiringOperatorServiceImpl implements OperatorService {
     private static final Logger LOG = LoggerFactory.getLogger(JiringOperatorServiceImpl.class);
     private static final String RECHARGE_BRAND_ID = "52";
     private static final String PAYBILL_BRAND_ID = "47";
+    private static final String WALLET_BRAND_ID = "49";
 
     @Value("${jiring.url}")
     private String url;
@@ -56,13 +57,15 @@ public class JiringOperatorServiceImpl implements OperatorService {
         switch (ServiceActions.getActionCode(action)) {
             case ServiceActions.TOP_UP: brandId = RECHARGE_BRAND_ID; break;
             case ServiceActions.PAY_BILL: brandId = PAYBILL_BRAND_ID; break;
+            case ServiceActions.WALLET: brandId = WALLET_BRAND_ID; break;
             default: throw new ISGException(String.format("jiring brandId not found for: %s", action));
         }
 
         // get token from jiring
         TCSResponse response = null;
         try {
-            response = jiringProxy.salesRequest(consumer, amount, brandId);
+            // sender: customerName if wallet, else consumer 
+            response = jiringProxy.salesRequest(consumer, amount, brandId, (brandId == WALLET_BRAND_ID) ? customerName : consumer);   
         } catch (ProxyAccessException e) {
             throw new OperatorNotAvailableException("error in jiring SalesRequest", e);
         }
@@ -120,7 +123,7 @@ public class JiringOperatorServiceImpl implements OperatorService {
         TCSResponse response = null;
         try {
             // dummy amount for pay-bill check-only action
-            response = jiringProxy.salesRequest(consumer, 100, PAYBILL_BRAND_ID);
+            response = jiringProxy.salesRequest(consumer, 100, PAYBILL_BRAND_ID, consumer);
         } catch (ProxyAccessException e) {
             throw new OperatorNotAvailableException("error in jiring SalesRequest", e);
         }

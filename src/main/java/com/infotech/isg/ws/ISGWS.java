@@ -134,12 +134,15 @@ public class ISGWS {
                                      @WebParam(name = "orderid") String orderId,
                                      @WebParam(name = "consumer") String consumer,
                                      @WebParam(name = "customerip") String customerIp,
-                                     @WebParam(name = "action") String action) {
+                                     @WebParam(name = "action") String action, 
+                                     @WebParam(name = "customerName") String customerName) {
 
         ISGServiceResponse response = jiringService.topup(username, password, bankCode, amount, channel,
                                       state, bankReceipt, orderId, consumer, customerIp,
                                       getClientIp(),
-                                      ((action == null) || action.isEmpty()) ? "top-up" : action, "noname", "infotech");    // top-up default action
+                                      ((action == null) || action.isEmpty()) ? "top-up" : action,   // top-up default action 
+                                      ((customerName == null) || customerName.isEmpty()) ? "noname" : customerName, // wallet(sndr) only, temp solution
+                                      "infotech");    
 
         return response;
     }
