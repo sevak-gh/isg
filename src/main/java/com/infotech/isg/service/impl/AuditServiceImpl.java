@@ -49,7 +49,10 @@ public class AuditServiceImpl implements AuditService {
         audit.setOperatorId(operatorId);
         audit.setStatus(status);
         audit.setIsgDoc(isgDoc);
-        audit.setOprDoc(oprDoc);
+        // TODO, trim oprdoc in live db 50 chars
+        if (oprDoc != null) {
+            audit.setOprDoc(oprDoc.substring(0, Math.min(50, oprDoc.length())));
+        }
         audit.setTimestamp(timestamp);
         audit.setResponseTime(responseTime);
         audit.setVendor(vendor);

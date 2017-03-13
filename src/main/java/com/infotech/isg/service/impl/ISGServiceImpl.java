@@ -115,7 +115,7 @@ public abstract class ISGServiceImpl implements ISGService {
         try {
             operatorServiceResponse = operatorService.topup(consumer, amount, 
                                                             transaction.getId(), action, 
-                                                            customerName, vendor, channel);
+                                                            customerName, vendor, channel, username);
         } catch (OperatorNotAvailableException e) {
             transaction.setStatus(ErrorCodes.OPERATOR_SERVICE_ERROR);
             transactionRepository.save(transaction);

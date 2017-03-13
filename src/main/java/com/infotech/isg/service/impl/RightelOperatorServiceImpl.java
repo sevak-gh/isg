@@ -39,7 +39,8 @@ public class RightelOperatorServiceImpl implements OperatorService {
     private String namespace;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor, String channel) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, 
+                                         String customerName, String vendor, String channel, String clientUsername) {
 
         RightelProxy rightelProxy = new RightelProxyImpl(url, username, password, namespace);
 

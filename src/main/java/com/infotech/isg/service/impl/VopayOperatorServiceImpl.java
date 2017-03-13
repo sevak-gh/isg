@@ -45,7 +45,8 @@ public class VopayOperatorServiceImpl implements OperatorService {
     private String authorizedIp;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor, String channel) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, 
+                                         String customerName, String vendor, String channel, String clientUsername) {
 
         VopayProxy vopayProxy = new VopayProxyImpl(url, accountId, agentId, key, secret, authorizedIp);
 

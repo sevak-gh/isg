@@ -10,12 +10,14 @@
     <context:property-placeholder location="file:/etc/isg/isg.ini" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:spring/data-access.properties" ignore-unresolvable="true"/>
 
+<!--
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
+-->
 
 <!--
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
@@ -29,6 +31,28 @@
         <property name="minIdle" value="${connectionpool.minIdle}" />
     </bean>
 -->
+
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="springHikariCP" />
+        <property name="dataSourceClassName" value="${jdbc.dataSourceClassName}"/>
+        <property name="connectionTimeout" value="${isg.hikari.connectionTimeout}" />
+        <property name="idleTimeout" value="${isg.hikari.idleTimeout}" />
+        <property name="maxLifetime" value="${isg.hikari.maxLifetime}" />
+        <property name="minimumIdle" value="${isg.hikari.minimumIdle}" /> 
+        <property name="maximumPoolSize" value="${isg.hikari.maximumPoolSize}" />
+        <property name="initializationFailFast" value="${isg.hikari.initializationFailFast}" />
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="url">${jdbc.url}</prop>
+                <prop key="user">${jdbc.username}</prop>
+                <prop key="password">${jdbc.password}</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
+
 
 </beans>
 

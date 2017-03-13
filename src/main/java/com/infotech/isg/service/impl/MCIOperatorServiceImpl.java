@@ -34,8 +34,6 @@ public class MCIOperatorServiceImpl implements OperatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MCIOperatorServiceImpl.class);
 
-    private static final int TIMEOUT = 2000;    // msec
-
     @Value("${mci.url}")
     private String url;
 
@@ -60,19 +58,34 @@ public class MCIOperatorServiceImpl implements OperatorService {
     @Value("${mci2.namespace}")
     private String namespace2;
 
+    @Value("${mci.timeout}")
+    private String timeout;
+
     private static ExecutorService executor = Executors.newCachedThreadPool();
 
     @Override
     public OperatorServiceResponse topup(String consumer, int amount, 
                                             long transactionId, String action, 
                                             String customerName, String vendor, 
-                                            String channel) {
+                                            String channel, String clientUsername) {
 
         CallableTopup callableTopup = new CallableTopup(consumer, amount, transactionId, action, customerName, vendor, channel);
         Future<OperatorServiceResponse> future = executor.submit(callableTopup);
+    
+        int timeoutMillis = 2000;
+        try {
+            timeoutMillis = Integer.parseInt(timeout);
+        } catch (NumberFormatException e) {
+            // invalid timeout param value, use the default
+            LOG.error("invalid mci timeout param, using default 2000");
+        }
+
+        if (clientUsername.equals("customersoap")) {
+            timeoutMillis = 30000; // 30 sec fixed for customersoap, they do not support -10, do_not_reverse
+        }
 
         try {
-            OperatorServiceResponse response  = future.get(TIMEOUT, TimeUnit.MILLISECONDS);
+            OperatorServiceResponse response  = future.get(timeoutMillis, TimeUnit.MILLISECONDS);
             return response;
         } catch (InterruptedException e ) {
             // async job interrupted, operator result unknown

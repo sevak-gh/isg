@@ -46,7 +46,8 @@ public class MTNOperatorServiceImpl implements OperatorService {
     private String vendorName;
 
     @Override
-    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, String customerName, String vendor, String channel) {
+    public OperatorServiceResponse topup(String consumer, int amount, long transactionId, String action, 
+                                        String customerName, String vendor, String channel, String clientUsername) {
         
         if (vendor.equalsIgnoreCase("infotech")) {
             url = env.getProperty("mtn.infotech.url");
