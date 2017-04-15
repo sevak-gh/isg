@@ -2,6 +2,8 @@ package com.infotech.isg.ws;
 
 import com.infotech.isg.service.ISGService;
 import com.infotech.isg.service.ISGServiceResponse;
+import com.infotech.isg.service.BalanceService;
+import com.infotech.isg.domain.Balance;
 import com.infotech.isg.validation.ErrorCodes;
 
 import javax.jws.WebService;
@@ -43,6 +45,8 @@ public class ISGWS {
     private final ISGService jiringService;
     private final ISGService rightelService;
     private final ISGService vopayService;
+    private final ISGService mciPinLessService;
+    private final BalanceService balanceService;
 
     /**
     * gets client remote IP through web service context
@@ -58,12 +62,16 @@ public class ISGWS {
                  @Qualifier("MCIService") ISGService mciService,
                  @Qualifier("JiringService") ISGService jiringService,
                  @Qualifier("RightelService") ISGService rightelService,
-                 @Qualifier("VopayService") ISGService vopayService) {
+                 @Qualifier("MCIPinLessService") ISGService mciPinLessService,
+                 @Qualifier("VopayService") ISGService vopayService,
+                 BalanceService balanceService) {
         this.mtnService = mtnService;
         this.mciService = mciService;
         this.jiringService = jiringService;
         this.rightelService = rightelService;
         this.vopayService = vopayService;
+        this.mciPinLessService = mciPinLessService;
+        this.balanceService = balanceService;
     }
 
     /**
@@ -83,9 +91,20 @@ public class ISGWS {
                                   @WebParam(name = "consumer") String consumer,
                                   @WebParam(name = "customerip") String customerIp) {
 
-        ISGServiceResponse response = mciService.topup(username, password, bankCode, amount, channel,
-                                      state, bankReceipt, orderId, consumer, customerIp,
-                                      getClientIp(), "top-up", "noname", "infotech");
+        ISGServiceResponse response = null;
+
+        // custom and temp control for migrating to mci pinless
+        // if pinless account available, give it the priority
+        Balance balance = balanceService.findById(1);
+        if (balance.getMciPinLess() > 10000000) {
+            response = mciPinLessService.topup(username, password, bankCode, amount, channel,
+                                               state, bankReceipt, orderId, consumer, customerIp,
+                                               getClientIp(), "top-up", "noname", "infotech");
+        } else {
+            response = mciService.topup(username, password, bankCode, amount, channel,
+                                        state, bankReceipt, orderId, consumer, customerIp,
+                                        getClientIp(), "top-up", "noname", "infotech");
+        }
 
         return response;
     }
