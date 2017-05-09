@@ -21,7 +21,7 @@ public class MCIRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
     public MCIRequestValidatorImpl(@Qualifier("MCIAmountValidator") AmountValidator amountValidator,
-                                   @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
+                                   @Qualifier("GenericCellNumberValidator") CellNumberValidator cellNumberValidator,
                                    @Qualifier("MCIActionValidator") ActionValidator actionValidator,
                                    BankCodeValidator bankCodeValidator,
                                    OperatorValidator operatorValidator,

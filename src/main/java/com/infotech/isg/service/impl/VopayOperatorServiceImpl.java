@@ -79,4 +79,5 @@ public class VopayOperatorServiceImpl implements OperatorService {
     public OperatorServiceResponse getBill(String consumer) {
         throw new UnsupportedOperationException("pay-bill not defined in Vopay");
     }
+
 }

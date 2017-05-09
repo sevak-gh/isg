@@ -112,7 +112,6 @@ public class MCIOperatorServiceImpl implements OperatorService {
         throw new UnsupportedOperationException("pay-bill not defined in MCI, try jiring");
     }
 
-
     class CallableTopup implements Callable<OperatorServiceResponse> {
 
         private final String consumer; 

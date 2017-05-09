@@ -50,8 +50,8 @@ public class JiringOperatorServiceImpl implements OperatorService {
         JiringProxy jiringProxy = new JiringProxyImpl(url, username, password);
 
         // normalize consumer/cell-number for jiring
-        // 091********
-        consumer = "091" + consumer.substring(consumer.length() - 8, consumer.length());
+        // 0**********
+        consumer = "0" + consumer.substring(consumer.length() - 10, consumer.length());
 
         // convert action into jiring brand ID
         String brandId = "";
@@ -117,8 +117,8 @@ public class JiringOperatorServiceImpl implements OperatorService {
         JiringProxy jiringProxy = new JiringProxyImpl(url, username, password);
 
         // normalize consumer/cell-number for jiring
-        // 091********
-        consumer = "091" + consumer.substring(consumer.length() - 8, consumer.length());
+        // 0**********
+        consumer = "0" + consumer.substring(consumer.length() - 10, consumer.length());
 
         // get token from jiring
         TCSResponse response = null;

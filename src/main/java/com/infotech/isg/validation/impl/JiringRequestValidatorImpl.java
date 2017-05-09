@@ -21,7 +21,7 @@ public class JiringRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
     public JiringRequestValidatorImpl(@Qualifier("MCIAmountValidator") AmountValidator amountValidator,
-                                      @Qualifier("MCICellNumberValidator") CellNumberValidator cellNumberValidator,
+                                      @Qualifier("GenericCellNumberValidator") CellNumberValidator cellNumberValidator,
                                       @Qualifier("JiringActionValidator") ActionValidator actionValidator,
                                       BankCodeValidator bankCodeValidator,
                                       OperatorValidator operatorValidator,

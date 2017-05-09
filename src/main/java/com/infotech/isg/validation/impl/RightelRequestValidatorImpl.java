@@ -21,7 +21,7 @@ public class RightelRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
     public RightelRequestValidatorImpl(@Qualifier("RightelAmountValidator") AmountValidator amountValidator,
-                                        @Qualifier("RightelCellNumberValidator") CellNumberValidator cellNumberValidator,
+                                        @Qualifier("GenericCellNumberValidator") CellNumberValidator cellNumberValidator,
                                         @Qualifier("RightelActionValidator") ActionValidator actionValidator,
                                         BankCodeValidator bankCodeValidator,
                                         OperatorValidator operatorValidator,
