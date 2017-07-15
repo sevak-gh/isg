@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class RightelRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
-    public RightelRequestValidatorImpl(@Qualifier("RightelAmountValidator") AmountValidator amountValidator,
+    public RightelRequestValidatorImpl(@Qualifier("GenericAmountValidator") AmountValidator amountValidator,
                                         @Qualifier("GenericCellNumberValidator") CellNumberValidator cellNumberValidator,
                                         @Qualifier("RightelActionValidator") ActionValidator actionValidator,
                                         BankCodeValidator bankCodeValidator,

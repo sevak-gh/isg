@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class JiringRequestValidatorImpl extends RequestValidatorImpl {
 
     @Autowired
-    public JiringRequestValidatorImpl(@Qualifier("MCIAmountValidator") AmountValidator amountValidator,
+    public JiringRequestValidatorImpl(@Qualifier("GenericAmountValidator") AmountValidator amountValidator,
                                       @Qualifier("GenericCellNumberValidator") CellNumberValidator cellNumberValidator,
                                       @Qualifier("JiringActionValidator") ActionValidator actionValidator,
                                       BankCodeValidator bankCodeValidator,
