@@ -94,17 +94,28 @@ public class ISGWS {
         ISGServiceResponse response = null;
 
         // custom and temp control for migrating to mci pinless
-        // if pinless account available, give it the priority
+        // if MCI account available, give it the priority
         Balance balance = balanceService.findById(1);
-        if (balance.getMciPinLess() > 10000000) {
-            response = mciPinLessService.topup(username, password, bankCode, amount, channel,
-                                               state, bankReceipt, orderId, consumer, customerIp,
-                                               getClientIp(), "top-up", "noname", "infotech");
-        } else {
+
+        if (((amount == 10000) && (balance.getMci10000() > 0L)) ||
+            ((amount == 20000) && (balance.getMci20000() > 0L)) ||
+            ((amount == 50000) && (balance.getMci50000() > 0L)) ||
+            ((amount == 100000) && (balance.getMci100000() > 0L)) ||
+            ((amount == 200000) && (balance.getMci200000() > 0L)) ||
+            ((amount == 500000) && (balance.getMci500000() > 0L)) ||
+            ((amount == 1000000) && (balance.getMci1000000() > 0L))) {
+            
+            // balance available in MCI
             response = mciService.topup(username, password, bankCode, amount, channel,
                                         state, bankReceipt, orderId, consumer, customerIp,
                                         getClientIp(), "top-up", "noname", "infotech");
-        }
+        } else {
+            // balance not available in MCI, go with pinless
+            response = mciPinLessService.topup(username, password, bankCode, amount, channel,
+                                               state, bankReceipt, orderId, consumer, customerIp,
+                                               getClientIp(), "top-up", "noname", "infotech");
+
+        }   
 
         return response;
     }
